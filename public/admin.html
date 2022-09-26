@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/logos/unicarBN.ico" type="image/x-icon">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="./css/norm.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="./css/admin-mobile.css">
+    <script src="./js/tokenManagement.js"></script>
+</head>
+<body onload="checkToken()">
+    <div id="loader">
+        <div class="dot-spinner">
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+            <div class="dot-spinner__dot"></div>
+        </div>
+    </div>
+    <nav id="desktop">
+        <div id="info-unicar">
+            <img src="./img/unicarN.png" alt="UNICAR ICON LOGO" id="logo-main">
+            <h2>UniCar APP</h2>
+            <h6>Admin Panel v1.3</h6>
+        </div>
+        <div id="menu">
+            <ul>
+                <li class="active" onclick="tabsHandler(this)"><i class="dashboard"></i><p>DASHBOARD</p></li>
+                <li onclick="tabsHandler(this)"><i class="usuarios"></i><p>USUARIOS</p></li>
+                <li onclick="tabsHandler(this)"><i class="viajes"></i><p>VIAJES</p></li>
+                <li onclick="tabsHandler(this)"><i class="universidades"></i><p>UNIVERSIDADES</p></li>
+                <li onclick="tabsHandler(this)"><i class="mensajes"></i><p>MENSAJES</p></li>
+                <li onclick="tabsHandler(this)"><i class="ajustes"></i><p>AJUSTES</p></li>
+            </ul>
+        </div>
+    </nav>
+    <nav id="mobile">
+        <div id="menuToggle">
+            <input type="checkbox" id="burguer-menu"/>
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu-mobile">
+                <li onclick="tabsHandlerMobile(this)" class="active">DASHBOARD</li>
+                <li onclick="tabsHandlerMobile(this)">USUARIOS</li>
+                <li onclick="tabsHandlerMobile(this)">VIAJES</li>
+                <li onclick="tabsHandlerMobile(this)">UNIVERSIDADES</li>
+                <li onclick="tabsHandlerMobile(this)">MENSAJES</li>
+                <li onclick="tabsHandlerMobile(this)">AJUSTES</li>
+            </ul>
+        </div>
+    </nav>
+    <main id="page-wrapper">
+        
+        <span id="exit" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h7v2Zm11-4-1.375-1.45 2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5Z"/></svg></span>
+        
+
+        <div id="dashboard" class="visible">
+            <h1 class="section-title">Dashboard</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#fff" onclick="refreshDashboard()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+            <section class="summary">
+                <div><p>Usuarios</p><span>0</span></div>
+                <div><p>Universidades</p><span>0</span></div>
+                <div><p>Viajes</p><span>0</span></div>
+                <div><p>Mensajes</p><span>0</span></div>
+            </section>
+            <section class="newsletter">
+                <h3>Newsletter</h3>
+                <div>
+                    <aside>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Usuarios suscritos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </aside>
+                    <article>
+                        <h5>Enviar nuevo correo masivo: </h5>
+                        <label for="asunto">Asunto</label>
+                        <input type="text" name="asunto">
+                        <label for="cuerpo">Cuerpo del correo</label>
+                        <textarea name="cuerpo" cols="30" rows="10" spellcheck="true"></textarea>
+                        <button onclick="sendNewsletter(this)">Enviar</button>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <div id="usuarios">
+            <h1 class="section-title">Usuarios</h1>
+            <p class="tab-msg"></p>
+            <div id="user-menu">
+                <div id="user-type">
+                    <span onclick="toggleUserType(this)" class="active">ALL</span>
+                    <span onclick="toggleUserType(this)">USER</span>
+                    <span onclick="toggleUserType(this)">ADMIN</span>
+                </div>
+                <div id="user-search">
+                    <div class="searchBar">
+                        <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" onkeyup="search(this)"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z"/></svg>
+                    </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#fff" onclick="refreshUsuarios()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+            </div>
+            <div id="user-menu">
+                <span class="boton" onclick="showPostForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M10.85 19.15v-6h-6v-2.3h6v-6h2.3v6h6v2.3h-6v6Z"/></svg>Añadir</span>
+                <span class="boton" onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"/></svg>Modificar</span>
+                <span class="boton" onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg>Borrar</span>
+            </div>
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div id="viajes">
+            <h1 class="section-title">Viajes</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#fff" onclick="refreshViajes()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+            <p class="tab-msg"></p>
+            <div id="user-menu">
+                <span class="boton" onclick="showPostForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M10.85 19.15v-6h-6v-2.3h6v-6h2.3v6h6v2.3h-6v6Z"/></svg>Añadir</span>
+                <span class="boton" onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"/></svg>Modificar</span>
+                <span class="boton" onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg>Borrar</span>
+            </div>
+            <section id="viajes-cards">
+                <details viaje-id="2" class="card" open="">
+                    <summary>Viaje 2 - ACTIVO</summary>
+                    <p>ID usuario: 5</p>
+                    <p>Salida: --- </p>
+                    <p>Origen: Cantabria | Destino: Campus de la Merced</p>
+                    <p>Plazas (ocupadas/totales): 2/3 | <strong>Precio: 5€</strong></p>
+                    <p>Observaciones: No se admiten mascotas!!!</p>
+                    <p>Pasajeros</p>
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </details>
+            </section>
+        </div>
+
+        <div id="universidades">
+            <h1 class="section-title">Universidades</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#fff" onclick="refreshUniversidades()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+            <p class="tab-msg"></p>
+            <div id="user-menu">
+                <span class="boton" onclick="showPostForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M10.85 19.15v-6h-6v-2.3h6v-6h2.3v6h6v2.3h-6v6Z"/></svg>Añadir</span>
+                <span class="boton" onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"/></svg>Modificar</span>
+                <span class="boton" onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg>Borrar</span>
+            </div>
+            <section>
+                <div>
+                    <header>
+                        <h3>Comunidades</h3>
+                    </header>
+                    <main id="universidades-comunidades"></main>
+                </div>
+                <div>
+                    <header>
+                        <h3>Universidades</h3>
+                    </header>
+                    <main id="universidades-universidades"></main>
+                </div>
+                <div>
+                    <header>
+                        <h3>Campus</h3>
+                    </header>
+                    <main id="universidades-campus"></main>
+                </div>
+            </section>
+        </div>
+
+        <div id="mensajes">
+            <h1 class="section-title">Mensajes</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#fff" onclick="refreshMensajes()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+            <p class="tab-msg"></p>
+            <div id="user-menu">
+                <span class="boton" onclick="showPostForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M10.85 19.15v-6h-6v-2.3h6v-6h2.3v6h6v2.3h-6v6Z"/></svg>Añadir</span>
+                <span class="boton" onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg>Borrar</span>
+            </div>
+            <section id="mensajes-cards"></section>
+        </div>
+
+        <div id="ajustes">
+            <h1 class="section-title">Ajustes</h1>
+            <section>
+
+            </section>
+        </div>
+    </main>
+    
+    <!-- NOTIFICATIONS -->
+    <section id="notifications-wrapper">
+        <div class="notification notification-error">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m8.4 17 3.6-3.6 3.6 3.6 1.4-1.4-3.6-3.6L17 8.4 15.6 7 12 10.6 8.4 7 7 8.4l3.6 3.6L7 15.6Zm3.6 5q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Zm0-2q3.35 0 5.675-2.325Q20 15.35 20 12q0-3.35-2.325-5.675Q15.35 4 12 4 8.65 4 6.325 6.325 4 8.65 4 12q0 3.35 2.325 5.675Q8.65 20 12 20Zm0-8Z"/></svg>
+            <p></p>
+        </div>
+        <div class="notification notification-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 17q.425 0 .713-.288Q13 16.425 13 16t-.287-.713Q12.425 15 12 15t-.712.287Q11 15.575 11 16t.288.712Q11.575 17 12 17Zm-1-4h2V7h-2Zm1 9q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Zm0-2q3.35 0 5.675-2.325Q20 15.35 20 12q0-3.35-2.325-5.675Q15.35 4 12 4 8.65 4 6.325 6.325 4 8.65 4 12q0 3.35 2.325 5.675Q8.65 20 12 20Zm0-8Z"/></svg>
+            <p></p>
+        </div>
+        <div class="notification notification-success">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="m10.6 16.6 7.05-7.05-1.4-1.4-5.65 5.65-2.85-2.85-1.4 1.4ZM12 22q-2.075 0-3.9-.788-1.825-.787-3.175-2.137-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175 1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138 1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175-1.35 1.35-3.175 2.137Q14.075 22 12 22Zm0-2q3.35 0 5.675-2.325Q20 15.35 20 12q0-3.35-2.325-5.675Q15.35 4 12 4 8.65 4 6.325 6.325 4 8.65 4 12q0 3.35 2.325 5.675Q8.65 20 12 20Zm0-8Z"/></svg>
+            <p></p>
+        </div>
+    </section>
+
+    <!-- POP UP FORMS -->
+    <div id="modalPost" class="modal-window">
+        <div>
+            <article class="modal-container">
+                <header class="modal-container-header">
+                    <h3 class="modal-container-title"></h3>
+                </header>
+                <section class="modal-container-body">
+                    <h4></h4>
+                    <div></div>
+                    <p></p>
+                </section>
+                <footer class="modal-container-footer">
+                    <sub></sub>
+                    <div>
+                        <button class="boton ghost" onclick="closeModal(this)">Cancelar</button>
+                        <button class="boton primary" onclick="postData(this)">Añadir</button>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <div id="modalPut" class="modal-window">
+        <div>
+            <article class="modal-container">
+                <header class="modal-container-header">
+                    <h3 class="modal-container-title">Editando contenido...</h3>
+                </header>
+                <section class="modal-container-body">
+                    <h4></h4>
+                    <div></div>
+                    <p></p>
+                </section>
+                <footer class="modal-container-footer">
+                    <sub></sub>
+                    <div>
+                        <button class="boton ghost" onclick="closeModal(this)">Cancelar</button>
+                        <button class="boton primary" onclick="putData(this)">Modificar</button>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <div id="modalDelete" class="modal-window">
+        <div>
+            <article class="modal-container">
+                <header class="modal-container-header">
+                    <h3 class="modal-container-title">Borrando contenido...</h3>
+                </header>
+                <section class="modal-container-body">
+                    <h4></h4>
+                    <div></div>
+                    <p></p>
+                </section>
+                <footer class="modal-container-footer">
+                    <sub>*Esta acción es irreversible</sub>
+                    <div>
+                        <button class="boton ghost" onclick="closeModal(this)">Cancelar</button>
+                        <button class="boton primary" onclick="deleteData(this)">Borrar</button>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="./js/admin/usersTab.js"></script>
+    <script src="./js/admin/tripsTab.js"></script>
+    <script src="./js/admin/unisTab.js"></script>
+    <script src="./js/admin/msgTabs.js"></script>
+    <script src="./js/admin/settingsTab.js"></script>
+    <script src="./js/admin/dashTab.js"></script>
+    
+    <script src="./js/crudForms.js"></script>
+    <script src="./js/admin/admin.js"></script>
+    
+</body>
+</html>

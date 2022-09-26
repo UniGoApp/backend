@@ -1,0 +1,24 @@
+@media (max-width: 800px){
+    /* HEADER */
+    header{
+        justify-content: flex-start;
+        padding-left: 24px;
+        gap: 0;
+    }
+    header > img.logo{
+        display: none;
+    }
+    /* MAIN */
+    /* FOOTER */
+    footer{
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+    .social_profile{
+        display: flex;
+        justify-content: center;
+    }
+    #copyright{
+        margin-top: 40px;
+    }
+}
