@@ -4,8 +4,6 @@ const nanoid = require("nanoid");
 const con = require("./database");
 const nodemailer = require('nodemailer');
 
-const JWT_SECRET = 'CreacionDeTokensSegurosParaUsuarios_UnicarApp2022';
-
 const signup = async (req, res) => {
   try {
     // validation
@@ -23,7 +21,7 @@ const signup = async (req, res) => {
           con.execute('INSERT INTO `usuarios` (email, password, username, rol, phone, picture) VALUES (?, ?, ?, ?, ?, ?)', [email, hashedPassword, name, 'USER', phone, default_picture], (err, result) => {
             if (err) return res.json({error: "Unexpected error"});
             //console.log("User created: "+ result.insertId);
-            const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, JWT_SECRET, {
+            const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, process.env.JWT_SECRET, {
               expiresIn: "7d",
             });
 
@@ -57,7 +55,7 @@ const signin = async (req, res) => {
           if (!match) return res.status(401).json({error: "Wrong password"});
 
           // create signed token
-          const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, JWT_SECRET, {
+          const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
             expiresIn: "7d",
           });
           

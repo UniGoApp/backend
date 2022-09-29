@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+var fs = require('fs');
+var https = require('https');
 
 //routes
 const router = require("./router");
-
 const app = express();
   
 // middlewares
@@ -26,3 +27,11 @@ app.use("/", router);
 
 const port = 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
+// const port = 443;
+// https.createServer({
+//     cert: fs.readFileSync('mi_certificado.crt'),
+//     key: fs.readFileSync('mi_certificado.key')
+//   },app).listen(port, function(){
+//      console.log('Servidor https correindo en el puerto 443');
+//  });

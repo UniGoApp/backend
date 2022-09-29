@@ -1,10 +1,12 @@
 const mysql = require('mysql2');
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 let con = mysql.createConnection({
     host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
     user: "root",
-    password: "unigoapp2022-Joseto",
-    database: "unigodb-1",
+    password: process.env.DATABASE_PW,
+    database: process.env.DATABASE_NAME,
     port: "3306"
 });
 
