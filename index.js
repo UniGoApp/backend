@@ -24,4 +24,5 @@ app.use((_, res, next) => {
 app.use(express.static('public'));
 app.use("/", router);
 
-app.listen(443, () => console.log("Server running on port 443"));
+const port = 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
