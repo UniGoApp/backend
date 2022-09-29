@@ -24,4 +24,4 @@ app.use((_, res, next) => {
 app.use(express.static('public'));
 app.use("/", router);
 
-app.listen(8000, () => console.log("Server running on port 8000"));
+app.listen(443, () => console.log("Server running on port 443"));
