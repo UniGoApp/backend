@@ -3,11 +3,11 @@ let con = null;
 
 try{
     con = mysql.createConnection({
-        host: "127.0.0.1",
-        user: "unicar_root",
-        password: "unicar_root@2022joseto",
-        database: "unicardb",
-        port: "3305"
+        host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
+        user: "root",
+        password: "unigoapp2022-Joseto",
+        database: "unigodb-1",
+        port: "3306"
     });
 }catch(err){
     console.log('Error al conectar con la base de datos...');
