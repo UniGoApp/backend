@@ -1,16 +1,20 @@
 const mysql = require('mysql2');
-let con = null;
 
-try{
-    con = mysql.createConnection({
-        host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
-        user: "root",
-        password: "unigoapp2022-Joseto",
-        database: "unigodb-1",
-        port: "3306"
-    });
-}catch(err){
-    console.log('Error al conectar con la base de datos...');
-}
+let con = mysql.createConnection({
+    host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
+    user: "root",
+    password: "unigoapp2022-Joseto",
+    database: "unigodb-1",
+    port: "3306"
+});
+
+con.connect(function(err) {
+    if (err) {
+        console.error('Database connection failed: ' + err.stack);
+        return;
+    }
+    
+    console.log('Connected to database.');
+});
 
 module.exports = con;
