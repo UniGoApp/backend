@@ -33,7 +33,7 @@ const fillNewsletterTable = (info) => {
 }
 
 const refreshDashboard = () => {
-    fetch('http://localhost:8000/api/admin/usuarios', requestOptions)
+    fetch('/api/admin/usuarios', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){
@@ -48,12 +48,12 @@ const refreshDashboard = () => {
         fillNewsletterTable(dataUsuarios);
     });
 
-    fetch('http://localhost:8000/api/admin/comunidades', requestOptions)
+    fetch('/api/admin/comunidades', requestOptions)
     .then(response => response.json())
     .then(result => dataComunidades = result)
     .catch(error => console.log('error', error));
 
-    fetch('http://localhost:8000/api/admin/universidades', requestOptions)
+    fetch('/api/admin/universidades', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){
@@ -65,12 +65,12 @@ const refreshDashboard = () => {
     })
     .catch(error => console.log('error', error));
 
-    fetch('http://localhost:8000/api/admin/campus', requestOptions)
+    fetch('/api/admin/campus', requestOptions)
     .then(response => response.json())
     .then(result => dataCampus = result)
     .catch(error => console.log('error', error));
 
-    fetch('http://localhost:8000/api/admin/viajes', requestOptions)
+    fetch('/api/admin/viajes', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){
@@ -82,7 +82,7 @@ const refreshDashboard = () => {
     })
     .catch(error => console.log('error', error));
 
-    fetch('http://localhost:8000/api/admin/mensajes', requestOptions)
+    fetch('/api/admin/mensajes', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){

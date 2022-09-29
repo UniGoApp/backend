@@ -1,7 +1,5 @@
 const con = require("../../database");
-const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = 'CreacionDeTokensSegurosParaUsuarios_UnicarApp2022';
 let destinos = {comunidades: []};
 let com = [];
 let uni = [];

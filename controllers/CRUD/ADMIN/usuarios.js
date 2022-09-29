@@ -1,6 +1,5 @@
 const con = require("../../database");
 const bcrypt = require("bcryptjs");
-const JWT_SECRET = 'CreacionDeTokensSegurosParaUsuarios_UnicarApp2022';
 
 const getUsuarios = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN"){

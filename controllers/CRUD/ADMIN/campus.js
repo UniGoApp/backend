@@ -1,8 +1,6 @@
 const con = require("../../database");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = 'CreacionDeTokensSegurosParaUsuarios_UnicarApp2022';
-
 const getCampus = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(

@@ -74,7 +74,7 @@ const mostrarUsuarios = () => {
 };
 
 const refreshUsuarios = () => {
-    fetch('http://localhost:8000/api/admin/usuarios', requestOptions)
+    fetch('/api/admin/usuarios', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){

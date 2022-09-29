@@ -1,11 +1,9 @@
-
+require('dotenv').config();
 const expressJWT = require('express-jwt');
-
-const JWT_SECRET = 'CreacionDeTokensSegurosParaUsuarios_UnicarApp2022';
 
 //MIDDLEWARE
 const requireSignin = expressJWT({
-    secret: JWT_SECRET,
+    secret: process.env.JWT_SECRET,
     algorithms: ['HS256']
 });
 

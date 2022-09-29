@@ -93,13 +93,13 @@ const mostrarComunidades = () =>{
 
 const refreshUniversidades = () => {
 
-    fetch('http://localhost:8000/api/admin/comunidades', requestOptions)
+    fetch('/api/admin/comunidades', requestOptions)
     .then(response => response.json())
     .then(result => dataComunidades = result)
     .catch(error => console.log('error', error))
     .finally(mostrarComunidades());
 
-    fetch('http://localhost:8000/api/admin/universidades', requestOptions)
+    fetch('/api/admin/universidades', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){
@@ -111,7 +111,7 @@ const refreshUniversidades = () => {
     })
     .catch(error => console.log('error', error));
 
-    fetch('http://localhost:8000/api/admin/campus', requestOptions)
+    fetch('/api/admin/campus', requestOptions)
     .then(response => response.json())
     .then(result => dataCampus = result)
     .catch(error => console.log('error', error));

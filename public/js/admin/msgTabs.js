@@ -30,7 +30,7 @@ const refreshMensajes = () => {
     document.getElementById('mensajes-cards').innerHTML= '';
 
     //New data:
-    fetch('http://localhost:8000/api/admin/mensajes', requestOptions)
+    fetch('/api/admin/mensajes', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){

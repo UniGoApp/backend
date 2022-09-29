@@ -52,7 +52,7 @@ const login = () => {
             redirect: 'follow'
         };
 
-        fetch("http://localhost:8000/api/signin", requestOptions)
+        fetch("/api/signin", requestOptions)
         .then(response => response.json())
         .then(result => {
             //Check token an user info received

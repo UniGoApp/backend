@@ -49,7 +49,7 @@ const mostrarViajes = () =>{
 }
 
 const refreshViajes = () => {
-    fetch('http://localhost:8000/api/admin/viajes', requestOptions)
+    fetch('/api/admin/viajes', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(!result.data){

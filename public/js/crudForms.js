@@ -454,7 +454,7 @@ const postData = (e) => {
         modal_id = select_postUni.value.toLowerCase();
     }
 
-    const url = `http://localhost:8000/api/admin/${modal_id}`;
+    const url = `/api/admin/${modal_id}`;
 
     var raw = JSON.stringify(data);
       
@@ -768,7 +768,7 @@ const deleteData = (e) => {
     if(modal_id == "universidades"){
         modal_id = document.querySelector('select[name="uni_type"]').value.toLowerCase();
     }
-    const url = `http://localhost:8000/api/admin/${modal_id}`;
+    const url = `/api/admin/${modal_id}`;
     var raw = JSON.stringify({
         "id": deleted_id
     });
