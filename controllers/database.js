@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-import * as dotenv from 'dotenv';
+require('dotenv').config();
 dotenv.config();
 
 let con = mysql.createConnection({
