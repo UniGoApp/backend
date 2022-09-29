@@ -1,6 +1,5 @@
 const mysql = require('mysql2');
 require('dotenv').config();
-dotenv.config();
 
 let con = mysql.createConnection({
     host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
