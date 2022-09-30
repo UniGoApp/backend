@@ -94,7 +94,44 @@ h1{
     margin: 0;
 }  
 /* MAIN */
+section{
+    margin: 50px 0;
+    padding: 0 16px;
+}
 
+
+/* ----> OPINIONS */
+#card-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+}
+.card-custom{
+    flex-basis: 28%;
+    background-color: var(--intermedio);
+    border-radius: 4px;
+    padding: 8px;
+}
+.card-custom > cite{
+    padding-top: 12px;
+    padding-left: 12px;
+}
+.card-user{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+.card-user > img {
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+}
+.card-user-info > p{
+    margin: 0;
+}
 /* FOOTER */
 footer {
     background: linear-gradient(150deg, var(--verde) , var(--intermedio), var(--azul));
