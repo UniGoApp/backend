@@ -2,8 +2,8 @@
 
 :root{
     --verde: #6bbda3;
-    --azul: #0000e9;
     --intermedio: #00a7b0;
+    --azul: #494994;
 }
 *, *::after, *::before{
     box-sizing: border-box;

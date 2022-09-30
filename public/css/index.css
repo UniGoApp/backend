@@ -4,6 +4,9 @@ a{
 }
 body, header, main, footer{
     z-index: 1;
+    user-select: text;
+    /* -moz-user-select: none;
+    -webkit-user-select: none; */
 }
 
 #toggle-nav{
@@ -22,7 +25,7 @@ body, header, main, footer{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 2px solid var(--intermedio);
+    /* border: 2px solid var(--intermedio); */
 }
 #toggle-nav.hamburguer.is-active{
     border: none;
@@ -53,6 +56,7 @@ body, header, main, footer{
 #menu{
     position: absolute;
     top: 0;
+    right: 0;
     width: 100vw;
     height: 100vh;
     flex-basis: content;
@@ -91,14 +95,16 @@ header{
 }
 h1{
     font-size: 1.6em;
-    margin: 0;
+    margin: 0!important;
 }  
 /* MAIN */
 section{
     margin: 50px 0;
     padding: 0 16px;
 }
-
+.section-title{
+    text-align: center;
+}
 
 /* ----> OPINIONS */
 #card-container{
@@ -106,16 +112,25 @@ section{
     flex-direction: row;
     justify-content: center;
     gap: 12px;
-    align-items: center;
+    align-items: stretch;
+    margin-top: 28px;
 }
 .card-custom{
     flex-basis: 28%;
-    background-color: var(--intermedio);
+    /* background-color: var(--intermedio); */
+    background-image: url('../img/triangles.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     border-radius: 4px;
     padding: 8px;
+    filter: drop-shadow(2px 2px 8px rgba(0,0,0,.2));
 }
-.card-custom > cite{
-    padding-top: 12px;
+.card-custom > .cite{
+    padding-left: 8px;
+}
+.card-custom cite{
+    text-align: left;
     padding-left: 12px;
 }
 .card-user{
@@ -123,6 +138,7 @@ section{
     justify-content: flex-start;
     align-items: center;
     gap: 12px;
+    margin-bottom: 12px;
 }
 .card-user > img {
     width: 64px;
@@ -197,19 +213,18 @@ footer a{
     width: 100%;
 }
 .subscribe__input {
-background-color: #fff;
-border: medium none;
-border-radius: 5px;
-color: #333;
-display: block;
-font-size: 15px;
-font-weight: 500;
-height: 60px;
-letter-spacing: 0.4px;
-margin: 0;
-padding: 0 52px 0 20px;
-text-transform: capitalize;
-width: 100%;
+    background-color: #fff;
+    border: medium none;
+    border-radius: 5px;
+    color: #333;
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    height: 60px;
+    letter-spacing: 0.4px;
+    margin: 0;
+    padding: 0 52px 0 20px;
+    width: 100%;
 }
 @media only screen and (max-width:768px) { 
 .subscribe__input{padding: 0 50px 0 20px;}
@@ -218,7 +233,7 @@ width: 100%;
 .subscribe__btn {
 background-color: transparent;
 border-radius: 0 25px 25px 0;
-color: #01c7e9;
+color: var(--verde);
 cursor: pointer;
 display: block;
 font-size: 20px;
@@ -234,7 +249,7 @@ width: 60px;
 }
 
 .subscribe__btn:hover i{
-    color:#ff3666;
+    color: var(--azul);
 }
 button {
     padding: 0;
@@ -279,10 +294,10 @@ padding: 0;
 }
 }
 .social_profile ul li a:hover{
-background:#ff3666;
-border: 1px solid #ff3666;
-color:#fff;
-border:0px;
+    background: var(--verde);
+    border: 1px solid  var(--verde);
+    color:#fff;
+    border:0px;
 }
 /*END SOCIAL PROFILE CSS*/
 #copyright {
