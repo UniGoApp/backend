@@ -25,9 +25,9 @@ app.use((_, res, next) => {
 app.use(express.static('public'));
 app.use("/", router);
 
-const port = 80;
+const port = 443;
 
-app.listen(port, () => console.log(`Server running on port ${port}`)).keepAliveTimeout = 65000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
 // const port = 443;
 // https.createServer({
