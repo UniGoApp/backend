@@ -25,13 +25,13 @@ app.use((_, res, next) => {
 app.use(express.static('public'));
 app.use("/", router);
 
-const port = 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// const port = 3000;
+// app.listen(port, () => console.log(`Server running on port ${port}`));
 
-// const port = 443;
-// https.createServer({
-//     cert: fs.readFileSync('mi_certificado.crt'),
-//     key: fs.readFileSync('mi_certificado.key')
-//   },app).listen(port, function(){
-//      console.log('Servidor https correindo en el puerto 443');
-//  });
+const port = 443;
+https.createServer({
+    key: fs.readFileSync('./privatekey.pem'),
+  cert: fs.readFileSync('./server.crt')
+  },app).listen(port, function(){
+     console.log('Servidor https correindo en el puerto 443');
+ });

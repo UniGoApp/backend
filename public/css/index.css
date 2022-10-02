@@ -5,8 +5,22 @@ a{
 body, header, main, footer{
     z-index: 1;
     user-select: text;
-    /* -moz-user-select: none;
-    -webkit-user-select: none; */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    overflow-x: hidden;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 10px;
+}
+*::-webkit-scrollbar-track {
+    background: var(--azul);
+}
+*::-webkit-scrollbar-thumb {
+    background-color: var(--verde);
+    border-radius: 6px;
+    border: transparent;
 }
 
 #toggle-nav{
@@ -99,13 +113,25 @@ h1{
 }  
 /* MAIN */
 section{
+    width: 100%;
     margin: 50px 0;
     padding: 0 16px;
 }
 .section-title{
     text-align: center;
 }
-
+/* ----> INICIO */
+#inicio{
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+}
+#inicio > div:first-child{
+    flex-basis: 65%;
+}
+#inicio > div:last-child{
+    flex-basis: 35%;
+}
 /* ----> OPINIONS */
 #card-container{
     display: flex;
