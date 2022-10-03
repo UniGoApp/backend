@@ -10,19 +10,6 @@ body, header, main, footer{
     overflow-x: hidden;
 }
 
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-    width: 10px;
-}
-*::-webkit-scrollbar-track {
-    background: var(--azul);
-}
-*::-webkit-scrollbar-thumb {
-    background-color: var(--verde);
-    border-radius: 6px;
-    border: transparent;
-}
-
 #toggle-nav{
     cursor: pointer;
     position: absolute;
