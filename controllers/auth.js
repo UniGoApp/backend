@@ -43,11 +43,10 @@ const signup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
-
   try {
     const { email, password } = req.body;
     con.execute('SELECT * FROM `usuarios` WHERE `email` = ?', [email], function (err, result) {
-      console.log('email :>> ', email);
+      console.log('err :>> ', err);
         if (err) return res.json({error: "Unexpected error"});
         if(result.length === 0){
           return res.status(404).json({error: "User not found"});
