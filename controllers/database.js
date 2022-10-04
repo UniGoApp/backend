@@ -2,11 +2,11 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 let con = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.DATABASE_PW,
-    database: process.env.DATABASE_NAME,
-    port: process.env.DB_PORT
+    host: process.env.RDS_HOST,
+    port: process.env.RDS_PORT,
+    user: process.env.RDS_USER,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DB_NAME
 });
 
 con.connect(function(err) {
