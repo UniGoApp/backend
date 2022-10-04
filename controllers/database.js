@@ -2,11 +2,11 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 let con = mysql.createConnection({
-    host: "unigo-bd-1.cdytxndlnkpj.us-east-1.rds.amazonaws.com",
-    user: "root",
+    host: process.env.HOST,
+    user: process.env.USER,
     password: process.env.DATABASE_PW,
     database: process.env.DATABASE_NAME,
-    port: "3306"
+    port: process.env.DB_PORT
 });
 
 con.connect(function(err) {
@@ -14,7 +14,6 @@ con.connect(function(err) {
         console.error('Database connection failed: ' + err.stack);
         return;
     }
-    
     console.log('Connected to database.');
 });
 
