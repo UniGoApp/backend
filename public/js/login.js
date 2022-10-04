@@ -47,6 +47,9 @@ const login = () => {
 
         var requestOptions = {
             method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: myHeaders,
             body: raw,
             redirect: 'follow'
