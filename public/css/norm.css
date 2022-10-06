@@ -4,6 +4,12 @@
     --verde: #6bbda3;
     --intermedio: #00a7b0;
     --azul: #494994;
+    --dark: #2c3333;
+    --blue: #395b64;
+    --blue-hover: #4a7581;
+    --light: #a5c9ca;
+    --white: #ededed;
+    --black: #333;
 }
 *, *::after, *::before{
     box-sizing: border-box;
