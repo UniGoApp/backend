@@ -406,13 +406,22 @@ section{
 
 /*Image*/
 .uni-avatar {
-    --size: 60px;
-    background: linear-gradient(to top, #f1e1c1 0%, #fcbc97 100%);
+    --size: 80px;
     width: var(--size);
     height: var(--size);
     border-radius: 50%;
     transition: transform .2s ease;
     margin-bottom: 1rem;
+}
+.uni-avatar::after{
+    content: '';
+    display: block;
+    border-radius: 100%;
+    margin: 10px auto;
+    width: 70px;
+    height: 3.5px;
+    background: linear-gradient(to right, lightgray, #555, lightgray);;
+    filter: blur(1px);
 }
 
 

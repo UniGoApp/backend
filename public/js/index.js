@@ -40,7 +40,7 @@ fetch('../public_data/destinos.json')
             let card_uni = `
             <div class="universidad">
                 <div class="uni-info">
-                    <div class="uni-avatar"></div>
+                    <div class="uni-avatar"><img src="./img/universidades/${uni.escudo}" alt="escudo universidad ${uni.sigla.toLowerCase()}"></div>
                     <div class="uni-title">${uni.sigla}</div>
                     <div class="uni-subtitle">${uni.nombre}</div>
                     <div class="uni-subtitle-2">${uni.campus.length} campus</div>
