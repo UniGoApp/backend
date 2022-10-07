@@ -9,6 +9,7 @@
                     "id_comunidad":1,
                     "nombre":"Universidad de Murcia",
                     "sigla":"UMU",
+                    "logo": "",
                     "campus":[
                         {
                             "id":1,
@@ -47,6 +48,7 @@
                     "id_comunidad":1,
                     "nombre":"Universidad Politécnica de Cartagena",
                     "sigla":"UPCT",
+                    "logo": "",
                     "campus":[
                         {
                             "id":7,
@@ -70,6 +72,7 @@
                     "id_comunidad":1,
                     "nombre":"Universidad Católica de Murcia",
                     "sigla":"UCAM",
+                    "logo": "",
                     "campus":[
                         {
                             "id":10,
