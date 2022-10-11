@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap');
 
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none;
+    }
+}
+
 :root{
     --verde: #6bbda3;
     --intermedio: #00a7b0;
@@ -21,7 +27,7 @@ body{
     margin: 0;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
-    overflow-x: hidden;
+    overflow-x: scroll;
 }
 img{
     max-width: 100%;

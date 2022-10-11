@@ -109,6 +109,11 @@ img{
     font-size: 1.8em;
     width: 200px;
     max-width: 200px;
+    transition: all .4s;
+}
+#menu > a:hover{
+    transform: scale(1.2);
+    color: var(--azul)!important;
 }
 #menu > a:not(:last-child){
     margin-bottom: 24px;
@@ -352,7 +357,7 @@ section{
 #universidades{
     width: 80%;
     margin: auto;
-    padding: 12px 0;
+    padding: 30px 0;
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
@@ -463,25 +468,236 @@ section{
 
 /* CONTACTO */
 
+/* SUSCRIBE */
+#suscribe{
+    margin: 50px 0;
+}
+#suscribe > sub{
+    padding: 20px;
+}
+.suscribe-container{
+    margin: 40px 10%;
+    padding: 10px;
+    border: 2px solid var(--black);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-center;
+    align-items: center;
+}
+.suscribe-container > *{
+    padding: 10px;
+}
+.suscribe-container > .suscribe-img{
+    flex-basis: 35%;
+}
+.suscribe-container > .suscribe-txt{
+    flex-basis: 65%;
+}
+.suscribe-container h2{
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 32px;
+    margin: 5px 0;
+}
+.suscribe-container p{
+    margin: 20px 0;
+}
+
+#contactForm > .contactForm-form{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+#contactForm input{
+    height: auto;
+    font-size: 1rem;
+    display: block;
+    width: 60%;
+    padding: 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#contactForm input::placeholder {
+    color: #6c757d;
+}
+#contactForm input:focus {
+    color: #000000;
+    background-color: #fff;
+    border-color: var(--verde);
+    outline: 0;
+    box-shadow: 0 0 10px 0.25rem var(--light);
+}
+#contactForm input:not(:placeholder-shown).emailInvalid{
+    border-color: tomato;
+    box-shadow: 0 0 10px 0.25rem rgba(255, 99, 71, 0.6);
+}
+#contactForm button{
+    display: inline-block;
+    cursor: pointer;
+    width: auto;
+    height: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1rem;
+    border: none;
+    color: var(--dark);
+    background-color: var(--verde);
+    
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease-in-out;
+}
+#contactForm button.disabled{
+    cursor: auto;
+    color: #fff;
+    background-color: var(--dark);
+}
+#submitErrorMessage, #submitSuccessMessage{
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+    text-align: left;
+}
+
+/* FAQ */
+#faq{
+    padding: 4rem;
+    width: 60%;
+    margin: 0 auto;
+}
+#faq .faq-item {
+    border: none;
+    border-bottom: 1px solid lightgray;
+}
+#faq .faq-item button[expanded='true'] {
+    border-bottom: 1px solid var(--azul);
+}
+#faq button {
+    position: relative;
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 1em 0;
+    color: var(--black);
+    font-size: 1.15rem;
+    font-weight: 400;
+    border: none;
+    background: none;
+    outline: none;
+}
+#faq button:hover, #faq button:focus {
+    cursor: pointer;
+    color: var(--azul);
+}
+#faq button:hover::after, #faq button:focus::after {
+    cursor: pointer;
+    color: var(--azul);
+    border: 1px solid var(--azul);
+}
+#faq button .faq-title {
+    padding: 1em 1.5em 1em 0;
+}
+#faq button .icon {
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid;
+    border-radius: 22px;
+}
+#faq button .icon::before {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 9px;
+    left: 5px;
+    width: 10px;
+    height: 2px;
+    background: currentColor;
+}
+#faq button .icon::after {
+    display: block;
+    position: absolute;
+    content: '';
+    top: 5px;
+    left: 9px;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+}
+#faq button[expanded='true'] {
+   color: var(--azul);
+}
+#faq button[expanded='true'] .icon::after {
+    width: 0;
+}
+#faq button[expanded='true'] .icon::after + .faq-content {
+    opacity: 1;
+    max-height: 9em;
+    transition: all 200ms linear;
+    will-change: opacity, max-height;
+}
+#faq .faq-content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 200ms linear, max-height 200ms linear;
+    will-change: opacity, max-height;
+}
+#faq .faq-content p {
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 2em 0;
+}
 
 
+
+/* STARS */
+#stars > div{
+    margin: 20px;
+    padding: 0 60px;
+}
 /**************************************/ 
 /**************  FOOTER  **************/ 
 /**************************************/ 
 footer {
-    background: linear-gradient(150deg, var(--verde) , var(--intermedio), var(--azul));
+    /* background: linear-gradient(150deg, var(--verde) , var(--intermedio), var(--azul)); */
+    background-color: var(--verde);
     padding-top: 80px;
     padding-bottom: 40px;
 }
-footer a{
-    color: white!important;
+footer a, footer p {
+    color: var(--black);
 }
 /*END FOOTER SOCIAL DESIGN*/
 @media only screen and (max-width:768px) { 
 .single_footer{margin-bottom:30px;}
 }
 .single_footer h4 {
-    color: #fff;
+    
     margin-top: 0;
     margin-bottom: 25px;
     font-weight: 700;
@@ -493,29 +709,26 @@ footer a{
     display: block;
     height: 2px;
     width: 40px;
-    background: #fff;
+    background-color: var(--azul);
     margin-top: 20px;
 }
-.single_footer p{color:#fff;}
 .single_footer ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 .single_footer ul li a {
-    color: #fff;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
     line-height: 36px;
     font-size: 15px;
     text-transform: capitalize;
 }
-.single_footer ul li a:hover { color: #ff3666; }
-
-.single_footer_address ul li{color:#fff;}
+.single_footer ul li a:hover { 
+    color: #ff3666; 
+}
 .single_footer_address ul li span {
     font-weight: 400;
-    color: #fff;
     line-height: 28px;
 }
 .contact_social ul {
@@ -523,61 +736,6 @@ footer a{
     margin: 0;
     padding: 0;
 }
-
-/*START NEWSLETTER CSS*/
-.subscribe {
-    display: block;
-    position: relative;
-    margin-top: 15px;
-    width: 100%;
-}
-.subscribe__input {
-    background-color: #fff;
-    border: medium none;
-    border-radius: 5px;
-    color: #333;
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-    height: 60px;
-    letter-spacing: 0.4px;
-    margin: 0;
-    padding: 0 52px 0 20px;
-    width: 100%;
-}
-@media only screen and (max-width:768px) { 
-.subscribe__input{padding: 0 50px 0 20px;}
-}
-
-.subscribe__btn {
-background-color: transparent;
-border-radius: 0 25px 25px 0;
-color: var(--verde);
-cursor: pointer;
-display: block;
-font-size: 20px;
-height: 60px;
-position: absolute;
-right: 0;
-top: 0;
-width: 60px;
-}
-.subscribe__btn i{transition: all 0.3s ease 0s;}
-@media only screen and (max-width:768px) { 
-.subscribe__btn{right:0px;}
-}
-
-.subscribe__btn:hover i{
-    color: var(--azul);
-}
-button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    -webkit-border-radius: 0;
-    border-radius: 0;
-}
-/*END NEWSLETTER CSS*/
 
 /*START SOCIAL PROFILE CSS*/
 .social_profile {margin-top:40px;}
@@ -594,13 +752,12 @@ padding: 0;
     transition: all 0.3s ease 0s;
     margin: 0px 5px;
     font-size: 18px;
-    color: #fff;
     border-radius: 30px;
+    border: 1px solid var(--azul);
     width: 50px;
     height: 50px;
     line-height: 50px;
     display: block;
-    border: 1px solid rgba(255,255,255,0.2);
 }
 @media only screen and (max-width:768px) { 
 .social_profile ul li a{margin-right:10px;margin-bottom:10px;}
@@ -612,20 +769,75 @@ padding: 0;
     line-height:40px;
 }
 }
+.social_profile i{
+    color: var(--azul);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .social_profile ul li a:hover{
-    background: var(--verde);
-    border: 1px solid  var(--verde);
-    color:#fff;
-    border:0px;
+    background-color: var(--azul);
+}
+.social_profile ul li a:hover > i{
+    color: var(--white);
 }
 /*END SOCIAL PROFILE CSS*/
 #copyright {
     margin-top: 70px;
     padding-top: 40px;
-    color:#fff;
     font-size: 15px;
-    border-top: 1px solid rgba(255,255,255,0.4);
+    border-top: 1px solid rgba(3,3,3,0.4);
     text-align: center;
 }
-#copyright a{color:#01c7e9;transition: all 0.2s ease 0s;}
-#copyright a:hover{color:#ff3666;}
+
+/* The Modal (background) */
+#openModal{
+    cursor: pointer;
+}
+.myModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .myModal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 4px;
+  }
+  
+  /* The Close Button */
+  #closeCreditos {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: all .3s;
+  }
+  
+  #closeCreditos:hover,
+  #closeCreditos:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .listado-creditos li a{
+    color: var(--verde)!important;
+  }
+  .listado-creditos li a:hover{
+    text-decoration: underline!important;
+  }

@@ -5,6 +5,15 @@ const path = require('path');
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
+router.get("/privacidad", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/privacidad.html'));
+});
+router.get("/terminos-y-condiciones", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/terminos-y-condiciones.html'));
+});
+router.get("/cookies", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/cookies.html'));
+});
 router.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });

@@ -77,13 +77,87 @@ allButton.onclick = (e) => {
         e.target.innerText = "Ver menos";
         prevButton.style.display = "none";
         nextButton.style.display = "none";
-        // universidadesContainer.style.flexWrap = "wrap";
-        // universidadesContainer.style.overflowX = "unset";
     }else{
         e.target.innerText = "Mostrar todas";
         prevButton.style.display = "inline";
         nextButton.style.display = "inline";
-        // universidadesContainer.style.flexWrap = "nowrap";
-        // universidadesContainer.style.overflowX = "scroll";
     }
+}
+
+// SUSCRIPTION
+// User feedback
+let submitSuccess = document.getElementById('submitSuccessMessage');
+submitSuccess.style.display = "none";
+let submitError = document.getElementById('submitErrorMessage');
+submitError.style.display = "none";
+
+// Functionality
+let suscribe_input = document.getElementById('email');
+let suscribe_button = document.getElementById('contactForm-button');
+
+suscribe_input.oninput = () => {
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(suscribe_input.value.match(mailformat)){
+        suscribe_button.disabled = false;
+        suscribe_button.classList.remove('disabled');
+        suscribe_input.classList.remove('emailInvalid');
+    }else{
+        suscribe_button.disabled = true;
+        suscribe_button.classList.add('disabled');
+        suscribe_input.classList.add('emailInvalid');
+    }
+}
+
+const myform = document.getElementById('contactForm');
+myform.onsubmit = (e) => {
+    e.preventDefault();
+    //CALL API
+
+    //CHECK RESPONSE
+    let response = false;
+    if(response){
+        submitSuccess.style.display = "flex";
+        let parent = suscribe_input.parentNode;
+        parent.style.display = "none";
+    }else{
+        submitError.style.display = "flex";
+        suscribe_input.value = "";
+    }
+}
+
+// FAQ
+const FAQitems = document.querySelectorAll(".faq button");
+
+function toggleAccordion() {
+    const itemToggle = this.getAttribute('expanded');
+    for (i = 0; i < FAQitems.length; i++) {
+        FAQitems[i].setAttribute('expanded', 'false');
+    }
+    if (itemToggle == 'false') {
+        this.setAttribute('expanded', 'true');
+    }
+}
+
+FAQitems.forEach(FAQitem => FAQitem.addEventListener('click', toggleAccordion));
+
+// MODAL CREDITS
+// Get the modal
+const modal = document.getElementById("creditos");
+
+// Get the buttons
+const btn = document.getElementById("openModal");
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+const span = document.getElementById("closeCreditos");
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }
