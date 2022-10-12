@@ -47,7 +47,7 @@ img{
     width: 50px;
     text-align: center;
     line-height: 50px;
-    z-index: 10;
+    z-index: 8;
     border-radius: 50%;
     transition: all 0.3s ease-in-out;
     display: flex;
@@ -107,8 +107,6 @@ img{
 }
 #menu > a{
     font-size: 1.8em;
-    width: 200px;
-    max-width: 200px;
     transition: all .4s;
 }
 #menu > a:hover{
@@ -157,15 +155,19 @@ section{
     margin-bottom: 50px;
 }
 #inicio > .inicio-info{
-    flex-basis: 65%;
+    flex-basis: 60%;
     align-self: center;
     padding: 0 80px;
 }
 .inicio-info > h2{
     font-size: 3em;
 }
+.inicio-info > span > a{
+    text-decoration: underline!important;
+    color: var(--azul);
+}
 #inicio > .inicio-img{
-    flex-basis: 35%;
+    flex-basis: 40%;
 }
 #inicio .inicio-img > img{
     width: 80%;
@@ -470,13 +472,14 @@ section{
 
 /* SUSCRIBE */
 #suscribe{
-    margin: 50px 0;
+    margin: 50px 0 0 0;
+    padding-top: 50px;
 }
 #suscribe > sub{
     padding: 20px;
 }
 .suscribe-container{
-    margin: 40px 10%;
+    margin: 40px 10% 0 10%;
     padding: 10px;
     border: 2px solid var(--black);
     border-radius: 20px;
@@ -503,13 +506,13 @@ section{
     margin: 20px 0;
 }
 
-#contactForm > .contactForm-form{
+#suscriptionForm > .suscriptionForm-form{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
 }
-#contactForm input{
+#suscriptionForm input{
     height: auto;
     font-size: 1rem;
     display: block;
@@ -527,21 +530,21 @@ section{
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-#contactForm input::placeholder {
+#suscriptionForm input::placeholder {
     color: #6c757d;
 }
-#contactForm input:focus {
+#suscriptionForm input:focus {
     color: #000000;
     background-color: #fff;
     border-color: var(--verde);
     outline: 0;
     box-shadow: 0 0 10px 0.25rem var(--light);
 }
-#contactForm input:not(:placeholder-shown).emailInvalid{
+#suscriptionForm input:not(:placeholder-shown).emailInvalid{
     border-color: tomato;
     box-shadow: 0 0 10px 0.25rem rgba(255, 99, 71, 0.6);
 }
-#contactForm button{
+#suscriptionForm button{
     display: inline-block;
     cursor: pointer;
     width: auto;
@@ -565,7 +568,7 @@ section{
     border-radius: 0.25rem;
     transition: all 0.15s ease-in-out;
 }
-#contactForm button.disabled{
+#suscriptionForm button.disabled{
     cursor: auto;
     color: #fff;
     background-color: var(--dark);
@@ -582,7 +585,7 @@ section{
 
 /* FAQ */
 #faq{
-    padding: 4rem;
+    padding: 8rem 4rem 2rem 4rem;
     width: 60%;
     margin: 0 auto;
 }
@@ -618,9 +621,10 @@ section{
 #faq button .faq-title {
     padding: 1em 1.5em 1em 0;
 }
-#faq button .icon {
+#faq button .faq-icon {
     display: inline-block;
     position: absolute;
+    content: '';
     top: 18px;
     right: 0;
     width: 22px;
@@ -628,7 +632,7 @@ section{
     border: 1px solid;
     border-radius: 22px;
 }
-#faq button .icon::before {
+#faq button .faq-icon::before {
     display: block;
     position: absolute;
     content: '';
@@ -638,7 +642,7 @@ section{
     height: 2px;
     background: currentColor;
 }
-#faq button .icon::after {
+#faq button .faq-icon::after {
     display: block;
     position: absolute;
     content: '';
@@ -647,14 +651,15 @@ section{
     width: 2px;
     height: 10px;
     background: currentColor;
+    transition: all .4s;
 }
 #faq button[expanded='true'] {
    color: var(--azul);
 }
-#faq button[expanded='true'] .icon::after {
-    width: 0;
+#faq button[expanded='true'] .faq-icon::after {
+    transform: rotate(90deg);
 }
-#faq button[expanded='true'] .icon::after + .faq-content {
+#faq button[expanded='true'] + .faq-content {
     opacity: 1;
     max-height: 9em;
     transition: all 200ms linear;
@@ -689,8 +694,8 @@ footer {
     padding-top: 80px;
     padding-bottom: 40px;
 }
-footer a, footer p {
-    color: var(--black);
+footer a:hover, footer p#openModal:hover {
+    color: var(--azul)!important;
 }
 /*END FOOTER SOCIAL DESIGN*/
 @media only screen and (max-width:768px) { 
@@ -723,9 +728,6 @@ footer a, footer p {
     line-height: 36px;
     font-size: 15px;
     text-transform: capitalize;
-}
-.single_footer ul li a:hover { 
-    color: #ff3666; 
 }
 .single_footer_address ul li span {
     font-weight: 400;
@@ -795,11 +797,13 @@ padding: 0;
 /* The Modal (background) */
 #openModal{
     cursor: pointer;
+    line-height: 36px;
+    margin: 0;
 }
 .myModal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 999; /* Sit on top */
+    z-index: 9; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -827,6 +831,7 @@ padding: 0;
     font-size: 28px;
     font-weight: bold;
     transition: all .3s;
+    line-height: 21px;
   }
   
   #closeCreditos:hover,

@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/index-mobile.css">
     <link rel="stylesheet" href="./css/animations.css">
-    <!-- CSS footer only -->
+    <!-- Start cookieyes banner -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/dd961097b419bd2db92d427f/script.js"></script>
+    <!-- CSS Bootstrap footer only -->
     <script src="https://kit.fontawesome.com/b976a64a61.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- jQuery for accordion -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 </head>
 <body>
     <div id="goTop" class="gotop-invisible">
@@ -34,19 +36,19 @@
         <a href="#" onclick="window.scrollTo(0, 0);">Inicio</a>
         <a href="#conocenos">Conócenos</a>
         <a href="#destinos">Universidades</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#faq">Preguntas frecuentes</a>
     </nav>
     <main>
         <section id="inicio">
             <div class="inicio-info">
-                <div class="forma"></div>
-                <h2>Planifica tu recorrido a la universidad</h2>
-                <p>Con nuestra aplicación podrás reservar plaza en el vehículo que te deja directamente en tu campus universitario. Disponible próximamente en las principales tiendas de aplicaciones.</p>
+                <h2>Llega sin problemas a tu campus universitario</h2>
+                <p>Con nuestra aplicación podrás reservar plaza en el vehículo que te deja directamente en tu campus universitario.</p>
                 
-                <div class="botonera">
+                <span>Disponible próximamente en las principales tiendas de aplicaciones. ¿Quieres enterarte el primero? ¡Suscríbete <a href="#suscribe">aquí</a> para estar a la última!</span>
+                <!-- <div class="botonera">
                     <a href="#" target="_blank"><img src="./img/google-play-badge.png" alt="descargar en google play"></a>
                     <a href="#" target="_blank"><img src="./img/apple-store-badge.png" alt="descargar en apple store"></a>
-                </div>
+                </div> -->
             </div>
             <div class="inicio-img">
                 <img src="./img/ilustraciones/navigation-inicio.gif" alt="viaje a la universidad">
@@ -164,7 +166,6 @@
         </section> -->
 
         <section id="destinos">
-            <!-- Cuando se metan mas universidades y no quepan, poner un boton que saque un modal con todos los logos -->
             <h3 class="section-title">Universidades inscritas</h3>
             <div id="universidades"></div>
             <div class="controls">
@@ -182,19 +183,17 @@
         </section>
 
         <section id="suscribe">
-            <!-- ultimas publciaciones de las redes sociales, blog o cualquier cosa similar -->
-            
             <div class="suscribe-container">
                 <div class="suscribe-img">
                     <img src="./img/ilustraciones/suscribe-email.png" alt="suscripcion a boletines de unigo">
                 </div>
                 <div class="suscribe-txt">
                     <h4>¿Quieres estar a la última?</h4>
-                    <p>Suscribete a nuestra newsletter para recibir las últimas novedades en tu bandeja de correo electrónico. Nos comprometemos a no enviar más de una comunicación al dia. <a href="#stars">*1</a></p>
-                    <form id="contactForm" action="" onsubmit="this.preventDefault()">
-                        <div class="contactForm-form">
+                    <p>Suscribete a nuestra newsletter para recibir las últimas novedades en tu bandeja de correo electrónico. Nos comprometemos a no enviar más de una comunicación semanal. <a href="#stars">*1</a></p>
+                    <form id="suscriptionForm" action="" onsubmit="this.preventDefault()">
+                        <div class="suscriptionForm-form">
                             <input class="emailInvalid" id="email" type="email" placeholder="Enter email address..." required />
-                            <button id="contactForm-button" class="disabled"  type="submit">Notify Me!</button>
+                            <button id="suscriptionForm-button" class="disabled"  type="submit">Notify Me!</button>
                         </div>
                         <!-- Submit success message-->
                         <div id="submitSuccessMessage">
@@ -217,44 +216,34 @@
                 <div class="faq-item">
                     <button id="button-1" expanded="false">
                         <span class="faq-title">Why is the moon sometimes out during the day?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m18.75 36-2.15-2.15 9.9-9.9-9.9-9.9 2.15-2.15L30.8 23.95Z"/></svg>
-                        <span class="icon" hidden="true"></span>
+                        <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button id="button-2" expanded="false">
-                        <span class="faq-title">Why is the sky blue?</span>
-                        <span class="icon" hidden="true"></span>
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button id="button-3" expanded="false">
-                        <span class="faq-title">Will we ever discover aliens?</span>
-                        <span class="icon" hidden="true"></span>
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button id="button-4" expanded="false">
-                        <span class="faq-title">How much does the Earth weigh?</span>
-                        <span class="icon" hidden="true"></span>
-                    </button>
-                    <div class="faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button id="button-5" expanded="false">
-                        <span class="faq-title">How do airplanes stay up?</span>
-                        <span class="icon" hidden="true"></span>
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
@@ -294,7 +283,7 @@
                             <li><a href="#" onclick="window.scrollTo(0, 0);">Inicio</a></li>
                             <li><a href="#conocenos">Conócenos</a></li>
                             <li><a href="#destinos">Universidades</a></li>
-                            <li><a href="#contacto">Contacto</a></li>
+                            <li><a href="#faq">Preguntas frecuentes</a></li>
                         </ul>
                     </div>
                 </div><!--- END COL -->
@@ -304,9 +293,8 @@
                     </div>
                     <div class="social_profile">
                         <ul>
-                            <li><a href="https://www.instagram.com/unigooooo/"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://www.twitter.com/unigo.app/"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="https://www.instagram.com/unigo.app/"><i class="fab fa-instagram"></i></a></li>
                         </ul>
                     </div>
                 </div><!--- END COL -->
@@ -330,9 +318,11 @@
             <div class="listado-creditos">
                 <h5>Créditos:</h5>
                 <ul>
-                    <li><p><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-codigo-qr_13416094.htm#page=2&position=27&from_view=author">Imagen de storyset</a> en Freepik</p></li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-codigo-qr_13416094.htm#page=2&position=27&from_view=author">Imagen de storyset</a> en Freepik</li>
                     <li><a href="https://storyset.com/internet">Internet illustrations by Storyset</a></li>
-                    <li></li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-navegacion_6203322.htm">Imagen de storyset</a> en Freepik</li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-parada-autobus_5357401.htm">Imagen de storyset</a> en Freepik</li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-correos-electronicos_7119119.htm#query=suscribe&position=3&from_view=author">Imagen de storyset</a> en Freepik</li>
                 </ul>
             </div>
         </div>

@@ -93,7 +93,7 @@ submitError.style.display = "none";
 
 // Functionality
 let suscribe_input = document.getElementById('email');
-let suscribe_button = document.getElementById('contactForm-button');
+let suscribe_button = document.getElementById('suscriptionForm-button');
 
 suscribe_input.oninput = () => {
     const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -108,7 +108,7 @@ suscribe_input.oninput = () => {
     }
 }
 
-const myform = document.getElementById('contactForm');
+const myform = document.getElementById('suscriptionForm');
 myform.onsubmit = (e) => {
     e.preventDefault();
     //CALL API
@@ -126,19 +126,17 @@ myform.onsubmit = (e) => {
 }
 
 // FAQ
-const FAQitems = document.querySelectorAll(".faq button");
+const FAQitems = document.querySelectorAll("#faq button");
 
-function toggleAccordion() {
-    const itemToggle = this.getAttribute('expanded');
+FAQitems.forEach(FAQitem => FAQitem.addEventListener('click', function(){
+    const itemToggle = FAQitem.getAttribute('expanded');
     for (i = 0; i < FAQitems.length; i++) {
         FAQitems[i].setAttribute('expanded', 'false');
     }
     if (itemToggle == 'false') {
         this.setAttribute('expanded', 'true');
     }
-}
-
-FAQitems.forEach(FAQitem => FAQitem.addEventListener('click', toggleAccordion));
+}));
 
 // MODAL CREDITS
 // Get the modal
