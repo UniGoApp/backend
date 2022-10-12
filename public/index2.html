@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="UniGo" />
+    <meta name="description" content="No busques aparcamiento ni dependas del transporte público. Descubre UniGo, la aplicación definitiva para ir a la universidad compartiendo coche." />
+    <meta name="keywords" content="unigo, universidad, uni, campus, viaje, autobus, tren, coche, como ir a la uni, compartir coche, universitarios, trayecto a la universidad, universidad de, compartir coche para ir a la universidad, ahorrar dinero, ir a la universidad, conocer gente, escuchar musica acompañado, combinacion de transporte, viaje directo, directo, rapido, comodo, hora punta, tranvia, parada, aparcamiento, destino, compañero">
+    <meta property="og:image" content="./img/logos/logo-name.png" />
+    <meta property="og:description" content="No busques aparcamiento ni dependas del transporte público. Descubre UniGo, la aplicación definitiva para ir a la universidad compartiendo coche." />
+    <meta property="og:title" content="UniGo App" />
+    <!-- Status bar -->
+    <meta name="theme-color" content="#ededed">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ededed">
+
+    <link rel="shortcut icon" href="./img/logos/unigo.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="./img/logos/unigo.ico" type="image/x-icon">
+    <title>UniGo App</title>
+    <link rel="stylesheet" href="./css/norm.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/index-mobile.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <!-- Start cookieyes banner -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/dd961097b419bd2db92d427f/script.js"></script>
+    <!-- CSS Bootstrap footer only -->
+    <script src="https://kit.fontawesome.com/b976a64a61.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <!-- jQuery for accordion -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+</head>
+<body>
+    <div id="goTop" class="gotop-invisible">
+        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="var(--dark)"><path d="M14.15 30.75 12 28.6l12-12 12 11.95-2.15 2.15L24 20.85Z"/></svg>
+    </div>
+    <div id="toggle-nav" class="hamburguer">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+    <header>
+        <img src="./img/logos/unigo.png" alt="unigo logo color" class="logo">
+        <h1>UniGo App</h1>
+        <p></p>
+    </header>
+    <nav id="menu">
+        <a href="#" onclick="window.scrollTo(0, 0);">Inicio</a>
+        <a href="#conocenos">Conócenos</a>
+        <a href="#destinos">Universidades</a>
+        <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+    <main>
+        <section id="inicio">
+            <div class="inicio-info">
+                <h2>Llega sin problemas a tu campus universitario</h2>
+                <p>Con nuestra aplicación podrás reservar plaza en el vehículo que te deja directamente en tu campus universitario.</p>
+                
+                <span>Disponible próximamente en las principales tiendas de aplicaciones. ¿Quieres enterarte el primero? ¡Suscríbete <a href="#suscribe">aquí</a> para estar a la última!</span>
+                <!-- <div class="botonera">
+                    <a href="#" target="_blank"><img src="./img/google-play-badge.png" alt="descargar en google play"></a>
+                    <a href="#" target="_blank"><img src="./img/apple-store-badge.png" alt="descargar en apple store"></a>
+                </div> -->
+            </div>
+            <div class="inicio-img">
+                <img src="./img/ilustraciones/navigation-inicio.gif" alt="viaje a la universidad">
+            </div>
+        </section>
+
+        <section id="stats">
+            <div class="stats-container">
+                <div class="stat">
+                    <h4>2.1k</h4>
+                    <p>Usuarios</p>
+                </div>
+                <div class="stat">
+                    <h4>256</h4>
+                    <p>Viajes diarios</p>
+                </div>
+                <div class="stat">
+                    <h4>36.8k</h4>
+                    <p>Viajes realizados</p>
+                </div>
+                <div class="stat">
+                    <h4>25</h4>
+                    <p>Destinos</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conocenos">
+            <div class="conocenos-info">
+                <div class="conocenos-info-img">
+                    <img src="./img/ilustraciones/bus-stop.png" alt="esperar en parada de autobus" class="scroll-content fadeLeft">
+                </div>
+                <div class="conocenos-info-txt">
+                    <h3 class="section-title">¿Por qué lo hacemos?</h3>
+                    <p>Somos un grupo de estudiantes que hemos vivido las carencias de algunos medios de transporte públicos por falta de servicio, largas colas, costes elevados y como olvidarnos de las horas punta en paradas de tranvía y de autobús...</p>
+                    <h4>Pricnipales beneficios</h4>
+                    <div class="beneficios-container">
+                        <div class="card-beneficios scroll-content fadeIn">
+                            <div class="card-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="#494994"><path d="M32 21.75q.75 0 1.25-.5t.5-1.25q0-.75-.5-1.25t-1.25-.5q-.75 0-1.25.5t-.5 1.25q0 .75.5 1.25t1.25.5Zm-16-5h10V14.5H16ZM9.75 41q-1.6-5.45-3.175-10.875Q5 24.7 5 19q0-4.2 2.9-7.1Q10.8 9 15 9h10.5q1.35-1.8 3.275-2.9Q30.7 5 33 5q.85 0 1.425.575Q35 6.15 35 7q0 .2-.05.4l-.1.4q-.3.7-.5 1.45T34 10.8l5.25 5.2H43v12.2L37.55 30l-3.3 11H25v-4h-6v4Zm1.7-2.25h5.3v-4h10.5v4h5.3L35.7 28.3l5.05-1.75v-8.3H38.3l-6.55-6.55q0-1.2.25-2.3.25-1.1.55-2.2-1.75.45-3.275 1.45t-2.425 2.6H15q-3.2 0-5.475 2.275Q7.25 15.8 7.25 19q0 5.1 1.425 9.95t2.775 9.8ZM24 22.95Z"/></svg>
+                                <h6>AHORRO</h6>
+                                <!-- COSTE REDUCIDO -->
+                            </div>
+                            <p class="card-bio">Ahorra en carburante poniendo a disposición de otros usuarios esas plazas vacías en tu vehículo.</p>
+                        </div>
+                        <div class="card-beneficios scroll-content fadeIn-2">
+                            <div class="card-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="#494994"><path d="M11.4 38.55q-2.05-2.15-3.225-4.9Q7 30.9 7 28q0-3.35 1.2-6.225Q9.4 18.9 11.8 16.5q1.8-1.85 4.575-3 2.775-1.15 6.25-1.725 3.475-.575 7.525-.7 4.05-.125 8.45.125.3 4.4.225 8.475-.075 4.075-.675 7.55-.6 3.475-1.775 6.3Q35.2 36.35 33.35 38.15q-2.4 2.45-5.2 3.65-2.8 1.2-5.9 1.2-3.15 0-5.925-1.125T11.4 38.55Zm4.15.25q1.35.95 3.125 1.45t3.575.5q2.6 0 5.05-1.05 2.45-1.05 4.45-3.15 1.25-1.25 2.175-3.275.925-2.025 1.55-4.9.625-2.875.875-6.625t.05-8.4q-4.05-.1-7.65.075-3.6.175-6.525.75-2.925.575-5.15 1.5Q14.85 16.6 13.5 18q-2.15 2.15-3.2 4.6-1.05 2.45-1.05 4.8 0 2.45 1.05 5.025T13 36.65q2.05-4.45 5.275-8.075Q21.5 24.95 25.85 22.45q-4.05 3.5-6.575 7.475Q16.75 33.9 15.55 38.8Zm0 0Zm0 0Z"/></svg>
+                                <h6>ECO FRIENDLY</h6>
+                            </div>
+                            <!-- ¿Por qué salir en varios vehículos de un mismo pueblo, pudiendo ir todos juntos a un mismo destino?  -->
+                            <p class="card-bio">Reduzcamos las emisiones de CO2 aprovechando las plazas disponibles de un vehículo que va a tu mismo destino. ¡Es responsabilidad de todos!</p>
+                        </div>
+                        <div class="card-beneficios scroll-content fadeIn">
+                            <div class="card-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="#494994"><path d="M23.6 40.65q.3 0 .7-.15.4-.15.65-.4L41.3 23.75q.7-.7 1.075-1.55.375-.85.375-1.75t-.375-1.8q-.375-.9-1.075-1.6l-8.4-8.4q-.7-.7-1.55-1.05-.85-.35-1.75-.35t-1.75.35q-.85.35-1.55 1.05l-1.4 1.4 3.95 4q.6.6 1.025 1.45.425.85.425 1.85 0 1.65-1.25 2.9t-2.9 1.25q-1.1 0-1.85-.325t-1.4-.925l-3.7-3.75-8.95 8.95q-.25.25-.4.625-.15.375-.15.725 0 .75.475 1.2.475.45 1.175.45.4 0 .775-.175t.575-.375l6.65-6.65 1.6 1.6-6.6 6.6q-.3.3-.425.65-.125.35-.125.75 0 .65.5 1.15.5.5 1.15.5.4 0 .75-.15t.6-.4l6.85-6.9 1.6 1.6-6.85 6.85q-.2.25-.375.65t-.175.75q0 .7.5 1.2t1.2.5q.35 0 .7-.15t.6-.4l6.9-6.9 1.6 1.6-6.9 6.9q-.25.25-.4.65-.15.4-.15.7 0 .8.475 1.225.475.425 1.225.425Zm0 2.3q-1.6 0-2.75-1.175t-1.2-2.925q-1.7-.1-2.85-1.175-1.15-1.075-1.25-2.875-1.75-.15-2.85-1.25t-1.2-2.85q-1.7-.1-2.875-1.175T7.45 26.75q0-.75.3-1.55t.9-1.4L19.2 13.25l5.1 5.1q.35.4.85.625.5.225 1 .225.7 0 1.3-.575.6-.575.6-1.325 0-.4-.2-.8t-.6-.8l-7-7.05q-.7-.7-1.55-1.05-.85-.35-1.8-.35-.9 0-1.725.35-.825.35-1.525 1.05l-6.95 7q-.75.7-1.075 1.575-.325.875-.375 1.925 0 .9.35 1.75t.9 1.55L4.8 24.1q-.75-.95-1.275-2.275Q3 20.5 3 19.1q0-1.45.525-2.775T5.1 14L12 7.05Q13.05 6 14.3 5.5q1.25-.5 2.65-.5t2.65.5q1.25.5 2.3 1.55l1.4 1.4 1.4-1.4q1-1.05 2.275-1.55T29.6 5q1.4 0 2.65.5t2.3 1.55l8.35 8.35q1 1 1.55 2.35t.55 2.7q0 1.4-.55 2.65t-1.55 2.3L26.55 41.7q-.6.65-1.375.95-.775.3-1.575.3Zm-5.65-26.1Z"/></svg>
+                                <h6>CONTACTO SOCIAL</h6>
+                            </div>
+                            <p class="card-bio">Promovemos las relaciones sociales, no pierdas la oportunidad de ampliar tus círculos de amistad conociendo a nuevas personas en tu entorno.</p>
+                        </div>
+                        <div class="card-beneficios scroll-content fadeIn-2">
+                            <div class="card-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="#494994"><path d="M14 40V8h12.15q4.1 0 6.975 2.875T36 17.85q0 4.05-2.875 6.9-2.875 2.85-6.975 2.85H17.1V40Zm3.1-15.45h9q2.85 0 4.8-1.95 1.95-1.95 1.95-4.75 0-2.85-1.95-4.8-1.95-1.95-4.8-1.95h-9Z"/></svg>
+                                <h6>MÁS APARCAMIENTO</h6>
+                            </div>
+                            <p class="card-bio">Aprovechamos las plazas libres de un vehículo, evitando que se saturen los aparcamientos con coches prácticamente vacíos.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- <section id="opiniones">
+            <h3 class="section-title">Qué opinan nuestros usuarios</h3>
+            <div id="card-container">
+                <div class="card-custom">
+                    <div class="card-user">
+                        <img src="./img/users/--3INMVV0zGMaazwStYb_.jpg" alt="user image">
+                        <div class="card-user-info">
+                            <p>Nombre del usuario</p>
+                            <sub>Usuario desde 20021</sub>
+                        </div>
+                    </div>
+                    <div class="cite">
+                        <cite>Hola</cite>
+                    </div>
+                </div>
+                <div class="card-custom">
+                    <div class="card-user">
+                        <img src="./img/users/--3INMVV0zGMaazwStYb_.jpg" alt="user image">
+                        <div class="card-user-info">
+                            <p>Nombre del usuario</p>
+                            <sub>Usuario desde 20021</sub>
+                        </div>
+                    </div>
+                    <div class="cite">
+                        <cite>Hola, una aplicacion de lujo. Me ahorro el agobio del tranvía y tener que usar mi propio coche, ahorro gasolina y me sale super economico.</cite>
+                    </div>
+                    
+                </div>
+                <div class="card-custom">
+                    <div class="card-user">
+                        <img src="./img/users/--3INMVV0zGMaazwStYb_.jpg" alt="user image">
+                        <div class="card-user-info">
+                            <p>Nombre del usuario</p>
+                            <sub>Usuario desde 20021</sub>
+                        </div>
+                    </div>
+                    <div class="cite">
+                        <cite>Hola</cite>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <section id="destinos">
+            <h3 class="section-title">Universidades inscritas</h3>
+            <div id="universidades"></div>
+            <div class="controls">
+                <p style="color: transparent; margin-left: 30px;">Mostrar todas</p>
+                <div>
+                    <div class="prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M28.05 36 16 23.95 28.05 11.9l2.15 2.15-9.9 9.9 9.9 9.9Z"/></svg>
+                    </div>
+                    <div class="next">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m18.75 36-2.15-2.15 9.9-9.9-9.9-9.9 2.15-2.15L30.8 23.95Z"/></svg>
+                    </div>
+                </div>
+                <button>Mostrar todas</button>
+            </div>
+        </section>
+
+        <section id="suscribe">
+            <div class="suscribe-container">
+                <div class="suscribe-img">
+                    <img src="./img/ilustraciones/suscribe-email.png" alt="suscripcion a boletines de unigo">
+                </div>
+                <div class="suscribe-txt">
+                    <h4>¿Quieres estar a la última?</h4>
+                    <p>Suscribete a nuestra newsletter para recibir las últimas novedades en tu bandeja de correo electrónico. Nos comprometemos a no enviar más de una comunicación semanal. <a href="#stars">*1</a></p>
+                    <form id="suscriptionForm" action="" onsubmit="this.preventDefault()">
+                        <div class="suscriptionForm-form">
+                            <input class="emailInvalid" id="email" type="email" placeholder="Enter email address..." required />
+                            <button id="suscriptionForm-button" class="disabled"  type="submit">Notify Me!</button>
+                        </div>
+                        <!-- Submit success message-->
+                        <div id="submitSuccessMessage">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="var(--verde)"><path d="m8.6 22.5-1.9-3.2-3.6-.8.35-3.7L1 12l2.45-2.8-.35-3.7 3.6-.8 1.9-3.2L12 2.95l3.4-1.45 1.9 3.2 3.6.8-.35 3.7L23 12l-2.45 2.8.35 3.7-3.6.8-1.9 3.2-3.4-1.45Zm2.35-6.95L16.6 9.9l-1.4-1.45-4.25 4.25-2.15-2.1L7.4 12Z"/></svg>
+                            <p>¡Te has suscrito con éxito!</p>
+                        </div>
+                        <!-- Submit error message-->
+                        <div id="submitErrorMessage">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="tomato"><path d="M1 21 12 2l11 19Zm11-3q.425 0 .713-.288Q13 17.425 13 17t-.287-.712Q12.425 16 12 16t-.712.288Q11 16.575 11 17t.288.712Q11.575 18 12 18Zm-1-3h2v-5h-2Z"/></svg>
+                            <p>Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <h3 class="section-title">Preguntas frecuentes</h3>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
+                    </button>
+                    <div class="faq-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
+                    </button>
+                    <div class="faq-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
+                    </button>
+                    <div class="faq-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button id="button-1" expanded="false">
+                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-icon" readable="true"></span>
+                    </button>
+                    <div class="faq-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stars">
+            <div>
+                <sub>
+                    <p>*1: Exceptuando las comunicaciones de seguridad e indisponibilidad del servicio.</p>
+    
+                </sub>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <!-- uses bootstrap -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-xs-12">
+                    <div class="single_footer">
+                        <h4>Aviso Legal</h4>
+                        <ul>
+                            <li><a href="/privacidad">Política de privacidad</a></li>
+                            <li><a href="/terminos-y-condiciones">Términos y condiciones</a></li>
+                            <li><p id="openModal">Créditos</p></li>
+                        </ul>
+                    </div>
+                </div><!--- END COL -->
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single_footer single_footer_address">
+                        <h4>Navegación</h4>
+                        <ul>
+                            <li><a href="#" onclick="window.scrollTo(0, 0);">Inicio</a></li>
+                            <li><a href="#conocenos">Conócenos</a></li>
+                            <li><a href="#destinos">Universidades</a></li>
+                            <li><a href="#faq">Preguntas frecuentes</a></li>
+                        </ul>
+                    </div>
+                </div><!--- END COL -->
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single_footer single_footer_address">
+                        <h4>Social</h4>
+                    </div>
+                    <div class="social_profile">
+                        <ul>
+                            <li><a href="https://www.twitter.com/unigo.app/"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="https://www.instagram.com/unigo.app/"><i class="fab fa-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                </div><!--- END COL -->
+            </div><!--- END ROW -->
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <p id="copyright"></p>
+                    <script type="text/javascript">
+                        document.getElementById('copyright').innerHTML= 'Copyright &copy; ' + new Date().getFullYear() + ' ' + 'All Rights Reserved.';
+                    </script>
+                </div><!--- END COL -->
+            </div><!--- END ROW -->
+        </div><!--- END CONTAINER -->
+    </footer>
+
+    <section id="creditos" class="myModal">
+        <div class="myModal-content">
+            <span id="closeCreditos">
+                &times;
+            </span>
+            <div class="listado-creditos">
+                <h5>Créditos:</h5>
+                <ul>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-codigo-qr_13416094.htm#page=2&position=27&from_view=author">Imagen de storyset</a> en Freepik</li>
+                    <li><a href="https://storyset.com/internet">Internet illustrations by Storyset</a></li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-navegacion_6203322.htm">Imagen de storyset</a> en Freepik</li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-parada-autobus_5357401.htm">Imagen de storyset</a> en Freepik</li>
+                    <li><a href="https://www.freepik.es/vector-gratis/ilustracion-concepto-correos-electronicos_7119119.htm#query=suscribe&position=3&from_view=author">Imagen de storyset</a> en Freepik</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/animations.js"></script>
+
+</body>
+</html>
