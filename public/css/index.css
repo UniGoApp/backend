@@ -582,7 +582,15 @@ section{
     flex-wrap: nowrap;
     text-align: left;
 }
-
+.unsuscribe-link{
+    width: 75%;
+    margin:0 auto;
+    text-align: right;
+    font-size: small;
+}
+.unsuscribe-link > a:hover{
+    color: var(--azul)!important;
+}
 /* FAQ */
 #faq{
     padding: 8rem 4rem 2rem 4rem;

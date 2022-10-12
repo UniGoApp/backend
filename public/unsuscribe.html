@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="shortcut icon" href="./img/logos/unigo.ico" type="image/x-icon">
+    <title>Unsuscribe</title>
+    <style type="text/css">
+        body{
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+        .no-visible{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentimos que te vayas</h1>
+    
+    <form action="" id="myForm">
+        <p>Introduce tu dirección de correo a continuación para anular tu suscripción al boletin de noticias:</p>
+        <input type="email" name="email" id="email" placeholder="Email" required />
+        <button type="submit">Unsuscribe</button>
+    </form>
+    <div id="msg" class="no-visible">
+        <p>¡Te echaremos de menos!</p>
+        <p>Ya puedes cerrar esta pestaña, has acabado.</p>
+    </div>
+    <script type="application/javascript">
+        const myform = document.getElementById('myForm');
+        const msgContainer = document.getElementById('msg');
+        myform.onsubmit = (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            myform.style.display = "none";
+            // CALL API
+
+            // SHOW MESSAGE
+            msgContainer.classList.toggle('no-visible');
+        }
+    </script>
+</body>
+</html>

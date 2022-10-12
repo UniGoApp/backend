@@ -11,6 +11,9 @@ router.get("/privacidad", (req, res) => {
 router.get("/terminos-y-condiciones", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/terminos-y-condiciones.html'));
 });
+router.get("/unsuscribe", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/unsuscribe.html'));
+});
 router.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });
