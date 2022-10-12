@@ -9,14 +9,95 @@
         display: none;
     }
     /* MAIN */
+    #inicio{
+        margin: 0;
+    }
+    #inicio > .inicio-info{
+        flex: 1;
+        padding: 0 24px;
+    }
+    #inicio > .inicio-img{
+        display: none;
+    }
+    .stats-container{
+        flex-wrap: wrap;
+    }
+    .stat{
+        flex-basis: 50%;
+    }
+    .conocenos-info {
+        flex-direction: column;
+    }
+    .card-beneficios:hover .card-info{
+        opacity: 1;
+    }
+    .card-beneficios .card-bio{
+        display: none;
+    }
+    .universidad{
+        flex-basis: 100%;
+    }
+    .uni-info{
+        margin: 0 0 20px 0;
+    }
+    #destinos > .controls{
+        width: 100%;
+    }
+    #suscribe{
+        padding-top: 12px;
+    }
+    .suscribe-container{
+        flex-direction: column-reverse;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    #suscriptionForm > .suscriptionForm-form{
+        flex-direction: column;
+    }
+    #suscriptionForm input{
+        width: 100%;
+    }
+    #submitErrorMessage{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 4px;
+        margin-top: 12px;
+    }
+    #submitErrorMessage p{
+        margin-top: 4px;
+    }
+    #faq{
+        width: 80%;
+        padding: 8rem 0 2rem 0;
+    }
+    #faq .faq-content p{
+        margin: 1em 0 2em 0;
+    }
+    #faq button .faq-title{
+        padding: 1em 0;
+        margin-right: 1.5em;
+    }
+    #faq button .faq-icon{
+        top: 40px;
+    }
+    #stars > div{
+        padding: 0;
+    }
+    #stars p{
+        line-height: 1.5em;
+        font-size: 16px;
+    }
     /* FOOTER */
     footer{
         padding-top: 40px;
         padding-bottom: 20px;
     }
-    .social_profile{
-        display: flex;
-        justify-content: center;
+    .single_footer h4::after{
+        margin-top: 6px;
+    }
+    footer > div{
+        padding: 0 22px!important;
     }
     #copyright{
         margin-top: 40px;

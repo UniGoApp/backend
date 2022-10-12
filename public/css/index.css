@@ -484,7 +484,7 @@ section{
     border: 2px solid var(--black);
     border-radius: 20px;
     display: flex;
-    justify-content: space-center;
+    justify-content: space-around;
     align-items: center;
 }
 .suscribe-container > *{

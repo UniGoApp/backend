@@ -65,11 +65,21 @@ const prevButton = document.querySelector('.controls div.prev');
 const nextButton = document.querySelector('.controls div.next');
 const allButton = document.querySelector('.controls > button');
 
+// SPECIAL CONTROLS FOR MOBILE
+const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+let scrollAmount = 0.33;
+let extraScroll = 0;
+
+if (width < 800){
+    scrollAmount = 1.00;
+    extraScroll = 20;
+}
+
 prevButton.onclick = () => {
-    universidadesContainer.scrollLeft -= 0.33*(0.8*window.innerWidth);
+    universidadesContainer.scrollLeft -= scrollAmount*(0.80*width) + extraScroll;
 }
 nextButton.onclick = () => {
-    universidadesContainer.scrollLeft += 0.33*(0.8*window.innerWidth);
+    universidadesContainer.scrollLeft += scrollAmount*(0.80*width) + extraScroll;
 }
 allButton.onclick = (e) => {
     universidadesContainer.classList.toggle('verTodas');
@@ -114,7 +124,7 @@ myform.onsubmit = (e) => {
     //CALL API
 
     //CHECK RESPONSE
-    let response = false;
+    let response = true;
     if(response){
         submitSuccess.style.display = "flex";
         let parent = suscribe_input.parentNode;

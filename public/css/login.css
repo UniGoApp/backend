@@ -1,9 +1,9 @@
 :root {
     --baseColor: #606468;
 }
-  
-  /* helpers/align.css */
-  
+*{
+    overflow: hidden;
+}
 .align {
     display: grid;
     place-items: center;
