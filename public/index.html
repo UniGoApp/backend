@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="./css/norm.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/index-mobile.css">
+    <link rel="stylesheet" href="./css/index-tablet.css">
     <link rel="stylesheet" href="./css/animations.css">
     <!-- Start cookieyes banner -->
     <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/dd961097b419bd2db92d427f/script.js"></script>
@@ -201,7 +202,7 @@
                 </div>
                 <div class="suscribe-txt">
                     <h4>¿Quieres estar a la última?</h4>
-                    <p>Suscribete a nuestra newsletter para recibir las últimas novedades en tu bandeja de correo electrónico. Nos comprometemos a no enviar más de una comunicación semanal. <a href="#stars">*1</a></p>
+                    <p>Suscribete a nuestra newsletter para recibir las últimas novedades en tu bandeja de correo electrónico. Nos comprometemos a no enviar más de una comunicación semanal. <a href="#stars" class="link">*1</a></p>
                     <form id="suscriptionForm" action="" onsubmit="this.preventDefault()">
                         <div class="suscriptionForm-form">
                             <input class="emailInvalid" id="email" type="email" placeholder="Introduce tu email..." required />
@@ -221,7 +222,7 @@
                 </div>
             </div>
             
-            <div class="unsuscribe-link"><a href="/unsuscribe" target="_blank">Darme de baja</a></div>
+            <div class="unsuscribe-link"><a href="/unsuscribe" target="_blank" class="link">Darme de baja</a></div>
         </section>
 
         <section id="faq">
@@ -229,38 +230,42 @@
             <div class="faq-accordion">
                 <div class="faq-item">
                     <button id="button-1" expanded="false">
-                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
                         <span class="faq-icon" readable="true"></span>
+                        <span class="faq-title">¿Cómo puedo contactar para informar de un problema?</span>
                     </button>
                     <div class="faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                        <p>Tienes varias formas de ponerte en contacto con nosotros:</p>
+                        <ul>
+                            <li>Por correo electrónico: <a href="mailto:contacto@unigoapp.es?subject=Reporte%20de%20un%20fallo%20o%20mal%20funcionamiento%20de%20la%20página%20web%20o%20aplicación." class="link" target="_blank">contacto@unigoapp.es</a></li>
+                            <li>Mediante la interfaz de la aplicación: Mi Perfil > Reportar un problema</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button id="button-1" expanded="false">
-                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
                         <span class="faq-icon" readable="true"></span>
+                        <span class="faq-title">¿Cuándo estará disponible la aplicación?</span>
                     </button>
                     <div class="faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                        <p>Todavía estamos trabajando en ella, mejorando su interfaz y arreglando errores para evitar que los usuarios tengáis una mala experiencia. Pedimos disculpas por el retraso.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button id="button-1" expanded="false">
-                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-title">¿Los viajes están asegurados?</span>
                         <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                        <p>Los viajes no están asegurados, pues no podemos controlar un mal uso de la aplicación por parte de otros usuarios. Pondremos a vuestra disposición en la interfaz de la aplicación diferentes métodos para verificar y reportar usuarios. Ante un caso... Puedes comprobar toda la información disponible en los Términos y Condiciones de uso haciendo click <a class="link" href="/terminos-y-condiciones">aquí</a>.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button id="button-1" expanded="false">
-                        <span class="faq-title">Why is the moon sometimes out during the day?</span>
+                        <span class="faq-title">¿Cómo puedo verificar mi perfil?</span>
                         <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
+                        <p>Para aparecer como un usuario verificado en la aplicación, deberás rellenar un formulario que tendrás disponible en tu perfil de usuario > Ajustes > Verificar mi perfil. Ten a mano el DNI y una copia de la matrícula de tu universidad del curso académico <script>document.write(`${new Date().getFullYear()}/${new Date().getFullYear()+1}`)</script>.</p>
                     </div>
                 </div>
             </div>

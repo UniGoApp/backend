@@ -55,8 +55,10 @@ fetch('../public_data/destinos.json')
         });
     });
     if(universidadesContainer.children.length <= 3){
-        const controls = document.querySelector('#destinos > div.controls');
-        controls.style.display = "none";
+        if(window.innerWidth>800 || screen.width>800){
+            const controls = document.querySelector('#destinos > div.controls');
+            controls.style.display = "none";
+        }
     }
 });
 

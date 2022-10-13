@@ -1,4 +1,4 @@
-@media (max-width: 800px){
+@media only screen and (max-width: 480px){
     /* HEADER */
     header{
         justify-content: flex-start;
@@ -92,6 +92,11 @@
     footer{
         padding-top: 40px;
         padding-bottom: 20px;
+    }
+    .social_profile ul li a{
+        width:40px;
+        height:40px;
+        line-height:40px;
     }
     .single_footer h4::after{
         margin-top: 6px;

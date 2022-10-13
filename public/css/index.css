@@ -2,6 +2,13 @@ a{
     text-decoration: none!important;
     color: unset!important;
 }
+.link{
+    text-decoration: underline!important;
+    transition: color .4s ease;
+}
+.link:hover{
+    color: var(--azul)!important;
+}
 body{
     background-color: var(--white);
 }
@@ -669,7 +676,7 @@ section{
 }
 #faq button[expanded='true'] + .faq-content {
     opacity: 1;
-    max-height: 9em;
+    max-height: 18em;
     transition: all 200ms linear;
     will-change: opacity, max-height;
 }
@@ -681,9 +688,7 @@ section{
     will-change: opacity, max-height;
 }
 #faq .faq-content p {
-    font-size: 1rem;
-    font-weight: 300;
-    margin: 2em 0;
+    margin: 1.2em 0.5em;
 }
 
 
@@ -697,7 +702,6 @@ section{
 /**************  FOOTER  **************/ 
 /**************************************/ 
 footer {
-    /* background: linear-gradient(150deg, var(--verde) , var(--intermedio), var(--azul)); */
     background-color: var(--verde);
     padding-top: 80px;
     padding-bottom: 40px;
@@ -706,9 +710,6 @@ footer a:hover, footer p#openModal:hover {
     color: var(--azul)!important;
 }
 /*END FOOTER SOCIAL DESIGN*/
-@media only screen and (max-width:768px) { 
-.single_footer{margin-bottom:30px;}
-}
 .single_footer h4 {
     
     margin-top: 0;
@@ -768,16 +769,6 @@ padding: 0;
     height: 50px;
     line-height: 50px;
     display: block;
-}
-@media only screen and (max-width:768px) { 
-.social_profile ul li a{margin-right:10px;margin-bottom:10px;}
-}
-@media only screen and (max-width:480px) { 
-.social_profile ul li a{
-    width:40px;
-    height:40px;
-    line-height:40px;
-}
 }
 .social_profile i{
     color: var(--azul);
