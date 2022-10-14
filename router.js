@@ -5,11 +5,14 @@ const path = require('path');
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
-router.get("/privacidad", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/privacidad.html'));
+router.get("/legal/cookies", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/politicas/cookies.html'));
 });
-router.get("/terminos-y-condiciones", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/terminos-y-condiciones.html'));
+router.get("/legal/privacidad", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/politicas/privacidad.html'));
+});
+router.get("/legal/terminos-y-condiciones", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/politicas/terminos-y-condiciones.html'));
 });
 router.get("/unsuscribe", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/unsuscribe.html'));
@@ -26,9 +29,17 @@ router.get("/401", (req, res) => {
 });
 
 ///////////////////////////////////////////
+///////////// WEB controllers /////////////
+///////////////////////////////////////////
+const { getNewsletter, joinNewsletter, removeNewsletter } = require("./controllers/CRUD/USER/newsletter");
+router.get("/api/newsletter", requireSignin, getNewsletter); //ONLY ADMIN
+router.post("/api/newsletter", joinNewsletter);
+router.delete("/api/newsletter", removeNewsletter);
+
+///////////////////////////////////////////
 //////////// AUTH controllers /////////////
 ///////////////////////////////////////////
-const { requireSignin, invalidToken } = require('./controllers/middleware');
+const { requireSignin } = require('./controllers/middleware');
 const { signup, signin, forgotPassword, resetPassword } = require("./controllers/auth");
 
 router.post("/api/signup", signup);
