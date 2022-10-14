@@ -123,18 +123,38 @@ suscribe_input.oninput = () => {
 const myform = document.getElementById('suscriptionForm');
 myform.onsubmit = (e) => {
     e.preventDefault();
+    let email = document.getElementById('email');
     //CALL API
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-    //CHECK RESPONSE
-    let response = true;
-    if(response){
-        submitSuccess.style.display = "flex";
-        let parent = suscribe_input.parentNode;
-        parent.style.display = "none";
-    }else{
-        submitError.style.display = "flex";
-        suscribe_input.value = "";
-    }
+    var raw = JSON.stringify({
+        "email": email.value
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("/api/newsletter", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        if(result.error === 'error'){
+            submitError.style.display = "flex";
+            suscribe_input.value = "";
+        }else{
+            submitSuccess.style.display = "flex";
+            let parent = suscribe_input.parentNode;
+            parent.style.display = "none";
+        }
+    })
+    .catch(error => console.log('error', error));
 }
 
 // FAQ
