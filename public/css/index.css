@@ -769,6 +769,7 @@ padding: 0;
     height: 50px;
     line-height: 50px;
     display: block;
+    color: var(--azul)!important;
 }
 .social_profile i{
     color: var(--azul);
@@ -780,6 +781,7 @@ padding: 0;
 }
 .social_profile ul li a:hover{
     background-color: var(--azul);
+    color: var(--white)!important;
 }
 .social_profile ul li a:hover > i{
     color: var(--white);

@@ -99,8 +99,10 @@ allButton.onclick = (e) => {
 // SUSCRIPTION
 // User feedback
 let submitSuccess = document.getElementById('submitSuccessMessage');
+let submitSuccessMsg = submitSuccess.getElementsByTagName('p')[0];
 submitSuccess.style.display = "none";
 let submitError = document.getElementById('submitErrorMessage');
+let submitErrorMsg = submitError.getElementsByTagName('p')[0];
 submitError.style.display = "none";
 
 // Functionality
@@ -146,15 +148,20 @@ myform.onsubmit = (e) => {
     .then(response => response.json())
     .then(result => {
         if(result.error === 'error'){
+            submitErrorMsg.innerText = result.info;
             submitError.style.display = "flex";
             suscribe_input.value = "";
         }else{
+            submitSuccessMsg.innerText = result.info;
             submitSuccess.style.display = "flex";
-            let parent = suscribe_input.parentNode;
-            parent.style.display = "none";
+            suscribe_input.parentNode.style.display = "none";
         }
     })
-    .catch(error => console.log('error', error));
+    .catch(() => {
+        submitErrorMsg.innerText = 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.';
+        submitError.style.display = "flex";
+        suscribe_input.value = "";
+    });
 }
 
 // FAQ

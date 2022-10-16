@@ -1,5 +1,7 @@
 const fs = require('fs');
-const jsonDir = "../../../public/public_data/newsletter.json";
+const path = require('path');
+
+const jsonDir = path.join(__dirname, "../../../public/public_data/newsletter.json");
 
 const getNewsletter = async (req, res) => {
     if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
@@ -44,19 +46,21 @@ const joinNewsletter = async (req, res) => {
     
     fs.readFile(jsonDir, 'utf8', (error, data) => {
         if(error){
-            // console.log('Error al leer archivo: ', error);
             return res.status(200).json({
                 error: 'error',
                 info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.'
             });
         }
-
         let finalData = JSON.parse(data);
+        if(finalData.emails.includes(emailToAdd)) {
+            return res.status(200).json({
+                error: '',
+                info: 'Ya estás entre nuestros contactos favoritos ✨.'
+            });
+        };
         finalData.emails.push(emailToAdd);
-
         fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
             if (error) {
-                // console.log('An error has occurred: ', error);
                 return res.status(200).json({
                     error: 'error',
                     info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.'
@@ -77,33 +81,28 @@ const removeNewsletter = async (req, res) => {
 
     fs.readFile(jsonDir, 'utf8', (error, data) => {
         if(error){
-            // console.log(error);
             return res.status(200).json({
                 error: 'error',
-                info: ''
+                info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
             });
         }
-
         let finalData = JSON.parse(data);
-        // console.log('data from newsletter.json :>> ', finalData);
 
         let index = finalData.emails.indexOf(emailToRemove);
-        if(index === -1) return res.status(200).json({error: 'error', info: ''});
+        if(index === -1) return res.status(200).json({error: 'error', info: 'No te encontramos en nuestra lista de noticias, si quieres volver a suscribirte puedes hacerlo desde la web. Y si no, ya está todo listo.'});
 
         finalData.emails.splice(index, 1);
 
         fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
             if (error) {
-                // console.log('An error has occurred: ', error);
                 return res.status(200).json({
                     error: 'error',
-                    info: ''
+                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
                 });
             }
-            // console.log('Data written successfully to disk.');
             return res.status(200).json({
                 error: '',
-                info: 'Success'
+                info: '¡Te echaremos de menos!'
             });
         });
     });

@@ -1,7 +1,7 @@
 :root {
     --baseColor: #606468;
 }
-*{
+body{
     overflow: hidden;
 }
 .align {

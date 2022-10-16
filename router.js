@@ -28,6 +28,9 @@ router.get("/401", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/401.html'));
 });
 
+// MIDDLEWARES
+const { requireSignin } = require('./controllers/middleware');
+
 ///////////////////////////////////////////
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
@@ -39,7 +42,6 @@ router.delete("/api/newsletter", removeNewsletter);
 ///////////////////////////////////////////
 //////////// AUTH controllers /////////////
 ///////////////////////////////////////////
-const { requireSignin } = require('./controllers/middleware');
 const { signup, signin, forgotPassword, resetPassword } = require("./controllers/auth");
 
 router.post("/api/signup", signup);

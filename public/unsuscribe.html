@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex,nofollow">
     <link rel="shortcut icon" href="./img/logos/unigo.ico" type="image/x-icon">
-    <title>Unsuscribe</title>
+    <title>Unsuscribe from Newsletter</title>
     <style type="text/css">
         body{
             width: 80%;
@@ -26,8 +26,8 @@
         <button type="submit">Unsuscribe</button>
     </form>
     <div id="msg" class="no-visible">
-        <p>¡Te echaremos de menos!</p>
-        <p>Ya puedes cerrar esta pestaña, has acabado.</p>
+        <p></p>
+        <p>Ya puedes cerrar esta ventana, has acabado.</p>
     </div>
     <script type="application/javascript">
         const myform = document.getElementById('myForm');
@@ -37,7 +37,6 @@
             let email = document.getElementById('email');
             myform.style.display = "none";
             // CALL API
-            //CALL API
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -62,15 +61,20 @@
                     msgContainer.classList.toggle('no-visible');
                     msgContainer.innerHTML="";
                     let errorP = document.createElement('p');
-                    errorP.innerText = "Ha ocurrido un error, por favor inténtelo de nuevo más tarde";
+                    errorP.innerText = result.info;
                     msgContainer.appendChild(errorP);
                 }else{
                     msgContainer.classList.toggle('no-visible');
+                    msgContainer.getElementsByTagName('p')[0].innerText = result.info;
                 }
             })
-            .catch(error => console.log('error', error));
-            // SHOW MESSAGE
-            
+            .catch( () => {
+                msgContainer.classList.toggle('no-visible');
+                msgContainer.innerHTML="";
+                let errorP = document.createElement('p');
+                errorP.innerText = result.info;
+                msgContainer.appendChild(errorP);
+            });
         }
     </script>
 </body>

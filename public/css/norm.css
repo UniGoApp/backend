@@ -6,6 +6,35 @@
     }
 }
 
+@font-face {
+    font-family: 'SF PD REGULAR';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF') format('opentype');
+}
+@font-face {
+  font-family: 'SF PD BOLD';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF') format('opentype');
+}
+@font-face {
+  font-family: 'SF PD ITALIC';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../fonts/sf-pro-display/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
+}
+p, a, span, div, section {
+    font-family: 'SF PD REGULAR', serif;
+}
+
+b, h1, h2, h3, h4, h5, h6{
+  font-family: 'SF PD BOLD', serif;
+}
+i{
+  font-family: 'SF PD ITALIC', serif;
+}
+
 :root{
     --verde: #6bbda3;
     --intermedio: #00a7b0;
@@ -25,8 +54,6 @@
 }
 body{
     margin: 0;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
     overflow-x: scroll;
 }
 img{
