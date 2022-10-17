@@ -12,7 +12,18 @@ app.use(compression());
 app.use(express.json({ limit: "4mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(morgan("dev"));
+app.use(morgan('combined', {
+    skip: function (req, res) { return res.statusCode < 400 }
+}));
+
+    //CORS options for admin panel
+// var corsOptions = {
+//     origin: 'https://www.unigoapp.es/admin'
+// }
+   //EXAMPLE OF USE
+// app.get('/products/:id', cors(corsOptions), function (req, res, next) {
+//     res.json({msg: 'This is CORS-enabled for only example.com.'})
+// })
 
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
