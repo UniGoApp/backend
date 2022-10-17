@@ -52,7 +52,10 @@ const signin = async (req, res) => {
         } else {
           const match = bcrypt.compareSync(password, result[0].password);
           if (!match) return res.status(401).json({error: "Wrong password"});
-
+          if(result.rol === "ADMIN" || result.rol === "SUPER_ADMIN"){
+            //register login in archive with ip, email, date and time
+            //make crud to see it only from super_admin role
+          }
           // create signed token
           const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
             expiresIn: "7d",

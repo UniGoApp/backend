@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 
 const publicarMensaje = async (req, res) => {
     if(req.user._rol === "USER"){

@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 
 const obtenerReservas = async (req, res) => {
     if(req.user._rol === "USER" || req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){

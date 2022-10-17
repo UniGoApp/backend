@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 
 const obtenerUsuario = async (req, res) => {
     if(req.user._rol === "USER" && req.user._id === req.params.id){

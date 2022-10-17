@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 
 let destinos = {comunidades: []};
 let com = [];

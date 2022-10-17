@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 const nanoid = require('nanoid');
 const fs = require('fs');
 const path = require('path');
