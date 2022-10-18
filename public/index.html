@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta name="language" content="ES">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="canonical" href="https://www.unigoapp.es" />
     <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="UniGo" />
     <meta name="description" content="No busques aparcamiento ni dependas del transporte público. Descubre UniGo, la aplicación definitiva para ir a la universidad compartiendo coche." />
@@ -274,7 +276,12 @@
                         <span class="faq-icon" readable="true"></span>
                     </button>
                     <div class="faq-content">
-                        <p>Para aparecer como un usuario verificado en la aplicación, deberás rellenar un formulario que tendrás disponible en tu perfil de usuario > Ajustes > Verificar mi perfil. Ten a mano el DNI y una copia de la matrícula de tu universidad del curso académico <script>document.write(`${new Date().getFullYear()}/${new Date().getFullYear()+1}`)</script>.</p>
+                        <p id="curso-academico">Para aparecer como un usuario verificado en la aplicación, deberás rellenar un formulario que tendrás disponible en tu perfil de usuario > Ajustes > Verificar mi perfil. Ten a mano el DNI y una copia de la matrícula de tu universidad del curso académico </p>
+                        <script>
+                        let curso = `${new Date().getFullYear()}/${new Date().getFullYear()+1}`;
+                        let curso_target = document.getElementById('curso-academico');
+                        curso_target.innerText += ' '+curso+'.';
+                        </script>
                     </div>
                 </div>
             </div>

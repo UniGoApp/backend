@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 const jwt = require("jsonwebtoken");
 
 const getCampus = async (req, res) => {

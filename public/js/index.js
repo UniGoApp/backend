@@ -32,10 +32,10 @@ window.addEventListener('scroll', function()  {
 // // DESTINOS FUNC
 let universidadesContainer = document.getElementById('universidades');
 
-fetch('../public_data/destinos.json')
+fetch('/api/destinos')
 .then(response => response.json())
 .then(data => {
-    data.comunidades.forEach(com => {
+    data.data.comunidades.forEach(com => {
         com.universidades.forEach(uni => {
             let card_uni = `
             <div class="universidad">

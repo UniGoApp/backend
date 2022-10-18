@@ -11,7 +11,7 @@ const upload_file = async (req, res) => {
     const image_type = '.jpg';
     const image_file = image_name.concat(image_type);
 
-    const upload_path = path.resolve(__dirname, `../../../public/img/users/${image_file}`);
+    const upload_path = path.resolve(__dirname, `../../public/img/users/${image_file}`);
     // let writeFileStream = fs.createWriteStream(upload_path);
     // writeFileStream.write(image_data);
     // writeFileStream.end();
@@ -68,14 +68,10 @@ const updateRrss = async (req, res) => {
     }
 };
 
-//ADMINS
-const getFiles = async (req, res) => {
-    
-};
 
 //USERS
 const getFile = async (req, res) => {
-    const path_name = path.resolve(__dirname, '../../../public/img/users');
+    const path_name = path.resolve(__dirname, '../../public/img/users');
     const options = {
         root: path_name,
         dotfiles: 'deny',
@@ -94,4 +90,4 @@ const getFile = async (req, res) => {
     });
 };
 
-module.exports = { upload_file, getFiles, getFile, updateRrss };
+module.exports = { upload_file, getFile, updateRrss };

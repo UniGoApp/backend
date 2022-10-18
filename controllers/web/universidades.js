@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 
 const getUniversidades = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){

@@ -47,13 +47,16 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////////////////////////////////////
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
-const { getNewsletter, joinNewsletter, removeNewsletter } = require("./controllers/web/newsletter");
+const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
 router.get("/api/admin/newsletter", requireSignin, getNewsletter); //ONLY ADMIN
 router.post("/api/newsletter", joinNewsletter);
 router.delete("/api/newsletter", removeNewsletter);
+router.put('/api/admin/newsletter', requireSignin, updateNewsletter);
 
-const { getDestinosWeb } = require("./controllers/web/destinos");
-router.get('api/destinos', getDestinosWeb);
+// ADMIN CRUD DESTINOS
+const { getDestinosWeb, updateDestinos } = require("./controllers/web/destinos");
+router.get('/api/destinos', getDestinosWeb);
+router.put('/api/admin/destinos', requireSignin, updateDestinos);
 //No admin crud --> Only modifying through the json archive manually
 
 // ADMIN CRUD USUARIOS
@@ -110,9 +113,8 @@ router.post("/api/forgot-password", forgotPassword);
 router.post("/api/reset-password", resetPassword);
 
 // FILES
-const { upload_file, getFiles, getFile, updateRrss } = require("./controllers/app/files");
+const { upload_file, getFile, updateRrss } = require("./controllers/app/files");
 router.post("/api/upload-image", requireSignin, upload_file);
-router.get("/files", requireSignin, getFiles);
 router.get("/file/:name", requireSignin, getFile);
 router.put("/api/rrss/:id", requireSignin, updateRrss);
 

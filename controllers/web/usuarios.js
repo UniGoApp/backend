@@ -1,4 +1,4 @@
-const con = require("../../database");
+const con = require("../database");
 const bcrypt = require("bcryptjs");
 
 const getUsuarios = async (req, res) => {

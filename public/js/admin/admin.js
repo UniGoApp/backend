@@ -45,8 +45,6 @@ const tabsHandler = (e) => {
     //Show clicked one: 
     const tabId = e.children[1].innerHTML.toLowerCase();
     document.getElementById(tabId).classList.add('visible');
-
-    loadData(tabId);
 };
 
 const tabsHandlerMobile = (e) => {
@@ -69,29 +67,9 @@ const tabsHandlerMobile = (e) => {
     const tabId = e.innerHTML.toLowerCase();
     document.getElementById(tabId).classList.add('visible');
 
-    loadData(tabId);
-
     //Close menu
     setTimeout(() => {
         document.getElementById('burguer-menu').checked = false;
     }, 150);
 };
 
-const loadData = (tabId) => {
-    switch (tabId) {
-        case 'usuarios':
-            mostrarUsuarios();
-            break;
-        case 'viajes':
-            mostrarViajes();
-            break;
-        case 'universidades':
-            mostrarComunidades();
-            break;
-        case 'mensajes':
-            mostrarMensajes();
-            break;
-        default:
-            break;
-    }
-};
