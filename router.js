@@ -80,27 +80,11 @@ router.post("/api/admin/viajes", requireSignin, postViajes);
 router.put("/api/admin/viajes", requireSignin, putViajes);
 router.delete("/api/admin/viajes", requireSignin, deleteViajes);
 
-// // ADMIN CRUD COMUNIDADES
-// const { getComunidades, postComunidades, putComunidades, deleteComunidades } = require("./controllers/web/comunidades");
-// router.get("/api/admin/comunidades", requireSignin, getComunidades);
-// router.post("/api/admin/comunidades", requireSignin, postComunidades);
-// router.put("/api/admin/comunidades", requireSignin, putComunidades);
-// router.delete("/api/admin/comunidades", requireSignin, deleteComunidades);
-
-// // ADMIN CRUD UNIVERSIDADES
-// const { getUniversidades, postUniversidades, putUniversidades, deleteUniversidades } = require("./controllers/web/universidades");
-// router.get("/api/admin/universidades", requireSignin, getUniversidades);
-// router.post("/api/admin/universidades", requireSignin, postUniversidades);
-// router.put("/api/admin/universidades", requireSignin, putUniversidades);
-// router.delete("/api/admin/universidades", requireSignin, deleteUniversidades);
-
-// // ADMIN CRUD CAMPUS
-// const { getCampus, postCampus, putCampus, deleteCampus } = require("./controllers/web/campus");
-// router.get("/api/admin/campus", requireSignin, getCampus);
-// router.post("/api/admin/campus", requireSignin, postCampus);
-// router.put("/api/admin/campus", requireSignin, putCampus);
-// router.delete("/api/admin/campus", requireSignin, deleteCampus);
-
+// ADMIN CRUD RESERVAS
+const { getReservas, postReservas, deleteReservas } = require("./controllers/web/reservas");
+router.get("/api/admin/reservas", requireSignin, getReservas);
+router.post("/api/admin/reservas", requireSignin, postReservas);
+router.delete("/api/admin/reservas", requireSignin, deleteReservas);
 
 ///////////////////////////////////////////
 //////////// APP controllers //////////////

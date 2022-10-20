@@ -10,11 +10,14 @@ body{
     background-color: var(--dark);
     overflow: hidden;
 }
+h6{
+    font-family: 'SF PD THIN', serif;
+}
 .boton{
     display: flex;
     align-items: center;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: var(--blue);
     user-select: none;
     text-align: center;
@@ -95,6 +98,7 @@ h6{
     list-style: none;
 }
 #menu > ul > li{
+    cursor: pointer;
     padding: 20px 10px;
     text-transform: uppercase;
     display: flex;
@@ -105,38 +109,26 @@ h6{
     max-width: 70%;
     margin: 0 auto;
 }
+#menu > ul > li:last-child:hover{
+    background-color: tomato;
+    border-radius: 6px;
+    transition: background-color .4s ease;
+}
+#menu > ul > li:last-child:hover > *{
+    color: var(--black);
+}
 #menu > ul > li > *{
     padding-left: 20px;
     color: lightgray;
     font-size: large;
 }
-#menu > ul > li > p:hover{
-    color: white;
-    transition: color .3s ease;
-}
 #menu > ul > li > i{
     max-width: 20px;
     max-height: 20px;
 }
-#menu > ul > li:hover{
-    cursor: pointer;
-}
-#exit{
-    align-self: flex-end;
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    border-radius: 10px;
-    background-color: tomato;
-    max-height: 48px;
-    align-items: center;
-}
-#exit > p{
-    color:black;
-    font-weight: bold;
-}
-#exit:hover{
-    cursor:pointer;
+#menu > ul > li:hover > p{
+    transition: color .3s ease;
+    color: white;
 }
 #page-wrapper{
     display: block;
@@ -205,7 +197,7 @@ h6{
     max-height: 373px;
 }
 .newsletter > div > aside{
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .newsletter > div > aside > table{
     max-height: 373px;
@@ -256,14 +248,34 @@ h6{
 .newsletter button:hover{
     background-color: var(--blue-hover);
 }
-
+p.refreshBtn{
+    cursor: pointer;
+    max-width: fit-content;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    align-items: center;
+    transition: all .4s;
+    letter-spacing: .65px;
+}
+p.refreshBtn:hover{
+    background-color: var(--light);
+    color: var(--black);
+    border-radius: 6px;
+}
+p.refreshBtn > svg{
+    transition: all .4s;
+    fill: var(--white);
+}
+p.refreshBtn:hover > svg{
+    fill: var(--black);
+}
 /* MENU */
 #mobile{
     display: none;
 }
-
-#menuToggle
-{
+#menuToggle{
   display: block;
   position: relative;
   top: 50px;
@@ -273,15 +285,11 @@ h6{
   -webkit-user-select: none;
   user-select: none;
 }
-
-#menuToggle a
-{
+#menuToggle a{
   text-decoration: none;
   color: var(--white);
 }
-
-#menuToggle input
-{
+#menuToggle input{
   display: block;
   width: 40px;
   height: 32px;
@@ -293,9 +301,7 @@ h6{
   z-index: 2;
   -webkit-touch-callout: none;
 }
-
-#menuToggle span
-{
+#menuToggle span{
   display: block;
   width: 33px;
   height: 4px;
@@ -309,34 +315,28 @@ h6{
               background-color 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
               opacity 0.55s ease;
 }
-
 #menuToggle span:first-child{
   transform-origin: 0% 0%;
 }
-
 #menuToggle span:nth-last-child(2){
   transform-origin: 0% 100%;
 }
-
 #menuToggle input:checked ~ span{
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
   background: #232323;
 }
-
 #menuToggle input:checked ~ span:nth-last-child(3){
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
-
 #menuToggle input:checked ~ span:nth-last-child(2){
   transform: rotate(-45deg) translate(0, -1px);
 }
-
 #menu-mobile{
     position: absolute;
     width: 300px;
-    margin: -100px 0 0 -50px;
+    margin: -80px 0 0 -50px;
     padding: 50px;
     padding-top: 125px;
     background-color: var(--blue);
@@ -346,13 +346,11 @@ h6{
     transform: translate(-100%, 0);
     transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }
-
 #menu-mobile li {
     text-transform: uppercase;
     padding: 10px;
     font-size: 22px;
 }
-
 #menuToggle input:checked ~ ul
 {
   transform: none;
@@ -421,11 +419,11 @@ h6{
 #searchQueryInput::placeholder{
     color: var(--light);
 }
-#page-wrapper > div table{
+table{
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 }
 td, th{
@@ -459,16 +457,14 @@ tbody tr:nth-child(even) {
     background-color: #f5f5f5; 
 }
 /******** TAB MENSAJES ********/
-#mensajes > span {
-    cursor: pointer;
-}
-#mensajes-cards, #viajes-cards{
+
+#viajes-cards{
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     flex-direction: row;
 }
-#mensajes-cards summary, #viajes-cards summary{
+#viajes-cards summary{
     display: inline;
     cursor: pointer;
 }
@@ -477,7 +473,7 @@ details.card{
     margin: 10px;
     padding: 10px;
     background-color: var(--light);
-    border-radius: 5px;
+    border-radius: 4px;
     color: black;
     transition: width .3s ease-in-out;
 }

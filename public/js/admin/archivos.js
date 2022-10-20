@@ -26,6 +26,7 @@ fetch('/api/admin/newsletter', requestOptions)
     let original_newsletter_json = JSON.stringify(result.data, null, 2);
     newsletter_txt = original_newsletter_json;
     textarea_newsletter.value = original_newsletter_json;
+    fillNewsletterTable(result);
 })
 .catch(error => console.log('error', error));
 

@@ -1,3 +1,4 @@
+//////// DASHBOARD ////////
 const summary = document.getElementsByClassName('summary')[0];
 const usuarios = summary.children[0].getElementsByTagName('span')[0];
 const universidades = summary.children[1].getElementsByTagName('span')[0];
@@ -10,7 +11,7 @@ const requestOptions = {
     credentials: "same-origin"
 };
 
-let dataUsuarios, dataViajes, dataMensajes, dataUniversidades = '';
+let dataUsuarios, dataViajes, dataUniversidades = '';
 
 const fillNewsletterTable = (info) => {
     const headerNewsletter  = document.querySelector('.newsletter > div > aside > table > thead > tr > th');
@@ -22,7 +23,7 @@ const fillNewsletterTable = (info) => {
         tableNewsletter.appendChild(row);
         headerNewsletter.innerText = '0 usuarios suscritos';
     }else{
-        headerNewsletter.innerText = info.data.emails.length+' usuarios suscritos';
+        headerNewsletter.innerText = info.data.emails.length+' usuarios suscritos al boletín';
         for(let i = 0; i<info.data.emails.length; i++){
             const row = document.createElement('tr');
             const rowdata = document.createElement('td');
@@ -43,9 +44,6 @@ const refreshDashboard = () => {
             usuarios.innerText = result.data.length;
         }
         dataUsuarios = result;
-    })
-    .catch(error => console.log('error', error))
-    .finally(()=> {
         //Msg target
         const target = document.getElementById('bbdd-usuarios').getElementsByTagName('tab-msg')[0];
         //Data targets
@@ -55,13 +53,13 @@ const refreshDashboard = () => {
         thead.innerHTML="";
         tbody.innerHTML="";
         
-        if(dataUsuarios.msg){
-            target.innerText = dataUsuarios.msg;
+        if(result.msg){
+            target.innerText = result.msg;
             document.querySelector('#bbdd-usuarios > table').style.display = 'none';
         }else{
             //Table headings
             const trhead = document.createElement('tr');
-            const keys = Object.keys(dataUsuarios.data[0]);
+            const keys = Object.keys(result.data[0]);
             keys.forEach(key => {
                 if(key !== 'password'){
                     const th = document.createElement('th');
@@ -72,7 +70,7 @@ const refreshDashboard = () => {
             thead.appendChild(trhead);
 
             //Table content
-            dataUsuarios.data.forEach(user => {
+            result.data.forEach(user => {
                 //DATA
                 const trbody = document.createElement('tr');
                 for(let d = 0; d < keys.length; d++){
@@ -86,7 +84,8 @@ const refreshDashboard = () => {
                 tbody.appendChild(trbody);
             });
         }
-    });
+    })
+    .catch(error => console.log('error', error));
 
     fetch('/api/admin/viajes', requestOptions)
     .then(response => response.json())
@@ -97,20 +96,17 @@ const refreshDashboard = () => {
             viajes.innerText = result.data.length;
         }
         dataViajes = result;
-    })
-    .catch(error => console.log('error', error))
-    .finally(()=>{
         //Clear previous data:
         document.querySelector('#viajes-cards').innerHTML= '';
         //Get html target
         const target = document.getElementById('bbdd-viajes').getElementsByClassName('tab-msg')[0];
 
-        if(dataViajes.msg){
-            target.innerText = dataViajes.msg;
+        if(result.msg){
+            target.innerText = result.msg;
             document.getElementById('viajes-cards').style.display = 'none';
         }else{
             const section = document.querySelector('#viajes-cards');
-            dataViajes.data.forEach(info => {
+            result.data.forEach(info => {
                 const div = document.createElement('div');
                 const card = document.createElement('details');
                 card.classList.add('card');
@@ -144,10 +140,52 @@ const refreshDashboard = () => {
                 // }
                 // card.appendChild(pasajeros_list);
                 section.appendChild(card);
-                
             });
         }
-    });
+    })
+    .catch(error => console.log('error', error));
+
+    fetch('/api/admin/reservas', requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        //Msg target
+        const tabmsg = document.getElementById('bbdd-reservas').getElementsByTagName('tab-msg')[0];
+        //Data targets
+        const thead = document.getElementById('bbdd-reservas').getElementsByTagName('thead')[0];
+        const tbody = document.getElementById('bbdd-reservas').getElementsByTagName('tbody')[0];
+        //Remove previous data:
+        thead.innerHTML="";
+        tbody.innerHTML="";
+        
+        if(result.msg){
+            tabmsg.innerText = dataUsuarios.msg;
+            document.querySelector('#bbdd-reservas > table').style.display = 'none';
+        }else{
+            //Table headings
+            const trhead = document.createElement('tr');
+            const keys = Object.keys(result.data[0]);
+            keys.forEach( key => {
+                const th = document.createElement('th');
+                th.innerText = key;
+                trhead.appendChild(th);
+            });
+            thead.appendChild(trhead);
+
+            //Table content
+            result.data.forEach(msg => {
+                //DATA
+                const trbody = document.createElement('tr');
+                for(let d = 0; d < keys.length; d++){
+                    const td = document.createElement('td');
+                    let key = keys[d];
+                    td.innerText = msg[key];
+                    trbody.appendChild(td);
+                }
+                tbody.appendChild(trbody);
+            });
+        }
+    })
+    .catch(error => console.log('error', error));
 
     fetch('/api/admin/mensajes', requestOptions)
     .then(response => response.json())
@@ -157,33 +195,44 @@ const refreshDashboard = () => {
         }else{
             mensajes.innerText = result.data.length;
         }
-        dataMensajes = result;
-    })
-    .catch(error => console.log('error', error))
-    .finally(() => {
-        //Clear previous data:
-        document.getElementById('mensajes-cards').innerHTML= '';
-        //Get html target
-        const target = document.getElementById('bbdd-mensajes').getElementsByClassName('tab-msg')[0];
-        if(dataMensajes.msg){
-            target.innerText = dataMensajes.msg;
-            document.getElementById('mensajes-cards').style.display = 'none';
+        //Msg target
+        const tabmsg = document.getElementById('bbdd-mensajes').getElementsByTagName('tab-msg')[0];
+        //Data targets
+        const thead = document.getElementById('bbdd-mensajes').getElementsByTagName('thead')[0];
+        const tbody = document.getElementById('bbdd-mensajes').getElementsByTagName('tbody')[0];
+        //Remove previous data:
+        thead.innerHTML="";
+        tbody.innerHTML="";
+        
+        if(result.msg){
+            tabmsg.innerText = dataUsuarios.msg;
+            document.querySelector('#bbdd-mensajes > table').style.display = 'none';
         }else{
-            const div = document.getElementById('mensajes-cards');
-            dataMensajes.data.forEach(info => {
-                const card = document.createElement('details');
-                card.setAttribute("card-id", info.id);
-                const summary = document.createElement('summary');
-                const p = document.createElement('p');
-                summary.innerText = 'Mensaje ' + info.id + ': ' + info.asunto;
-                p.innerText = info.mensaje;
-                card.appendChild(summary);
-                card.appendChild(p);
-                card.classList.add('card');
-                div.appendChild(card);
+            //Table headings
+            const trhead = document.createElement('tr');
+            const keys = Object.keys(result.data[0]);
+            keys.forEach( key => {
+                const th = document.createElement('th');
+                th.innerText = key;
+                trhead.appendChild(th);
+            });
+            thead.appendChild(trhead);
+
+            //Table content
+            result.data.forEach(msg => {
+                //DATA
+                const trbody = document.createElement('tr');
+                for(let d = 0; d < keys.length; d++){
+                    const td = document.createElement('td');
+                    let key = keys[d];
+                    td.innerText = msg[key];
+                    trbody.appendChild(td);
+                }
+                tbody.appendChild(trbody);
             });
         }
-    });
+    })
+    .catch(error => console.log('error', error));
 };
 
 refreshDashboard();

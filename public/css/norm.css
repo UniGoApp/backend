@@ -7,20 +7,24 @@
 @font-face {
     font-family: 'SF PD REGULAR';
     font-style: normal;
-    font-weight: normal;
+    font-weight: 400;
     src: url('../fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF') format('opentype');
 }
 @font-face {
   font-family: 'SF PD BOLD';
   font-style: normal;
-  font-weight: bold;
   src: url('../fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF') format('opentype');
 }
 @font-face {
   font-family: 'SF PD ITALIC';
   font-style: italic;
-  font-weight: normal;
+  font-weight: 400;
   src: url('../fonts/sf-pro-display/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
+}
+@font-face {
+  font-family: 'SF PD THIN';
+  font-style: normal;
+  src: url('../fonts/sf-pro-display/SFPRODISPLAYTHINITALIC.OTF') format('opentype');
 }
 p, a, span, div, section {
     font-family: 'SF PD REGULAR', serif;
@@ -102,7 +106,7 @@ i.close{
 }
 .active{
   background-color: var(--verde);
-  border-radius: 8px;
+  border-radius: 6px;
   transition: background-color .4s ease;
 }
 .active > p{

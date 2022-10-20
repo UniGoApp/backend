@@ -9,7 +9,7 @@
           "id_comunidad": 1,
           "nombre": "Universidad de Murcia",
           "sigla": "UMU",
-          "escudo": "escudo-umu.png",
+          "escudo": "escudo-umu-rojo.png",
           "campus": [
             {
               "id": 1,
