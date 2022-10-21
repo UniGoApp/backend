@@ -19,9 +19,11 @@ const fillNewsletterTable = (info) => {
     tableNewsletter.innerHTML = '';
     if(!info && !info.data){
         const row = document.createElement('tr');
-        row.innerText = 'No hay usuarios suscritos todavía.';
+        const rowData = document.createElement('td');
+        rowData.innerText = 'Error al cargar los datos.';
+        row.appendChild(rowData);
         tableNewsletter.appendChild(row);
-        headerNewsletter.innerText = '0 usuarios suscritos';
+        headerNewsletter.innerText = 'Usuarios suscritos';
     }else{
         headerNewsletter.innerText = info.data.emails.length+' usuarios suscritos al boletín';
         for(let i = 0; i<info.data.emails.length; i++){
@@ -38,25 +40,21 @@ const refreshDashboard = () => {
     fetch('/api/admin/usuarios', requestOptions)
     .then(response => response.json())
     .then(result => {
-        if(!result.data){
+        let target = document.querySelector('#bbdd-usuarios > p.tab-msg');
+        if(result.error){
             usuarios.innerText = 0;
+            target.textContent = result.info;
+            document.querySelector('#bbdd-usuarios > table').style.display = 'none';
+            document.getElementById('user-menu').style.display = "none";
         }else{
             usuarios.innerText = result.data.length;
-        }
-        dataUsuarios = result;
-        //Msg target
-        const target = document.getElementById('bbdd-usuarios').getElementsByTagName('tab-msg')[0];
-        //Data targets
-        const thead = document.getElementById('bbdd-usuarios').getElementsByTagName('thead')[0];
-        const tbody = document.getElementById('bbdd-usuarios').getElementsByTagName('tbody')[0];
-        //Remove previous data:
-        thead.innerHTML="";
-        tbody.innerHTML="";
-        
-        if(result.msg){
-            target.innerText = result.msg;
-            document.querySelector('#bbdd-usuarios > table').style.display = 'none';
-        }else{
+            dataUsuarios = result;
+            //Data targets
+            const thead = document.getElementById('bbdd-usuarios').getElementsByTagName('thead')[0];
+            const tbody = document.getElementById('bbdd-usuarios').getElementsByTagName('tbody')[0];
+            //Remove previous data:
+            thead.innerHTML="";
+            tbody.innerHTML="";
             //Table headings
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
@@ -68,7 +66,6 @@ const refreshDashboard = () => {
                 }
             });
             thead.appendChild(trhead);
-
             //Table content
             result.data.forEach(user => {
                 //DATA
@@ -85,26 +82,26 @@ const refreshDashboard = () => {
             });
         }
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {
+        let target = document.querySelector('#bbdd-usuarios > p.tab-msg');
+        target.textContent="Error al cargar los usuarios del servidor.";
+        document.getElementById('user-menu').style.display = "none";
+    });
 
     fetch('/api/admin/viajes', requestOptions)
     .then(response => response.json())
     .then(result => {
-        if(!result.data){
+        let target = document.querySelector('#bbdd-viajes > p.tab-msg');
+        if(result.error){
             viajes.innerText = 0;
-        }else{
-            viajes.innerText = result.data.length;
-        }
-        dataViajes = result;
-        //Clear previous data:
-        document.querySelector('#viajes-cards').innerHTML= '';
-        //Get html target
-        const target = document.getElementById('bbdd-viajes').getElementsByClassName('tab-msg')[0];
-
-        if(result.msg){
-            target.innerText = result.msg;
+            target.textContent = result.info;
             document.getElementById('viajes-cards').style.display = 'none';
         }else{
+            viajes.innerText = result.data.length;
+            dataViajes = result;
+            //Clear previous data:
+            document.querySelector('#viajes-cards').innerHTML= '';
+
             const section = document.querySelector('#viajes-cards');
             result.data.forEach(info => {
                 const div = document.createElement('div');
@@ -143,7 +140,10 @@ const refreshDashboard = () => {
             });
         }
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {
+        let target = document.querySelector('#bbdd-viajes > p.tab-msg');
+        target.textContent="Error al cargar los viajes del servidor.";
+    });
 
     fetch('/api/admin/reservas', requestOptions)
     .then(response => response.json())
@@ -156,9 +156,8 @@ const refreshDashboard = () => {
         //Remove previous data:
         thead.innerHTML="";
         tbody.innerHTML="";
-        
-        if(result.msg){
-            tabmsg.innerText = dataUsuarios.msg;
+        if(result.error){
+            tabmsg.innerText = dataUsuarios.info;
             document.querySelector('#bbdd-reservas > table').style.display = 'none';
         }else{
             //Table headings
@@ -185,29 +184,28 @@ const refreshDashboard = () => {
             });
         }
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {
+        let target = document.querySelector('#bbdd-reservas > p.tab-msg');
+        target.textContent="Error al cargar las reservas del servidor.";
+    });
 
     fetch('/api/admin/mensajes', requestOptions)
     .then(response => response.json())
     .then(result => {
-        if(!result.data){
-            mensajes.innerText = 0;
-        }else{
-            mensajes.innerText = result.data.length;
-        }
         //Msg target
-        const tabmsg = document.getElementById('bbdd-mensajes').getElementsByTagName('tab-msg')[0];
-        //Data targets
-        const thead = document.getElementById('bbdd-mensajes').getElementsByTagName('thead')[0];
-        const tbody = document.getElementById('bbdd-mensajes').getElementsByTagName('tbody')[0];
-        //Remove previous data:
-        thead.innerHTML="";
-        tbody.innerHTML="";
-        
-        if(result.msg){
-            tabmsg.innerText = dataUsuarios.msg;
+        const tabmsg = document.querySelector('#bbdd-mensajes > p.tab-msg');
+        if(result.error){
+            mensajes.innerText = 0;
+            tabmsg.innerText = result.info;
             document.querySelector('#bbdd-mensajes > table').style.display = 'none';
         }else{
+            mensajes.innerText = result.data.length;
+            //Data targets
+            const thead = document.getElementById('bbdd-mensajes').getElementsByTagName('thead')[0];
+            const tbody = document.getElementById('bbdd-mensajes').getElementsByTagName('tbody')[0];
+            //Remove previous data:
+            thead.innerHTML="";
+            tbody.innerHTML="";
             //Table headings
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
@@ -217,10 +215,8 @@ const refreshDashboard = () => {
                 trhead.appendChild(th);
             });
             thead.appendChild(trhead);
-
             //Table content
             result.data.forEach(msg => {
-                //DATA
                 const trbody = document.createElement('tr');
                 for(let d = 0; d < keys.length; d++){
                     const td = document.createElement('td');
@@ -232,7 +228,10 @@ const refreshDashboard = () => {
             });
         }
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {
+        let target = document.querySelector('#bbdd-mensajes > p.tab-msg');
+        target.textContent="Error al cargar los mensajes del servidor.";
+    });
 };
 
 refreshDashboard();

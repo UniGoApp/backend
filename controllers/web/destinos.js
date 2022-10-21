@@ -6,27 +6,24 @@ const jsonDir = path.join(__dirname, "../../public/public_data/destinos.json");
 const getDestinosWeb = async (req, res) => {
     fs.readFile(jsonDir, "utf8", (err, data) => {
         if (err) {
-            // console.log("Error reading file from disk:", err);
             return res.status(200).json({
-                msg: 'Se ha producido un error al leer el archivo.',
-                data: '',
-                info: ''
+                error: true,
+                info: 'Se ha producido un error al leer el archivo.',
+                data: ''
             });
         }
         try {
             const jsonData = JSON.parse(data);
-            // console.log('emails: ', jsonData);
             return res.status(200).json({
-                msg: '',
-                data: jsonData,
-                info: ''
+                error: false,
+                    info: '',
+                    data: jsonData
             });
         } catch (err) {
-            // console.log("Error parsing JSON string:", err);
             return res.status(200).json({
-                msg: '',
-                data: data,
-                info: ''
+                error: false,
+                info: '',
+                data: data
             });
         }
     });
@@ -40,20 +37,22 @@ const updateDestinos = async (req, res) => {
         fs.writeFile(jsonDir, JSON.stringify(newContent, null, 2), (error) => {
             if (error) {
                 return res.status(200).json({
-                    error: 'error',
-                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
+                    error: true,
+                    info: 'Error al escribir en el archivo.',
+                    data: ''
                 });
             }
             return res.status(200).json({
-                error: '',
-                info: 'Archivo modificado correctamente.'
+                error: false,
+                info: 'Archivo modificado correctamente.',
+                data: ''
             });
         });
     }else{
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
-            data: '',
-            info: ''
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
         });
     }
 };

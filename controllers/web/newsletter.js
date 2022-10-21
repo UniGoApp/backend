@@ -7,35 +7,32 @@ const getNewsletter = async (req, res) => {
     if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
         fs.readFile(jsonDir, "utf8", (err, data) => {
             if (err) {
-                // console.log("Error reading file from disk:", err);
                 return res.status(200).json({
-                    msg: 'Se ha producido un error al leer el archivo.',
-                    data: '',
-                    info: ''
+                    error: true,
+                    info: 'Se ha producido un error al leer el archivo.',
+                    data: ''
                 });
             }
             try {
                 const jsonData = JSON.parse(data);
-                // console.log('emails: ', jsonData);
                 return res.status(200).json({
-                    msg: '',
-                    data: jsonData,
-                    info: ''
+                    error: false,
+                    info: '',
+                    data: jsonData
                 });
             } catch (err) {
-                // console.log("Error parsing JSON string:", err);
                 return res.status(200).json({
-                    msg: '',
-                    data: data,
-                    info: ''
+                    error: false,
+                    info: '',
+                    data: data
                 });
             }
         });
     }else{
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
-            data: '',
-            info: ''
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
         });
     }
 };
@@ -47,28 +44,32 @@ const joinNewsletter = async (req, res) => {
     fs.readFile(jsonDir, 'utf8', (error, data) => {
         if(error){
             return res.status(200).json({
-                error: 'error',
-                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.'
+                error: true,
+                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                data: ''
             });
         }
         let finalData = JSON.parse(data);
         if(finalData.emails.includes(emailToAdd)) {
             return res.status(200).json({
-                error: '',
-                info: 'Ya estás entre nuestros contactos favoritos ✨.'
+                error: false,
+                info: 'Ya estás entre nuestros contactos favoritos ✨.',
+                data: ''
             });
         };
         finalData.emails.push(emailToAdd);
         fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
             if (error) {
                 return res.status(200).json({
-                    error: 'error',
-                    info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.'
+                    error: true,
+                    info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                    data: ''
                 });
             }
             return res.status(200).json({
-                error: '',
-                info: '¡Te has suscrito con éxito!'
+                error: false,
+                info: '¡Te has suscrito con éxito!',
+                data: ''
             });
         });
     });
@@ -82,27 +83,30 @@ const removeNewsletter = async (req, res) => {
     fs.readFile(jsonDir, 'utf8', (error, data) => {
         if(error){
             return res.status(200).json({
-                error: 'error',
-                info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
+                error: true,
+                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                data: ''
             });
         }
         let finalData = JSON.parse(data);
 
         let index = finalData.emails.indexOf(emailToRemove);
-        if(index === -1) return res.status(200).json({error: 'error', info: 'No te encontramos en nuestra lista de noticias, si quieres volver a suscribirte puedes hacerlo desde la web. Y si no, ya está todo listo.'});
+        if(index === -1) return res.status(200).json({error: true, info: 'No te encontramos en nuestra lista de noticias, si quieres volver a suscribirte puedes hacerlo desde la web. Y si no, ya está todo listo.', data: ''});
 
         finalData.emails.splice(index, 1);
 
         fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
             if (error) {
                 return res.status(200).json({
-                    error: 'error',
-                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
+                    error: true,
+                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.',
+                    data: ''
                 });
             }
             return res.status(200).json({
-                error: '',
-                info: '¡Te echaremos de menos!'
+                error: false,
+                info: '¡Te echaremos de menos!',
+                data: ''
             });
         });
     });
@@ -116,20 +120,22 @@ const updateNewsletter = async (req, res) => {
         fs.writeFile(jsonDir, JSON.stringify(newContent, null, 2), (error) => {
             if (error) {
                 return res.status(200).json({
-                    error: 'error',
-                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.'
+                    error: true,
+                    info: 'Error al escribir en el archivo.',
+                    data: ''
                 });
             }
             return res.status(200).json({
-                error: '',
-                info: 'Archivo modificado correctamente.'
+                error: false,
+                info: 'Archivo modificado correctamente.',
+                data: ''
             });
         });
     }else{
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
-            data: '',
-            info: ''
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
         });
     }
 };

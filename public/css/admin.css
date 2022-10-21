@@ -154,7 +154,7 @@ h6{
     height: 3px;
     background-color: var(--verde);
     margin-top: 5px;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 /******** TAB DASHBOARD ********/
@@ -262,7 +262,7 @@ p.refreshBtn{
 p.refreshBtn:hover{
     background-color: var(--light);
     color: var(--black);
-    border-radius: 6px;
+    border-radius: 4px;
 }
 p.refreshBtn > svg{
     transition: all .4s;
@@ -376,7 +376,7 @@ p.refreshBtn:hover > svg{
     cursor: pointer;
 }
 #user-type{
-    padding: 10px;
+    padding: 12.4px 5px;
     border-radius: 5px;
     width: fit-content;
     background-color: var(--blue);
@@ -522,6 +522,7 @@ div.supermenuContainer > div.supermenu > p.shown{
     height: auto;
     font-size: 16px;
     margin-bottom: 20px;
+    background-color: #cbcbcb;
 }
 .archivos-btn{
     display: inline;
@@ -538,8 +539,50 @@ div.supermenuContainer > div.supermenu > p.shown{
     cursor: not-allowed;
 }
 /******** TAB IMAGENES ********/
-
-
+#imagenes-universidades > p{
+    font-family: 'SF PD THIN', serif;
+}
+#imagenes-universidades > div{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    
+}
+#imagenes-universidades > div > div{
+    flex-basis: calc(20% - 10px);
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: var(--light);
+    color: var(--black);
+    margin: 0 10px 10px 0;
+}
+#imagenes-universidades img{
+    max-width: 100px;
+}
+#imagenes-universidades div.uni-default{
+    background-color: var(--white);
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    
+}
+#imagenes-universidades div.uni-default svg{
+    fill: #cbcbcb;
+    transition: fill .3s;
+}
+#imagenes-universidades div.uni-default:hover svg{
+    fill: var(--verde);
+}
+#imagenes-universidades div.uni-default path{
+    transform: scale(2.5);
+}
+#imagenes-universidades div.uni-default > p{
+    margin-top: -20px;
+}
 /******** TAB AJUSTES ********/
 
 

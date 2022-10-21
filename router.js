@@ -48,7 +48,7 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
-router.get("/api/admin/newsletter", requireSignin, getNewsletter); //ONLY ADMIN
+router.get("/api/admin/newsletter", requireSignin, getNewsletter);
 router.post("/api/newsletter", joinNewsletter);
 router.delete("/api/newsletter", removeNewsletter);
 router.put('/api/admin/newsletter', requireSignin, updateNewsletter);
@@ -70,7 +70,6 @@ router.delete("/api/admin/usuarios", requireSignin, deleteUsuarios);
 const { getMensajes, postMensajes, deleteMensajes } = require("./controllers/web/mensajes");
 router.get("/api/admin/mensajes", requireSignin, getMensajes);
 router.post("/api/admin/mensajes", requireSignin, postMensajes);
-//PUT mensajes not necessary
 router.delete("/api/admin/mensajes", requireSignin, deleteMensajes);
 
 // ADMIN CRUD VIAJES
