@@ -20,12 +20,6 @@ app.use(morgan('combined', {
     skip: function (req, res) { return res.statusCode < 400 }
 }));
 
-    
-   //EXAMPLE OF USE
-// app.get('/products/:id', cors(corsOptions), function (req, res, next) {
-//     res.json({msg: 'This is CORS-enabled for only example.com.'})
-// })
-
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');

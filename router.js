@@ -18,6 +18,9 @@ const path = require('path');
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
+router.get("/maintenance", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/maintenance.html'));
+});
 router.get("/legal/cookies", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/politicas/cookies.html'));
 });
