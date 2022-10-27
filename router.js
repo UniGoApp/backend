@@ -16,7 +16,8 @@ const path = require('path');
 // }
 
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+  // res.sendFile(path.join(__dirname, '/public/index.html'));
+  res.redirect('/maintenance');
 });
 router.get("/maintenance", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/maintenance.html'));
