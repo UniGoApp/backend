@@ -7,7 +7,8 @@ buttonNav.onclick = () => {
     buttonNav.classList.toggle('is-active');
 }
 //Closing menu from anchor
-for(let i=0; i<nav.children.length; i++){
+let countChildrens = nav.children.length;
+for(let i=0; i<countChildrens; i++){
     nav.children[i].onclick = () => {
         buttonNav.classList.toggle('is-active');
     }
@@ -181,7 +182,8 @@ const FAQitems = document.querySelectorAll("#faq button");
 
 FAQitems.forEach(FAQitem => FAQitem.addEventListener('click', function(){
     const itemToggle = FAQitem.getAttribute('expanded');
-    for (i = 0; i < FAQitems.length; i++) {
+    let countItems = FAQitems.length;
+    for (i = 0; i < countItems; i++) {
         FAQitems[i].setAttribute('expanded', 'false');
     }
     if (itemToggle == 'false') {

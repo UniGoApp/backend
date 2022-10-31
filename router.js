@@ -2,25 +2,11 @@ const express = require("express");
 const router = express.Router();
 const path = require('path');
 
-// const maintenance = false;
+const maintenance = true;
 
-// if(maintenance) {
-//   router.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname, '/public/maintenance.html'));
-//   });
-//   router.get("/*", (req, res) => {
-//     res.redirect('/');
-//   });
-// }else{
-  
-// }
 
 router.get("/", (req, res) => {
-  // res.sendFile(path.join(__dirname, '/public/index.html'));
-  res.redirect('/maintenance');
-});
-router.get("/maintenance", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/maintenance.html'));
+  maintenance ? res.sendFile(path.join(__dirname, '/public/maintenance.html')) : res.sendFile(path.join(__dirname, '/public/main.html'));
 });
 router.get("/legal/cookies", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/politicas/cookies.html'));
@@ -40,7 +26,7 @@ router.get("/login", (req, res) => {
 router.get("/admin", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/admin.html'));
 });
-// 301 error
+// 401 error
 router.get("/401", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/401.html'));
 });

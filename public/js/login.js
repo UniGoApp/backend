@@ -71,7 +71,9 @@ const login = () => {
                 document.getElementsByTagName('form')[0].reset();
             }
         })
-        .catch(error => console.log('error', error));
+        .catch(error => {
+            error_box.innerText = "Se ha producido un error inesperado..."
+        });
     }
 };
 
