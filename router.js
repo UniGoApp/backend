@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const path = require('path');
+const multer  = require('multer');
+const upload = multer();
 
+// SERVER OPTIONS
 const maintenance = true;
 
-
+// STATIC RESOURCES
 router.get("/", (req, res) => {
   maintenance ? res.sendFile(path.join(__dirname, '/public/maintenance.html')) : res.sendFile(path.join(__dirname, '/public/main.html'));
 });
@@ -37,6 +40,16 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////////////////////////////////////
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
+// ADMIN SENDGRID MAIL
+const {getEmails, addEmail, removeEmail, updateEmail} = require("./controllers/web/sendgrid");
+// router.get("/api/admin/email", requireSignin, getEmails);
+router.post("/api/mail/inbound", upload.none(), addEmail);
+// router.delete("/api/admin/email", requireSignin, removeEmail);
+// router.put('/api/admin/email', requireSignin, updateEmail);
+// API to answer emails:
+// router.post("/api/mail/send", sendEmail);
+
+// ADMIN CRUD NEWSLETTER
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
 router.get("/api/admin/newsletter", requireSignin, getNewsletter);
 router.post("/api/newsletter", joinNewsletter);

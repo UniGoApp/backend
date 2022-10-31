@@ -1,0 +1,12 @@
+{
+    "emails": [
+        {
+            "id": "email_17032000_164555",
+            "from": "joseto.lopez00@gmail.com",
+            "to": "contacto@unigoapp.es",
+            "subject": "Asunto",
+            "text": "Contenido",
+            "date": "17/03/2000, 16:45:55"
+        }
+    ]
+}
