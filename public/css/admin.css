@@ -603,29 +603,6 @@ div.supermenuContainer > div.supermenu > p.shown{
 #imagenes-universidades img{
     max-width: 100px;
 }
-#imagenes-universidades div.uni-default{
-    background-color: var(--white);
-    border: 1px solid lightgray;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    
-}
-#imagenes-universidades div.uni-default svg{
-    fill: #cbcbcb;
-    transition: fill .3s;
-}
-#imagenes-universidades div.uni-default:hover svg{
-    fill: var(--verde);
-}
-#imagenes-universidades div.uni-default path{
-    transform: scale(2.5);
-}
-#imagenes-universidades div.uni-default > p{
-    margin-top: -20px;
-}
 /******** TAB AJUSTES ********/
 
 

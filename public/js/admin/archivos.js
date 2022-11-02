@@ -124,6 +124,7 @@ fetch('/api/destinos', requestOptions)
         universidades.innerText = uniscount;
         original_destinos_json = JSON.stringify(result.data, null, 4);
         destinos_txt = original_destinos_json;
+        mostrarImagenes();
         textarea_destinos.value = original_destinos_json;
     }
 })
@@ -198,37 +199,26 @@ function guardar_destinos(){
 }
 
 // IMAGENES DE UNIVERSIDADES EN TAB "IMAGENES"
-const imagenesContainer = document.querySelector('#imagenes-universidades > div');
-if(!destinos_txt){
-    imagenesContainer.innerText = "Error al cargar los escudos.";
-}else{
-    imagenesContainer.innerHTML="";
-    const escudosUnisJSON = JSON.parse(destinos_txt);
-    console.log('escudosUnis :>> ', escudosUnisJSON);
-    escudosUnisJSON.array.forEach(com => {
-        com.universidades.array.forEach(uni => {
-    
-            let imageCard = document.createElement('div');
-            let text = document.createElement('p');
-            text.innerText = uni.sigla + ' - ' + com.nombre;
-            let image = document.createElement('img');
-            image.src = './img/universidades/'+uni.escudo;
-            image.alt = 'escudo universidad '+uni.sigla;
-            imageCard.appendChild(image);
-            imageCard.appendChild(text);
-            imagenesContainer.appendChild(imageCard);
+function mostrarImagenes(){
+    const imagenesContainer = document.querySelector('#imagenes-universidades > div');
+    if(!destinos_txt){
+        imagenesContainer.innerText = "Error al cargar los escudos.";
+    }else{
+        imagenesContainer.innerHTML="";
+        const escudosUnisJSON = JSON.parse(destinos_txt);
+        escudosUnisJSON.comunidades.forEach(com => {
+            com.universidades.forEach(uni => {
+                let imageCard = document.createElement('div');
+                let text = document.createElement('p');
+                text.innerText = uni.sigla + ' - ' + com.nombre;
+                let image = document.createElement('img');
+                image.src = './img/universidades/'+uni.escudo;
+                image.alt = 'escudo universidad '+uni.sigla;
+                imageCard.appendChild(image);
+                imageCard.appendChild(text);
+                imagenesContainer.appendChild(imageCard);
+            });
         });
-    });
-    let imageAdd = document.createElement('div');
-    imageAdd.classList.add('uni-default');
-    imageAdd.onclick = () => {
-        //show post form
-        console.log('trying to post escudos');
     }
-    let text = document.createElement('p');
-    text.innerText = 'Añadir nuevo escudo';
-    let image = '<svg xmlns="http://www.w3.org/2000/svg" height="120" width="120" fill="#cbcbcb"><path d="M22.65 34h3v-8.3H34v-3h-8.35V14h-3v8.7H14v3h8.65ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Zm.05-3q7.05 0 12-4.975T41 23.95q0-7.05-4.95-12T24 7q-7.05 0-12.025 4.95Q7 16.9 7 24q0 7.05 4.975 12.025Q16.95 41 24.05 41ZM24 24Z"/></svg>';
-    imageAdd.appendChild(image);
-    imageAdd.appendChild(text);
-    imagenesContainer.appendChild(imageAdd);
 }
+
