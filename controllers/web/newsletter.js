@@ -99,7 +99,7 @@ const removeNewsletter = async (req, res) => {
             if (error) {
                 return res.status(200).json({
                     error: true,
-                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.',
+                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a contacto@unigoapp.es.',
                     data: ''
                 });
             }

@@ -92,11 +92,11 @@ function guardar_newsletter(){
     })
     .catch(error => {
         const noti = document.querySelector('#notifications-wrapper > .notification-error');
-            noti.style.display = 'flex';
-            noti.querySelector('p').innerText = result.info;
-            setTimeout(() => {
-                noti.style.display = 'none';
-            }, 5000);
+        noti.style.display = 'flex';
+        noti.querySelector('p').innerText = error;
+        setTimeout(() => {
+            noti.style.display = 'none';
+        }, 5000);
     });
 
     descartarNewsletter.classList.add('disabled');
@@ -110,7 +110,7 @@ let textarea_destinos = document.getElementById('destinos_json');
 let destinos_txt, original_destinos_json = '';
 fetch('/api/destinos', requestOptions)
 .then(response => response.json())
-.then(result => {
+.then(result => { 
     if(result.error){
         universidades.innerText = 0;
         textarea_destinos.value = result.info;
@@ -118,7 +118,7 @@ fetch('/api/destinos', requestOptions)
         document.getElementById('guardar-destinos').style.display = "none";
     }else{
         let uniscount = 0;
-        result.data.forEach(com => {
+        result.data.comunidades.forEach(com => {
             uniscount += com.universidades.length;
         });
         universidades.innerText = uniscount;
@@ -185,7 +185,7 @@ function guardar_destinos(){
     .catch(error => {
         const noti = document.querySelector('#notifications-wrapper > .notification-error');
             noti.style.display = 'flex';
-            noti.querySelector('p').innerText = result.info;
+            noti.querySelector('p').innerText = error;
             setTimeout(() => {
                 noti.style.display = 'none';
             }, 5000);

@@ -140,12 +140,14 @@ h6{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     z-index: 1;
+    height: 100vh;
 }
 #page-wrapper > div{
-    display:none;
+    display: none;
 }
 #page-wrapper > div.visible{
     display: block;
+    height: calc(100% - 16px - 22px);
 }
 #page-wrapper > div > h1.section-title::after{
     content: '';
@@ -511,9 +513,50 @@ div.supermenuContainer > div.supermenu > p.shown{
     border-bottom: 3px solid var(--verde);
 }
 
-/******** TAB BBDD ********/
-
-
+/******** TAB CORREOS ********/
+#correo > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+}
+#correo > div > section{
+    flex-basis: 49%;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+#email-list tr{
+    cursor: pointer;
+    transition: all .3s;
+}
+#email-list tr:hover{
+    background-color: var(--light);
+}
+#email-list tr.visible{
+    background-color: var(--verde);
+}
+#email-view{
+    margin-top: 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 8px;
+}
+#email-actions{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+#email-actions > *{
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: var(--verde);
+    color: var(--black);
+    cursor: pointer;
+}
 /******** TAB ARCHIVOS ********/
 #archivos textarea{
     width: 100%;

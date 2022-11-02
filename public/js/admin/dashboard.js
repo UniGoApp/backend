@@ -3,7 +3,7 @@ const summary = document.getElementsByClassName('summary')[0];
 const usuarios = summary.children[0].getElementsByTagName('span')[0];
 const universidades = summary.children[1].getElementsByTagName('span')[0];
 const viajes = summary.children[2].getElementsByTagName('span')[0];
-const mensajes = summary.children[3].getElementsByTagName('span')[0];
+const correos = summary.children[3].getElementsByTagName('span')[0];
 
 const requestOptions = {
     method: 'GET',
@@ -86,6 +86,87 @@ const refreshDashboard = () => {
         let target = document.querySelector('#bbdd-usuarios > p.tab-msg');
         target.textContent="Error al cargar los usuarios del servidor.";
         document.getElementById('user-menu').style.display = "none";
+    });
+
+    fetch('/api/admin/email', requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        //Msg target
+        const emailContainer = document.getElementById('correo');
+        let tabmsg = emailContainer.getElementsByClassName('tab-msg')[0];
+        const target = document.getElementById('email-list');
+        //Data targets
+        const thead = target.getElementsByTagName('thead')[0];
+        const tbody = target.getElementsByTagName('tbody')[0];
+        //Remove previous data:
+        thead.innerHTML="";
+        tbody.innerHTML="";
+        if(result.error){
+            correos.innerText = 0;
+            tabmsg.innerText = result.info;
+            emailContainer.querySelector('div').style.display = 'none';
+        }else{
+            correos.innerText = result.data.emails.length;
+            //Table headings
+            const trhead = document.createElement('tr');
+            const keys = Object.keys(result.data.emails[0]);
+            keys.forEach( key => {
+                if(key==='from' || key==='subject' || key==='date') {
+                    const th = document.createElement('th');
+                    th.innerText = key;
+                    trhead.appendChild(th);
+                }
+            });
+            thead.appendChild(trhead);
+
+            //Table content
+            result.data.emails.forEach(msg => {
+                const trbody = document.createElement('tr');
+                for(let d = 0; d < keys.length; d++){
+                    if(keys[d]==='from' || keys[d]==='subject' || keys[d]==='date'){
+                        const td = document.createElement('td');
+                        let key = keys[d];
+                        td.innerText = msg[key];
+                        trbody.appendChild(td);
+                    }
+                }
+                trbody.onclick = (e) => {
+                    const show = document.getElementById('email-content');
+                    show.innerHTML = "";
+                    let clicked = e.target;
+                    if(e.target.nodeName === "TD"){
+                        clicked = e.target.parentNode;
+                    }
+                    clicked.parentNode.querySelectorAll('tr').forEach(e => {
+                        e.classList.remove('visible');
+                    });
+                    clicked.classList.add('visible');
+                    const data = clicked.nextSibling.querySelectorAll('td');
+                    let count = 0;
+                    const dataTypes = ['ID', 'From', 'To', 'Asunto', 'Contenido', 'Date'];
+                    data.forEach(e => {
+                        show.innerHTML += `<p><b>${dataTypes[count]}:</b> ${e.innerText}</p>`;
+                        count++;
+                    });
+                };
+                tbody.appendChild(trbody);
+                //hidden with all data
+                const trbodyhidden = document.createElement('tr');
+                trbodyhidden.style.display = "none";
+                for(let d = 0; d < keys.length; d++){
+                    const td = document.createElement('td');
+                    let key = keys[d];
+                    td.innerText = msg[key];
+                    trbodyhidden.appendChild(td);
+                }
+                tbody.appendChild(trbodyhidden);
+            });
+        }
+    })
+    .catch(error => {
+        let target = document.querySelector('#correo > p.tab-msg');
+        target.textContent="Error al cargar los correos del servidor.";
+        console.log('error :>> ', error);
     });
 
     fetch('/api/admin/viajes', requestOptions)
@@ -187,50 +268,6 @@ const refreshDashboard = () => {
     .catch(error => {
         let target = document.querySelector('#bbdd-reservas > p.tab-msg');
         target.textContent="Error al cargar las reservas del servidor.";
-    });
-
-    fetch('/api/admin/mensajes', requestOptions)
-    .then(response => response.json())
-    .then(result => {
-        //Msg target
-        const tabmsg = document.querySelector('#bbdd-mensajes > p.tab-msg');
-        if(result.error){
-            mensajes.innerText = 0;
-            tabmsg.innerText = result.info;
-            document.querySelector('#bbdd-mensajes > table').style.display = 'none';
-        }else{
-            mensajes.innerText = result.data.length;
-            //Data targets
-            const thead = document.getElementById('bbdd-mensajes').getElementsByTagName('thead')[0];
-            const tbody = document.getElementById('bbdd-mensajes').getElementsByTagName('tbody')[0];
-            //Remove previous data:
-            thead.innerHTML="";
-            tbody.innerHTML="";
-            //Table headings
-            const trhead = document.createElement('tr');
-            const keys = Object.keys(result.data[0]);
-            keys.forEach( key => {
-                const th = document.createElement('th');
-                th.innerText = key;
-                trhead.appendChild(th);
-            });
-            thead.appendChild(trhead);
-            //Table content
-            result.data.forEach(msg => {
-                const trbody = document.createElement('tr');
-                for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbody.appendChild(td);
-                }
-                tbody.appendChild(trbody);
-            });
-        }
-    })
-    .catch(error => {
-        let target = document.querySelector('#bbdd-mensajes > p.tab-msg');
-        target.textContent="Error al cargar los mensajes del servidor.";
     });
 };
 

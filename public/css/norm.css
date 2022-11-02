@@ -87,6 +87,9 @@ i.archivos{
 i.imagenes{
   background-image: url(../img/icons/images.svg);
 }
+i.correo{
+  background-image: url(../img/icons/mails.svg);
+}
 i.bbdd{
   background-image: url(../img/icons/bbdd.svg);
 }

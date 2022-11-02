@@ -71,21 +71,20 @@ const addEmail = async (req, res) => {
         if(error){
             return res.status(200).json({
                 error: true,
-                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                info: 'Ha ocurrido un error al leer el archivo.',
                 data: ''
             });
         }
-        let data = JSON.parse(data);
-        data.emails.push(newEmail);
-        fs.writeFile(jsonDir, JSON.stringify(data, null, 2), (error) => {
+        let prevData = JSON.parse(data);
+        prevData.emails.push(newEmail);
+        fs.writeFile(jsonDir, JSON.stringify(prevData, null, 2), (error) => {
             if (error) {
                 return res.status(200).json({
                     error: true,
-                    info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                    info: 'Ha ocurrido un error al escribir el archivo.',
                     data: ''
                 });
             }
-            
             return res.status(200).send();
         });
     });
@@ -93,21 +92,20 @@ const addEmail = async (req, res) => {
 };
 
 const removeEmail = async (req, res) => {
-    let emailToRemove = req.body.email;
+    let emailToRemove = req.body.email_id;
     if(!emailToRemove) return;
 
     fs.readFile(jsonDir, 'utf8', (error, data) => {
         if(error){
             return res.status(200).json({
                 error: true,
-                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                info: 'Ha ocurrido un error al leer el archivo.',
                 data: ''
             });
         }
         let finalData = JSON.parse(data);
-
-        let index = finalData.emails.indexOf(emailToRemove);
-        if(index === -1) return res.status(200).json({error: true, info: 'No te encontramos en nuestra lista de noticias, si quieres volver a suscribirte puedes hacerlo desde la web. Y si no, ya está todo listo.', data: ''});
+        let index = finalData.emails.findIndex(email => email.id === emailToRemove)
+        if(index === -1) return res.status(200).json({error: true, info: 'No existe el correo solicitado.', data: ''});
 
         finalData.emails.splice(index, 1);
 
@@ -115,45 +113,24 @@ const removeEmail = async (req, res) => {
             if (error) {
                 return res.status(200).json({
                     error: true,
-                    info: 'Ha ocurrido un error, por favor inténtelo de nuevo más tarde... Si el error persiste contacta con nosotros a soporte@unigoapp.es.',
+                    info: 'Ha ocurrido un error al escribir el archivo.',
                     data: ''
                 });
             }
             return res.status(200).json({
                 error: false,
-                info: '¡Te echaremos de menos!',
+                info: 'Email borrado correctamente.',
                 data: ''
             });
         });
     });
 };
 
-const updateEmail = async (req, res) => {
-    if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
-        let newContent = req.body;
-        if(!newContent) return;
-        
-        fs.writeFile(jsonDir, JSON.stringify(newContent, null, 2), (error) => {
-            if (error) {
-                return res.status(200).json({
-                    error: true,
-                    info: 'Error al escribir en el archivo.',
-                    data: ''
-                });
-            }
-            return res.status(200).json({
-                error: false,
-                info: 'Archivo modificado correctamente.',
-                data: ''
-            });
-        });
-    }else{
-        return res.status(403).json({
-            error: true,
-            info: 'Acceso no autorizado',
-            data: ''
-        });
-    }
+const sendEmails = async (req,res) => {
+
+};
+const answerEmail = async (req,res) => {
+
 };
 
-module.exports = {getEmails, addEmail, removeEmail, updateEmail};
+module.exports = {getEmails, addEmail, removeEmail, sendEmails, answerEmail};

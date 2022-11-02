@@ -42,6 +42,10 @@
                     <p>DASHBOARD</p>
                 </li>
                 <li onclick="tabsHandler(this)">
+                    <i class="correo"></i>
+                    <p>Correo</p>
+                </li>
+                <li onclick="tabsHandler(this)">
                     <i class="bbdd"></i>
                     <p>Bbdd</p>
                 </li>
@@ -68,6 +72,7 @@
             <span></span>
             <ul id="menu-mobile">
                 <li onclick="tabsHandlerMobile(this)" class="active">DASHBOARD</li>
+                <li onclick="tabsHandlerMobile(this)">Correo</li>
                 <li onclick="tabsHandlerMobile(this)">Bbdd</li>
                 <li onclick="tabsHandlerMobile(this)">archivos</li>
                 <li onclick="tabsHandlerMobile(this)">imagenes</li>
@@ -88,7 +93,7 @@
                 <div><p>Usuarios</p><span>0</span></div>
                 <div><p>Universidades</p><span>0</span></div>
                 <div><p>Viajes</p><span>0</span></div>
-                <div><p>Mensajes</p><span>0</span></div>
+                <div><p>Correos</p><span>0</span></div>
             </section>
             <section class="newsletter">
                 <h3>Newsletter</h3>
@@ -116,13 +121,36 @@
             </section>
         </div>
 
+        <div id="correo">
+            <h1 class="section-title">Correo</h1>
+            <p class="tab-msg"></p>
+            <div>
+                <section id="email-list">
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </section>
+                <section id="email-view">
+                    <div id="email-actions">
+                        <p onclick="borrar()">Borrar</p>
+                        <p onclick="responder()">Responder</p>
+                        <p onclick="reenviar()">Reenviar</p>
+                        <!-- Reenviar al gmail -->
+                    </div>
+                    <div id="email-content"></div>
+                </section>
+            </div>
+        </div>
+
         <div id="bbdd" class="supermenuContainer">
             <h1 class="section-title">Bbdd</h1>
             <div id="bbdd-menu" class="supermenu">
                 <p class="shown">Usuarios</p>
                 <p>Viajes</p>
                 <p>Reservas</p>
-                <p>Mensajes</p>
             </div>
             <div>
                 <section id="bbdd-usuarios">
@@ -166,15 +194,6 @@
                     </div>
                 </section>
                 <section id="bbdd-reservas">
-                    <p class="tab-msg"></p>
-                    <table>
-                        <thead>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </section>
-                <section id="bbdd-mensajes">
                     <p class="tab-msg"></p>
                     <table>
                         <thead>
@@ -346,6 +365,7 @@
     <script src="./js/admin/dashboard.js"></script>
     <script src="./js/admin/usuarios.js"></script>
     <script src="./js/admin/imagenes.js"></script>
+    <script src="./js/admin/correo.js"></script>
     <script src="./js/admin/bbdd.js"></script>
     <script src="./js/admin/archivos.js"></script>
     

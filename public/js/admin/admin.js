@@ -72,4 +72,3 @@ const tabsHandlerMobile = (e) => {
         document.getElementById('burguer-menu').checked = false;
     }, 150);
 };
-

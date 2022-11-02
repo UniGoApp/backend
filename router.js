@@ -41,13 +41,12 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
 // ADMIN SENDGRID MAIL
-const {getEmails, addEmail, removeEmail, updateEmail} = require("./controllers/web/sendgrid");
-// router.get("/api/admin/email", requireSignin, getEmails);
+const { getEmails, addEmail, removeEmail, sendEmails, answerEmail } = require("./controllers/web/mailing");
+router.get("/api/admin/email", requireSignin, getEmails);
 router.post("/api/mail/inbound", upload.none(), addEmail);
-// router.delete("/api/admin/email", requireSignin, removeEmail);
-// router.put('/api/admin/email', requireSignin, updateEmail);
-// API to answer emails:
-// router.post("/api/mail/send", sendEmail);
+router.delete("/api/admin/email", requireSignin, removeEmail);
+// API to answer emails (AWS SES):
+router.post("/api/mail/send", sendEmails);
 
 // ADMIN CRUD NEWSLETTER
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
@@ -58,7 +57,7 @@ router.put('/api/admin/newsletter', requireSignin, updateNewsletter);
 
 // ADMIN CRUD DESTINOS
 const { getDestinosWeb, updateDestinos } = require("./controllers/web/destinos");
-router.get('/api/destinos', getDestinosWeb);
+router.get('/api/destinos', getDestinosWeb); //Not singin required for web use
 router.put('/api/admin/destinos', requireSignin, updateDestinos);
 //No admin crud --> Only modifying through the json archive manually
 
@@ -68,12 +67,6 @@ router.get("/api/admin/usuarios", requireSignin, getUsuarios);
 router.post("/api/admin/usuarios", requireSignin, postUsuarios);
 router.put("/api/admin/usuarios", requireSignin, putUsuarios); 
 router.delete("/api/admin/usuarios", requireSignin, deleteUsuarios);
-
-// ADMIN CRUD MENSAJES
-const { getMensajes, postMensajes, deleteMensajes } = require("./controllers/web/mensajes");
-router.get("/api/admin/mensajes", requireSignin, getMensajes);
-router.post("/api/admin/mensajes", requireSignin, postMensajes);
-router.delete("/api/admin/mensajes", requireSignin, deleteMensajes);
 
 // ADMIN CRUD VIAJES
 const { getViajes, postViajes, putViajes, deleteViajes } = require("./controllers/web/viajes");
