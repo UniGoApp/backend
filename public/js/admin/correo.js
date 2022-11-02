@@ -56,12 +56,22 @@ const responder = () => {
     if(emailContent.innerText == ""){
         return;
     }
-    console.log('responder :>> ', emailContent.innerText);
+    let content = emailContent.getElementsByTagName('p');
+    let id = content[0].innerText;
+    let from = content[1].innerText;
+    //Open modal to answer email
 };
 
 const reenviar = () => {
     if(emailContent.innerText == ""){
         return;
     }
-    console.log('reenviar :>> ', emailContent.innerText);
+    let content = emailContent.getElementsByTagName('p');
+    let id = content[0].innerText;
+    let from = content[1].innerText;
+    let to = content[2].innerText;
+    let asunto = content[3].innerText;
+    let contenido = content[4].innerText;
+    let date = content[5].innerText;
+    window.open(`mailto:uniigooo@gmail.com?subject=Email%20${id}&body=${date}%0D${from}%20-%20${to}%0D%0D${asunto}%0D%0D${contenido}`, '_blank');
 };
