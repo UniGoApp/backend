@@ -57,7 +57,7 @@ const postUsuarios = async (req, res) => {
                 } else {
                     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
                     con.execute(
-                        'INSERT INTO usuarios (`email`,`password`,`username`,`rol`,`phone`) VALUES (?, ?, ?, ?, ?);', [req.body.email, hashedPassword, req.body.username, req.body.rol, req.body.phone], (err, result) => {
+                        'INSERT INTO usuarios (`email`,`password`,`username`,`rol`,`phone`,`rrss`) VALUES (?, ?, ?, ?, ?, ?);', [req.body.email, hashedPassword, req.body.username, req.body.rol, req.body.phone, req.body.rrss], (err, result) => {
                             if (err) console.log('err :>>', err);
                             con.execute(
                                 'SELECT * FROM usuarios WHERE id = ?;', [result.insertId], (err, result2) => {

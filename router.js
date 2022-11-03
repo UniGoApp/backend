@@ -103,10 +103,6 @@ router.get("/api/usuarios/:id", requireSignin, obtenerUsuario);
 router.put("/api/usuarios/:id", requireSignin, modificarUsuario);
 router.delete("/api/usuarios/:id", requireSignin, borrarUsuario);
 
-// MENSAJES
-const { publicarMensaje } = require("./controllers/app/mensajes");
-router.post("/api/mensajes", requireSignin, publicarMensaje);
-
 // VIAJES
 const { obtenerViajes, publicarViajes, modificarViajes, borrarViajes } = require("./controllers/app/viajes");
 router.get("/api/viajes", requireSignin, obtenerViajes);

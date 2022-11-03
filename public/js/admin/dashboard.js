@@ -65,6 +65,9 @@ const refreshDashboard = () => {
                     trhead.appendChild(th);
                 }
             });
+            let thActions = document.createElement('th');
+            thActions.innerText = "Options";
+            trhead.appendChild(thActions);
             thead.appendChild(trhead);
             //Table content
             result.data.forEach(user => {
@@ -78,6 +81,9 @@ const refreshDashboard = () => {
                         trbody.appendChild(td);
                     }
                 }
+                const td = document.createElement('td');
+                td.innerHTML = `<div onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"/></svg></div><div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
+                trbody.appendChild(td);
                 tbody.appendChild(trbody);
             });
         }
@@ -200,10 +206,10 @@ const refreshDashboard = () => {
                 p_salida.innerText = 'Salida: ' + info.salida;
                 card.appendChild(p_salida);
                 const p_origen_destino = document.createElement('p');
-                p_origen_destino.innerText = 'Origen: ' + info.origen + ' | Destino: ' + info.destino;
+                p_origen_destino.innerText = 'Origen: ' + info.origen + ' | Destino (campus): ' + info.id_campus;
                 card.appendChild(p_origen_destino);
                 const p_plazas_precio = document.createElement('p');
-                p_plazas_precio.innerHTML = 'Plazas (ocupadas/totales): ' + info.plazas + '/' + info.totales + ' | <strong>Precio: '+info.precio+'€ </strong>';
+                p_plazas_precio.innerHTML = 'Plazas (ocupadas/totales): ' + info.reservas + '/' + info.plazas + ' | <strong>Precio: '+info.precio+'€ </strong>';
                 card.appendChild(p_plazas_precio);
                 const p_observaciones = document.createElement('p');
                 p_observaciones.innerText = 'Observaciones: ' + info.observaciones;
@@ -229,11 +235,12 @@ const refreshDashboard = () => {
     fetch('/api/admin/reservas', requestOptions)
     .then(response => response.json())
     .then(result => {
+        const section = document.getElementById('bbdd-reservas');
         //Msg target
-        const tabmsg = document.getElementById('bbdd-reservas').getElementsByTagName('tab-msg')[0];
+        const tabmsg = section.getElementsByTagName('tab-msg')[0];
         //Data targets
-        const thead = document.getElementById('bbdd-reservas').getElementsByTagName('thead')[0];
-        const tbody = document.getElementById('bbdd-reservas').getElementsByTagName('tbody')[0];
+        const thead = section.getElementsByTagName('thead')[0];
+        const tbody = section.getElementsByTagName('tbody')[0];
         //Remove previous data:
         thead.innerHTML="";
         tbody.innerHTML="";
@@ -249,11 +256,12 @@ const refreshDashboard = () => {
                 th.innerText = key;
                 trhead.appendChild(th);
             });
+            let thActions = document.createElement('th');
+            thActions.innerText = "Options";
+            trhead.appendChild(thActions);
             thead.appendChild(trhead);
-
             //Table content
             result.data.forEach(msg => {
-                //DATA
                 const trbody = document.createElement('tr');
                 for(let d = 0; d < keys.length; d++){
                     const td = document.createElement('td');
@@ -261,6 +269,9 @@ const refreshDashboard = () => {
                     td.innerText = msg[key];
                     trbody.appendChild(td);
                 }
+                const td = document.createElement('td');
+                td.innerHTML = `<div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
+                trbody.appendChild(td);
                 tbody.appendChild(trbody);
             });
         }
