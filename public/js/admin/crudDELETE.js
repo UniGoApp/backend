@@ -79,11 +79,6 @@ const showDeleteForm = (e) => {
                 opt_def_v.disabled = true;
                 opt_def_v.innerText = 'Elija un viaje';
                 select_viaje.appendChild(opt_def_v);
-                // dataViajes.data.forEach(v => {
-                //     if(v.estado == select_estado.value){
-                        
-                //     }
-                // });
                 let num_viajes = dataViajes.data.length;
                 for(i=0; i<num_viajes; i++){
                     if(dataViajes.data[i].estado == select_estado.value){

@@ -91,7 +91,7 @@ const postUsuarios = async (req, res) => {
 const putUsuarios = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'UPDATE usuarios SET `email` = ?,`password` = ?,`username` = ?,`rol` = ?,`phone` = ? WHERE id = ?;', [req.body.email, req.body.password, req.body.username, req.body.rol, req.body.phone, req.body.id], (err, result) => {
+            'UPDATE usuarios SET `email` = ?,`username` = ?,`rol` = ?,`phone` = ?,`picture` = ?,`resetCode` = ?,`creation_time` = ?,`rrss` = ?,`id_preferred_university` = ? WHERE id = ?;', [req.body.email, req.body.username, req.body.rol, req.body.phone, req.body.picture, req.body.resetCode, req.body.creation_time, req.body.rrss, req.body.id_preferred_university, req.body.id], (err, result) => {
                 if (err) console.log('err :>>', err);
                 con.execute(
                     'SELECT * FROM usuarios WHERE id = ?;', [req.body.id], (err, result2) => {

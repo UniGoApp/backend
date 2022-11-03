@@ -61,10 +61,10 @@ const postViajes = async (req, res) => {
 const putViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'UPDATE viajes SET `estado` = ? WHERE id = ?;', [req.body.estado, req.body.viaje_id], (err, result) => {
+            'UPDATE viajes SET `observaciones`= ?,`estado` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.body.id], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
-                    'SELECT * FROM `viajes` WHERE id = ?;', [req.body.id], (err, result2) => {
+                    'SELECT * FROM viajes WHERE id = ?;', [req.body.id], (err, result2) => {
                         if (err) console.log(err);
                         if(result2.length === 0) return res.status(200).json({
                             error: true,

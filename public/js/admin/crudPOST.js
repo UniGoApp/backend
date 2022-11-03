@@ -2,7 +2,6 @@
 const showPostForm = (e) => {
 
     if(e.nodeName != 'SPAN') return;
-    // const target = e.parentNode.parentNode;
     const tab = e.parentNode.parentNode.id;
     const tabName = tab.split('-')[1].toLowerCase();
 
