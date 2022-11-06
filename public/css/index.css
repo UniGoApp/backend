@@ -598,6 +598,26 @@ section{
 .unsuscribe-link > a:hover{
     color: var(--azul)!important;
 }
+/* OTHER APPS */
+#other_apps{
+    margin-top: 50px;
+    padding: 50px 0;
+    background-color: var(--verde);
+    color: var(--black);
+}
+#other_apps > div{
+    width: 85%;
+    margin: 30px auto 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+#other_apps > div > a{
+    width: 200px;
+    height: auto;
+}
 /* FAQ */
 #faq{
     padding: 8rem 4rem 2rem 4rem;
@@ -690,8 +710,6 @@ section{
 #faq .faq-content p {
     margin: 1.2em 0.5em;
 }
-
-
 
 /* STARS */
 #stars > div{

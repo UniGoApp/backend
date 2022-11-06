@@ -11,6 +11,7 @@
     /* MAIN */
     #inicio{
         margin: 0;
+        height: 40vh;
     }
     #inicio > .inicio-info{
         flex: 1;
