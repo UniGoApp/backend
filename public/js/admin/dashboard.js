@@ -237,7 +237,7 @@ const refreshDashboard = () => {
     .then(result => {
         const section = document.getElementById('bbdd-reservas');
         //Msg target
-        const tabmsg = section.getElementsByTagName('tab-msg')[0];
+        const tabmsg = section.getElementsByClassName('tab-msg')[0];
         //Data targets
         const thead = section.getElementsByTagName('thead')[0];
         const tbody = section.getElementsByTagName('tbody')[0];
@@ -245,7 +245,7 @@ const refreshDashboard = () => {
         thead.innerHTML="";
         tbody.innerHTML="";
         if(result.error){
-            tabmsg.innerText = dataUsuarios.info;
+            tabmsg.innerText = result.info;
             document.querySelector('#bbdd-reservas > table').style.display = 'none';
         }else{
             //Table headings
