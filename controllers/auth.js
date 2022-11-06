@@ -45,8 +45,8 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    con.execute('SELECT * FROM `usuarios` WHERE `email` = ?', [email], function (err, result) {
-        if (err) return res.json({error: "Unexpected error"});
+    con.execute('SELECT * FROM usuarios WHERE `email` = ?;', [email], function (err, result) {
+        if (err) return res.status(400).json({error: "Unexpected error"});
         if(result.length === 0){
           return res.status(404).json({error: "User not found"});
         } else {
@@ -60,7 +60,6 @@ const signin = async (req, res) => {
           const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
             expiresIn: "7d",
           });
-          
           res.status(200).json({
             token,
             user: result[0],
@@ -69,7 +68,7 @@ const signin = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send("Error. Try again.");
+    return res.json({error: "Error. Try again."});
   }
 };
 
