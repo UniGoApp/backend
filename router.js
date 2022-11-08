@@ -5,7 +5,7 @@ const multer  = require('multer');
 const upload = multer();
 
 // SERVER OPTIONS
-const maintenance = false;
+const maintenance = true;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {
@@ -43,7 +43,7 @@ const { requireSignin } = require('./controllers/middleware');
 // ADMIN SENDGRID MAIL
 const { getEmails, addEmail, removeEmail, sendEmails, answerEmail } = require("./controllers/web/mailing");
 router.get("/api/admin/email", requireSignin, getEmails);
-router.post("/api/mail/inbound", upload.none(), addEmail);
+router.post("/api/mail/inbound", upload.none(), addEmail); //From SendGrid
 router.delete("/api/admin/email", requireSignin, removeEmail);
 // API to answer emails (AWS SES):
 router.post("/api/mail/send", sendEmails);

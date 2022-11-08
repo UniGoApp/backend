@@ -40,7 +40,7 @@ const getEmails = async (req, res) => {
 const addEmail = async (req, res) => {
     
     const body = req.body;
-    if(!req.body) return;
+    if(!body) return;
 
     console.log(`From: ${body.from}`);
     console.log(`To: ${body.to}`);
