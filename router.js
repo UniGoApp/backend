@@ -5,7 +5,7 @@ const multer  = require('multer');
 const upload = multer();
 
 // SERVER OPTIONS
-const maintenance = true;
+const maintenance = false;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {
