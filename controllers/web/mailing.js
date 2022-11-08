@@ -38,7 +38,7 @@ const getEmails = async (req, res) => {
 };
 
 const addEmail = async (req, res) => {
-    
+    console.log('nuevoCorreo :>> ', req.body);
     const body = req.body;
     if(!body) return;
 

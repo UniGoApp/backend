@@ -47,10 +47,8 @@ const signin = async (req, res) => {
     const { email, password } = req.body;
     con.execute('SELECT * FROM usuarios WHERE `email` = ?;', [email], function (err, result) {
         if (err) {
-          console.log('AQUUIIII err :>> ', err);
           return res.status(400).json({error: "Unexpected error"});
         }
-        console.log('estoy entrando :>> ');
         if(result.length === 0){
           return res.status(404).json({error: "User not found"});
         } else {
