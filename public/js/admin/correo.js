@@ -6,20 +6,15 @@ const borrar = () => {
         return;
     }
     if (confirm("¿Desea borrar el email?") == true) {
-        let email1 = tbody.querySelector('tr.visible');
-        let id = emailContent.getElementsByTagName('p')[0].innerText;
-        let [name, value] = id.split(': ');
-
-        var raw = JSON.stringify({
-            "email_id": value
-        });
+        const email = tbody.querySelector('tr.visible');
+        let email_id = tbody.querySelector('tr.visible > td').innerText;
+        console.log('email_id :>> ', email_id);
         var requestOptions = {
             method: 'DELETE',
             headers: myHeaders,
-            body: raw,
             redirect: 'follow'
         };
-        fetch('/api/admin/email', requestOptions)
+        fetch(`/api/admin/email/${email_id}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result.error){
@@ -37,7 +32,7 @@ const borrar = () => {
                     noti.style.display = 'none';
                 }, 5000);
                 emailContent.innerHTML = "";
-                email1.style.display = "none";
+                email.style.display = "none";
             }
         }).catch(error => {
             const noti = document.querySelector('#notifications-wrapper > .notification-error');
@@ -56,22 +51,12 @@ const responder = () => {
     if(emailContent.innerText == ""){
         return;
     }
-    let content = emailContent.getElementsByTagName('p');
-    let id = content[0].innerText;
-    let from = content[1].innerText;
+    let fullContent = emailContent.innerText;
+    let fromContent = fullContent.split('From: ')[1];
+    let start_of_from = fromContent.split('<')[1];
+    let final_from = start_of_from.split('>')[0];
+    
     //Open modal to answer email
-};
 
-const reenviar = () => {
-    if(emailContent.innerText == ""){
-        return;
-    }
-    let content = emailContent.getElementsByTagName('p');
-    let id = content[0].innerText;
-    let from = content[1].innerText;
-    let to = content[2].innerText;
-    let asunto = content[3].innerText;
-    let contenido = content[4].innerText;
-    let date = content[5].innerText;
-    window.open(`mailto:uniigooo@gmail.com?subject=Email%20${id}&body=${date}%0D${from}%20-%20${to}%0D%0D${asunto}%0D%0D${contenido}`, '_blank');
+    
 };

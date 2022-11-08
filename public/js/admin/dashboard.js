@@ -11,7 +11,7 @@ const requestOptions = {
     credentials: "same-origin"
 };
 
-let dataUsuarios, dataViajes, dataUniversidades = '';
+let dataUsuarios, dataViajes = '';
 
 const fillNewsletterTable = (info) => {
     const headerNewsletter  = document.querySelector('.newsletter > div > aside > table > thead > tr > th');
@@ -94,7 +94,7 @@ const refreshDashboard = () => {
         document.getElementById('user-menu').style.display = "none";
     });
 
-    fetch('/api/admin/email', requestOptions)
+    fetch('/api/admin/emails', requestOptions)
     .then(response => response.json())
     .then(result => {
         //Msg target
@@ -112,33 +112,27 @@ const refreshDashboard = () => {
             tabmsg.innerText = result.info;
             emailContainer.querySelector('div').style.display = 'none';
         }else{
-            correos.innerText = result.data.emails.length;
+            correos.innerText = result.data.length;
             //Table headings
             const trhead = document.createElement('tr');
-            const keys = Object.keys(result.data.emails[0]);
-            keys.forEach( key => {
-                if(key==='from' || key==='subject' || key==='date') {
-                    const th = document.createElement('th');
-                    th.innerText = key;
-                    trhead.appendChild(th);
-                }
-            });
+            const th = document.createElement('th');
+            th.innerText = 'Key';
+            trhead.appendChild(th);
             thead.appendChild(trhead);
 
-            //Table content
-            result.data.emails.forEach(msg => {
+            // Table content
+            result.data.forEach( s3obj => {
+                const name = s3obj.Key.split('/')[1];
+
                 const trbody = document.createElement('tr');
-                for(let d = 0; d < keys.length; d++){
-                    if(keys[d]==='from' || keys[d]==='subject' || keys[d]==='date'){
-                        const td = document.createElement('td');
-                        let key = keys[d];
-                        td.innerText = msg[key];
-                        trbody.appendChild(td);
-                    }
-                }
+                const td = document.createElement('td');
+                td.innerText = name;
+                trbody.appendChild(td);
+
                 trbody.onclick = (e) => {
                     const show = document.getElementById('email-content');
-                    show.innerHTML = "";
+                    let loader = `<div class="boxLoading"><div></div><div></div></div>`;
+                    show.innerHTML = loader;
                     let clicked = e.target;
                     if(e.target.nodeName === "TD"){
                         clicked = e.target.parentNode;
@@ -147,25 +141,22 @@ const refreshDashboard = () => {
                         e.classList.remove('visible');
                     });
                     clicked.classList.add('visible');
-                    const data = clicked.nextSibling.querySelectorAll('td');
-                    let count = 0;
-                    const dataTypes = ['ID', 'From', 'To', 'Asunto', 'Contenido', 'Date'];
-                    data.forEach(e => {
-                        show.innerHTML += `<p><b>${dataTypes[count]}:</b> ${e.innerText}</p>`;
-                        count++;
+                    //Get email info
+                    fetch(`/api/admin/email/${clicked.innerText}`, requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        show.innerHTML="";
+                        if(result.error){
+                            show.innerText = result.info;
+                        }
+                        show.innerText = result.data;
+                    })
+                    .catch(error => {
+                        show.textContent = "Error al cargar el correo del servidor.";
+                        console.log('error :>> ', error);
                     });
                 };
                 tbody.appendChild(trbody);
-                //hidden with all data
-                const trbodyhidden = document.createElement('tr');
-                trbodyhidden.style.display = "none";
-                for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbodyhidden.appendChild(td);
-                }
-                tbody.appendChild(trbodyhidden);
             });
         }
     })

@@ -98,6 +98,10 @@ i.ajustes{
 }
 i.exit{
   background-image: url(../img/icons/exit.svg);
+  transition: all .4s;
+}
+li:hover > i.exit{
+  background-image: url(../img/icons/exit-black.svg);
 }
 i.right{
   background-image: url(../img/icons/right.svg);

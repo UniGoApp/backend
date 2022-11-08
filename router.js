@@ -40,13 +40,11 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////////////////////////////////////
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
-// ADMIN SENDGRID MAIL
-const { getEmails, addEmail, removeEmail, sendEmails, answerEmail } = require("./controllers/web/mailing");
-router.get("/api/admin/email", requireSignin, getEmails);
-router.post("/api/mail/inbound", upload.any(), addEmail); //From SendGrid
-router.delete("/api/admin/email", requireSignin, removeEmail);
-// API to answer emails (AWS SES):
-router.post("/api/mail/send", sendEmails);
+// ADMIN MAIL
+const { getEmails, getEmail, deleteEmail } = require("./controllers/web/mailing");
+router.get("/api/admin/emails", requireSignin, getEmails);
+router.get("/api/admin/email/:id", requireSignin, getEmail);
+router.delete("/api/admin/email/:id", requireSignin, deleteEmail);
 
 // ADMIN CRUD NEWSLETTER
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
