@@ -10,7 +10,7 @@ a{
     color: var(--azul)!important;
 }
 body{
-    background-color: var(--white);
+    background-color: #fff;
 }
 body, header, main, footer{
     z-index: 1;
