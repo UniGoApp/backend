@@ -28,15 +28,18 @@ const getViajes = async (req, res) => {
 
 const postViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+        let dateTime = new Date().toJSON().split('T');
+        let date = dateTime[0].replaceAll('-','');
+        let time = dateTime[1].split('.')[0].replaceAll(':','');
+        let id = `v_${date}_${time}`;
         con.execute(
-            'INSERT INTO viajes (`id_usuario`, `origen`,`id_campus`,`precio`,`plazas`,`salida`,`observaciones`,`estado`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);', [req.body.id_usuario, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
+            'INSERT INTO viajes (`id`, `id_usuario`, `origen`,`id_campus`,`precio`,`plazas`,`salida`,`observaciones`,`estado`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [id, req.body.id_usuario, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
-                    'SELECT * FROM viajes WHERE id = ?;', [result.insertId], (err, result2) => {
-                        if (err) console.log(err);
-                        if(result2.length === 0) return res.status(200).json({
+                    'SELECT * FROM viajes WHERE id = ?;', [id], (err, result2) => {
+                        if(err || result2.length === 0) return res.status(200).json({
                             error: true,
-                            info: 'No se encuentra el viaje con id: ' + result.insertId + '.',
+                            info: 'No se encuentra el viaje con id: ' + id + '.',
                             data: ''
                         });
                         return res.status(200).json({
@@ -61,14 +64,14 @@ const postViajes = async (req, res) => {
 const putViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'UPDATE viajes SET `observaciones`= ?,`estado` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.body.id], (err, result) => {
+            'UPDATE viajes SET `observaciones`= ?,`estado` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.params.id], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
-                    'SELECT * FROM viajes WHERE id = ?;', [req.body.id], (err, result2) => {
+                    'SELECT * FROM viajes WHERE id = ?;', [req.params.id], (err, result2) => {
                         if (err) console.log(err);
                         if(result2.length === 0) return res.status(200).json({
                             error: true,
-                            info: 'No se encuentra el viaje con id: ' + req.body.id + '.',
+                            info: 'No se encuentra el viaje con id: ' + req.params.id + '.',
                             data: ''
                         });
                         return res.status(200).json({
@@ -92,11 +95,11 @@ const putViajes = async (req, res) => {
 const deleteViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'DELETE FROM viajes WHERE `id` = ?;', [req.body.id], (err, result) => {
+            'DELETE FROM viajes WHERE `id` = ?;', [req.params.id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
-                        info: 'Viaje no se ha podido borrar. Por favor vuelva a intentarlo mas tarde o contacte con contaco@unigoapp.es.',
+                        info: 'Este viaje no se ha podido borrar.',
                         data: ''
                     });
                 }

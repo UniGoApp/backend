@@ -104,21 +104,15 @@ const deleteData = (e) => {
     const raw_data = e.parentNode.parentNode.parentNode.querySelector('.modal-container-body > p').innerText;
     if(raw_data == '') return;
     const data = JSON.parse(raw_data);
-    const deleted_id = data.id;
     // Url en funcion del h4
     let modal_id = document.querySelector('#modalDelete h4').innerText.toLowerCase().split(':')[0]+'s';
     
-    const url = `/api/admin/${modal_id}`;
-    var raw = JSON.stringify({
-        "id": deleted_id
-    });
+    const url = `/api/admin/${modal_id}/${data.id}`;
     var requestOptions = {
         method: 'DELETE',
         headers: myHeaders,
-        body: raw,
         redirect: 'follow'
     };
-    
     fetch(url, requestOptions)
     .then(response => response.json())
     .then(result => {

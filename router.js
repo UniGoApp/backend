@@ -39,7 +39,7 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
 // ADMIN MAIL
-const { getEmails, getEmail, deleteEmail } = require("./controllers/web/mailing");
+const { getEmails, getEmail, deleteEmail } = require("./controllers/web/AWSmails");
 router.get("/api/admin/emails", requireSignin, getEmails);
 router.get("/api/admin/email/:id", requireSignin, getEmail);
 router.delete("/api/admin/email/:id", requireSignin, deleteEmail);
@@ -57,25 +57,30 @@ router.get('/api/destinos', getDestinosWeb); //Not singin required for web use
 router.put('/api/admin/destinos', requireSignin, updateDestinos);
 //No admin crud --> Only modifying through the json archive manually
 
+// ADMIN CRUD LOGINS
+const { getLoginsWeb, updateLogins } = require("./controllers/web/loginFailure");
+router.get('/api/admin/logins', requireSignin, getLoginsWeb);
+router.put('/api/admin/logins', requireSignin, updateLogins);
+
 // ADMIN CRUD USUARIOS
 const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios } = require("./controllers/web/usuarios");
 router.get("/api/admin/usuarios", requireSignin, getUsuarios);
 router.post("/api/admin/usuarios", requireSignin, postUsuarios);
-router.put("/api/admin/usuarios", requireSignin, putUsuarios); 
-router.delete("/api/admin/usuarios", requireSignin, deleteUsuarios);
+router.put("/api/admin/usuarios/:id", requireSignin, putUsuarios); 
+router.delete("/api/admin/usuarios/:id", requireSignin, deleteUsuarios);
 
 // ADMIN CRUD VIAJES
 const { getViajes, postViajes, putViajes, deleteViajes } = require("./controllers/web/viajes");
 router.get("/api/admin/viajes", requireSignin, getViajes);
 router.post("/api/admin/viajes", requireSignin, postViajes);
-router.put("/api/admin/viajes", requireSignin, putViajes);
-router.delete("/api/admin/viajes", requireSignin, deleteViajes);
+router.put("/api/admin/viajes/:id", requireSignin, putViajes);
+router.delete("/api/admin/viajes/:id", requireSignin, deleteViajes);
 
 // ADMIN CRUD RESERVAS
 const { getReservas, postReservas, deleteReservas } = require("./controllers/web/reservas");
 router.get("/api/admin/reservas", requireSignin, getReservas);
 router.post("/api/admin/reservas", requireSignin, postReservas);
-router.delete("/api/admin/reservas", requireSignin, deleteReservas);
+router.delete("/api/admin/reservas/:id", requireSignin, deleteReservas);
 
 ///////////////////////////////////////////
 //////////// APP controllers //////////////

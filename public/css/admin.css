@@ -603,7 +603,7 @@ div.supermenuContainer > div.supermenu > p.shown{
     line-height: 1em;
     cursor: pointer;
     background-color: var(--verde);
-    color: var(--black);
+    color: #000;
     border-radius: 4px;
     padding: 10px 24px;
     transition: all .3s;

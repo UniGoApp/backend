@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const jsonDir = path.join(__dirname, "../../public/public_data/newsletter.json");
+const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
 const getNewsletter = async (req, res) => {
     if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){

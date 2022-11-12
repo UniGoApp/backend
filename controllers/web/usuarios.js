@@ -55,16 +55,20 @@ const postUsuarios = async (req, res) => {
                         data: ''
                     });
                 } else {
+                    let dateTime = new Date().toJSON().split('T');
+                    let date = dateTime[0].replaceAll('-','');
+                    let time = dateTime[1].split('.')[0].replaceAll(':','');
+                    let id = `u_${date}_${time}`;
                     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
                     con.execute(
-                        'INSERT INTO usuarios (`email`,`password`,`username`,`rol`,`phone`,`rrss`) VALUES (?, ?, ?, ?, ?, ?);', [req.body.email, hashedPassword, req.body.username, req.body.rol, req.body.phone, req.body.rrss], (err, result) => {
+                        'INSERT INTO usuarios (`id`,`email`,`password`,`username`,`rol`,`phone`,`rrss`) VALUES (?, ?, ?, ?, ?, ?, ?);', [id, req.body.email, hashedPassword, req.body.username, req.body.rol, req.body.phone, req.body.rrss], (err, result) => {
                             if (err) console.log('err :>>', err);
                             con.execute(
-                                'SELECT * FROM usuarios WHERE id = ?;', [result.insertId], (err, result2) => {
+                                'SELECT * FROM usuarios WHERE id = ?;', [id], (err, result2) => {
                                     if (err) console.log('err :>>', err);
                                     if(result2.length === 0) return res.status(200).json({
                                         error: true,
-                                        info: 'No se encuentra el usuario con id: ' + result.insertId + '.',
+                                        info: 'No se encuentra el usuario con id: ' + id + '.',
                                         data: ''
                                     });
                                     return res.status(200).json({
@@ -91,14 +95,14 @@ const postUsuarios = async (req, res) => {
 const putUsuarios = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'UPDATE usuarios SET `email` = ?,`username` = ?,`rol` = ?,`phone` = ?,`picture` = ?,`resetCode` = ?,`creation_time` = ?,`rrss` = ?,`id_preferred_university` = ? WHERE id = ?;', [req.body.email, req.body.username, req.body.rol, req.body.phone, req.body.picture, req.body.resetCode, req.body.creation_time, req.body.rrss, req.body.id_preferred_university, req.body.id], (err, result) => {
+            'UPDATE usuarios SET `email` = ?,`username` = ?,`rol` = ?,`phone` = ?,`picture` = ?,`resetCode` = ?,`creation_time` = ?,`rrss` = ? WHERE id = ?;', [req.body.email, req.body.username, req.body.rol, req.body.phone, req.body.picture, req.body.resetCode, req.body.creation_time, req.body.rrss, req.params.id], (err, result) => {
                 if (err) console.log('err :>>', err);
                 con.execute(
-                    'SELECT * FROM usuarios WHERE id = ?;', [req.body.id], (err, result2) => {
+                    'SELECT * FROM usuarios WHERE id = ?;', [req.params.id], (err, result2) => {
                         if (err) console.log('err :>>', err);
                         if(result2.length === 0) return res.status(200).json({
                             error: true,
-                            info: 'No se encuentra el usuario con id: ' + req.body.id + '.',
+                            info: 'No se encuentra el usuario con id: ' + req.params.id + '.',
                             data: ''
                         });
                         return res.status(200).json({
@@ -122,11 +126,11 @@ const putUsuarios = async (req, res) => {
 const deleteUsuarios = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'DELETE FROM usuarios WHERE id = ?;', [req.body.id], (err, result) => {
+            'DELETE FROM usuarios WHERE id = ?;', [req.params.id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
-                        info: 'Usuario no se ha podido borrar. Por favor vuelva a intentarlo mas tarde o contacte con contaco@unigoapp.es.',
+                        info: 'Este usuario no se ha podido borrar.',
                         data: ''
                     });
                 }

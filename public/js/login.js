@@ -72,7 +72,7 @@ const login = () => {
             }
         })
         .catch(error => {
-            error_box.innerText = "Se ha producido un error inesperado..."
+            error_box.innerText = "Se ha producido un error inesperado...";
         });
     }
 };

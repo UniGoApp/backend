@@ -2,6 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nanoid = require("nanoid");
 const con = require("./database");
+const fs = require('fs');
+const path = require('path');
+const logsDir = path.join(__dirname, '../data/loginFailure.json');
+
 const nodemailer = require('nodemailer');
 
 const signup = async (req, res) => {
@@ -42,80 +46,93 @@ const signup = async (req, res) => {
   }
 };
 
+function createNewLog(req, cause, email){
+	let access = {};
+	access.why = cause;
+	access.email = email;
+	access.date = new Date().toLocaleString();
+	access.ip = req.ip;
+	access.protocol = req.protocol;
+	try{
+		fs.readFile(logsDir, "utf8", function (err, data) {
+			var json = JSON.parse(data);
+			json.logs.push(access);
+			fs.writeFile(logsDir, JSON.stringify(json, null, 4), (err) => {});
+		});
+	}catch(err){
+		console.log('err :>> ', err);
+	}
+}
+
 const signin = async (req, res) => {
-  try {
     const { email, password } = req.body;
     con.execute('SELECT * FROM usuarios WHERE `email` = ?;', [email], function (err, result) {
         if (err) {
-          return res.status(400).json({error: "Unexpected error"});
+        	return res.status(400).json({error: "Se ha producido un error."});
         }
         if(result.length === 0){
-          return res.status(404).json({error: "User not found"});
-        } else {
-          const match = bcrypt.compareSync(password, result[0].password);
-          if (!match) return res.status(401).json({error: "Wrong password"});
-          if(result.rol === "ADMIN" || result.rol === "SUPER_ADMIN"){
-            //register login in archive with ip, email, date and time
-            //make crud to see it only from super_admin role
-          }
-          // create signed token
-          const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-          });
-          res.status(200).json({
-            token,
-            user: result[0],
-          });
+			createNewLog(req, 'Email incorrecto', email);
+        	return res.status(404).json({error: "Este usuario no existe."});
         }
+		const match = bcrypt.compareSync(password, result[0].password);
+		if (!match) {
+			createNewLog(req, 'Contraseña incorrecta', email);
+			return res.status(401).json({error: "Contraseña incorrecta."});
+		}
+		// create signed token
+		const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
+			expiresIn: "7d",
+		});
+		res.status(200).json({
+			token,
+			user: result[0],
+		});
     });
-  } catch (err) {
-    return res.json({error: "Error. Try again."});
-  }
 };
 
 const forgotPassword = async (req, res) => {
-  const email = req.body.email;
+	const email = req.body.email;
 
-  let testAccount = await nodemailer.createTestAccount();
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
-    },
-  });
+	let testAccount = await nodemailer.createTestAccount();
+	// create reusable transporter object using the default SMTP transport
+	let transporter = nodemailer.createTransport({
+		host: "smtp.ethereal.email",
+		port: 587,
+		secure: false, // true for 465, false for other ports
+		auth: {
+		user: testAccount.user, // generated ethereal user
+		pass: testAccount.pass, // generated ethereal password
+		},
+	});
 
-  // Generate code
-  const resetCode = nanoid(6).toUpperCase();
-  //Prepare email
-  const emailData = {
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: email, // list of receivers
-    subject: "UniCar Reset Password Code", // Subject line
-    text: `Your password reset code is: ${resetCode}. Please delete this message if you haven't requested this change. For security reasons we reccomend you to go to your UNICAR account settings and change your password.`, // plain text body
-    html: `
-    <h4>Your password reset code is: </h4>
-    <h2>${resetCode}</h2>
-    <p>Please delete this message if you haven't requested this change. For security reasons we reccomend you to go to your UNICAR account settings and change your password.</p>`, // html body
-  };
+	// Generate code
+	const resetCode = nanoid(6).toUpperCase();
+	//Prepare email
+	const emailData = {
+		from: '"Fred Foo 👻" <foo@example.com>', // sender address
+		to: email, // list of receivers
+		subject: "UniCar Reset Password Code", // Subject line
+		text: `Your password reset code is: ${resetCode}. Please delete this message if you haven't requested this change. For security reasons we reccomend you to go to your UNICAR account settings and change your password.`, // plain text body
+		html: `
+		<h4>Your password reset code is: </h4>
+		<h2>${resetCode}</h2>
+		<p>Please delete this message if you haven't requested this change. For security reasons we reccomend you to go to your UNICAR account settings and change your password.</p>`, // html body
+	};
 
-  // find user by email
-  con.execute('SELECT * FROM `usuarios` WHERE `email` = ?', [email], function (err, result) {
-      if (err) return res.json({error: "Unexpected error"});
-      if(result.length == 0){
-        return res.json({error: "Este usuario no existe."});
-      } else {
-        // save resetCode to db
-        con.query('UPDATE `usuarios` SET `resetCode` = ? WHERE `email` = ?', [resetCode, email], function(err) {
-          if(err) return res.json({error: "Unexpected error"});
-          sendMail(transporter, emailData);
-          return res.json({info: 'Código enviado con éxito.'});
-        });
-      }
-  });
+	// find user by email
+	con.execute('SELECT * FROM `usuarios` WHERE `email` = ?', [email], function (err, result) {
+		if (err) return res.json({error: "Unexpected error"});
+		if(result.length == 0){
+			return res.json({error: "Este usuario no existe."});
+		} else {
+			// save resetCode to db
+			con.query('UPDATE `usuarios` SET `resetCode` = ? WHERE `email` = ?', [resetCode, email], function(err) {
+			if(err) return res.json({error: "Unexpected error"});
+			sendMail(transporter, emailData);
+			return res.json({info: 'Código enviado con éxito.'});
+			});
+		}
+	});
   
 };
 

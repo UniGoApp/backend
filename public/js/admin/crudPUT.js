@@ -20,7 +20,7 @@ const showPutForm = (e) => {
     switch (tabName) {
         case 'usuarios':
             modal.querySelector('h4').innerText = "Usuario: ";
-            let data_user = {id:'', email:'', username:'', rol:'', phone:'', picture:'', resetCode:'', creation_time:'', rrss:'', id_preferred_university:''};
+            let data_user = {id:'', email:'', username:'', rol:'', phone:'', picture:'', resetCode:'', creation_time:'', rrss:''};
             const elements = target.getElementsByTagName('TD');
             data_user.id = elements[0].innerText;
             data_user.email = elements[1].innerText;
@@ -31,7 +31,6 @@ const showPutForm = (e) => {
             data_user.resetCode = elements[6].innerText;
             data_user.creation_time = elements[7].innerText;
             data_user.rrss = elements[8].innerText;
-            data_user.id_preferred_university = elements[9].innerText;
             modal.querySelector('p').innerText = JSON.stringify(data_user, null, '\t');
             break;
         case 'viajes':
@@ -108,7 +107,7 @@ const putData = (e) => {
     const data = JSON.parse(raw_data);
     let modal_id = document.querySelector('#modalPut h4').innerText.toLowerCase().split(':')[0]+'s';
     
-    const url = `/api/admin/${modal_id}`;
+    const url = `/api/admin/${modal_id}/${data.id}`;
     var raw = JSON.stringify(data);
     var requestOptions = {
         method: 'PUT',

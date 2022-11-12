@@ -28,15 +28,24 @@ const getReservas = async (req, res) => {
 
 const postReservas = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+        let dateTime = new Date().toJSON().split('T');
+        let date = dateTime[0].replaceAll('-','');
+        let time = dateTime[1].split('.')[0].replaceAll(':','');
+        let id = `r_${date}_${time}`;
         con.execute(
-            'INSERT INTO reservas (`id_viaje`,`id_usuario`,`leido`) VALUES (?, ?, ?);', [req.body.id_viaje, req.body.id_usuario, req.body.leido], (err, result) => {
-                if (err) console.log(err);
+            'INSERT INTO reservas (id`,`id_viaje`,`id_usuario`,`leido`) VALUES (?, ?, ?, ?);', [id, req.body.id_viaje, req.body.id_usuario, req.body.leido], (err, result) => {
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        info: 'No se ha podido procesar la petición.',
+                        data: ''
+                    });
+                };
                 con.execute(
-                    'SELECT * FROM reservas WHERE id = ?;', [result.insertId], (err, result2) => {
-                        if (err) console.log(err);
-                        if(result2.length === 0) return res.status(200).json({
+                    'SELECT * FROM reservas WHERE id = ?;', [id], (err, result2) => {
+                        if(err || result2.length === 0) return res.status(200).json({
                             error: true,
-                            info: 'No se encuentra la reserva con id: ' + req.body.id + '.',
+                            info: 'No se encuentra la reserva con id: ' + id + '.',
                             data: ''
                         });
                         return res.status(200).json({
@@ -60,11 +69,11 @@ const postReservas = async (req, res) => {
 const deleteReservas = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'DELETE FROM reservas WHERE id = ?;', [req.body.id], (err, result) => {
+            'DELETE FROM reservas WHERE id = ?;', [req.params.id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
-                        info: 'Reserva no se ha podido borrar. Por favor vuelva a intentarlo mas tarde o contacte con contaco@unigoapp.es.',
+                        info: 'Esta reserva no se ha podido borrar.',
                         data: ''
                     });
                 }
