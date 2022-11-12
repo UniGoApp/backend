@@ -55,15 +55,15 @@ const login = () => {
             redirect: 'follow'
         };
 
-        fetch("/api/signin", requestOptions)
+        fetch("/api/admin/signin", requestOptions)
         .then(response => response.json())
         .then(result => {
             //Check token an user info received
             if(!result.error && (result.user.rol === "SUPER_ADMIN" || result.user.rol === "ADMIN")){
                 const token = 'Bearer ' + result.token;
-                localStorage.setItem('tokenUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
+                localStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
                 const usuario = JSON.stringify(result.user);
-                localStorage.setItem('adminUserUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
+                localStorage.setItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
                 window.location.assign('/admin');
             }else{
                 error_box.classList.remove('icons');

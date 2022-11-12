@@ -1,11 +1,15 @@
-const bearerToken = localStorage.getItem('tokenUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022');
-let user = localStorage.getItem('adminUserUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+const bearerToken = localStorage.getItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+let user = localStorage.getItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
 
-user = JSON.parse(user);
+try{
+    user = JSON.parse(user);
+}catch(err){
+    window.location.assign('/');
+}
 
 const checkToken = () => {
     if(!bearerToken || !user || user.rol === "USER"){
-        window.location.assign('/login');
+        window.location.assign('/');
     }
 };
 const checkTokenOnLogin = () => {
@@ -14,13 +18,12 @@ const checkTokenOnLogin = () => {
     }
 };
 
-//Header with token for fetch
 const myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('Authorization', localStorage.getItem("tokenUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022"));
+myHeaders.append('Authorization', localStorage.getItem("tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022"));
 
 const logout = () => {
-    localStorage.removeItem('tokenUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022');
-    localStorage.removeItem('adminUserUniCarAPP_forAdminPanel__SecurityLevelAuth0_04082022');
-    window.location.assign('/login');
+    localStorage.removeItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+    localStorage.removeItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+    window.location.assign('/');
 };

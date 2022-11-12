@@ -1,23 +1,16 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nanoid = require("nanoid");
-const con = require("./database");
-const fs = require('fs');
-const path = require('path');
-const logsDir = path.join(__dirname, '../data/loginFailure.json');
-
+const con = require("../database");
 const nodemailer = require('nodemailer');
 
 const signup = async (req, res) => {
-  try {
-    // validation
     const { name, email, phone, password } = req.body;
     
-    con.execute(
-      'SELECT * FROM `usuarios` WHERE `email` = ? OR `phone` = ?', [email, phone], (err, result) => {
+    con.execute('SELECT * FROM `usuarios` WHERE `email` = ? OR `phone` = ?', [email, phone], (err, result) => {
         if (err) return res.json({error: "Unexpected error"});
         if(result.length !== 0){
-          return res.status(409).json({error: "Email or phone already in use!"});
+          	return res.status(409).json({error: "Email or phone already in use!"});
         } else {
           // hash password
           const hashedPassword = bcrypt.hashSync(password, 10);
@@ -26,62 +19,39 @@ const signup = async (req, res) => {
             if (err) return res.json({error: "Unexpected error"});
             //console.log("User created: "+ result.insertId);
             const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, process.env.JWT_SECRET, {
-              expiresIn: "7d",
+              	expiresIn: "7d",
             });
 
             return res.status(200).json({
                 message: "User created successfully.",
                 token,
                 user: {
-                  _id: result.insertId,
-                  email: email
+                    _id: result.insertId,
+                    email: email
                 }
             });
           });
         }
       }
     );
-  } catch (err) {
-    console.log(err);
-  }
 };
-
-function createNewLog(req, cause, email){
-	let access = {};
-	access.why = cause;
-	access.email = email;
-	access.date = new Date().toLocaleString();
-	access.ip = req.ip;
-	access.protocol = req.protocol;
-	try{
-		fs.readFile(logsDir, "utf8", function (err, data) {
-			var json = JSON.parse(data);
-			json.logs.push(access);
-			fs.writeFile(logsDir, JSON.stringify(json, null, 4), (err) => {});
-		});
-	}catch(err){
-		console.log('err :>> ', err);
-	}
-}
 
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE `email` = ?;', [email], function (err, result) {
+    con.execute('SELECT * FROM usuarios WHERE `email` = ? AND `rol` = ?;', [email, 'USER'], function (err, result) {
         if (err) {
         	return res.status(400).json({error: "Se ha producido un error."});
         }
         if(result.length === 0){
-			createNewLog(req, 'Email incorrecto', email);
         	return res.status(404).json({error: "Este usuario no existe."});
         }
 		const match = bcrypt.compareSync(password, result[0].password);
 		if (!match) {
-			createNewLog(req, 'Contraseña incorrecta', email);
 			return res.status(401).json({error: "Contraseña incorrecta."});
 		}
 		// create signed token
 		const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
-			expiresIn: "7d",
+			expiresIn: "90d",
 		});
 		res.status(200).json({
 			token,

@@ -21,7 +21,7 @@ router.get("/legal/terminos-y-condiciones", (req, res) => {
 router.get("/unsuscribe", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/unsuscribe.html'));
 });
-router.get("/login", (req, res) => {
+router.get("/l0g1n52", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });
 router.get("/admin", (req, res) => {
@@ -38,6 +38,12 @@ const { requireSignin } = require('./controllers/middleware');
 ///////////////////////////////////////////
 ///////////// WEB controllers /////////////
 ///////////////////////////////////////////
+// AUTH
+const { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin } = require("./controllers/web/loginAdmin");
+router.post("/api/admin/signin", signinAdmin);
+router.post("/api/admin/forgot-password", forgotPasswordAdmin);
+router.post("/api/admin/reset-password", resetPasswordAdmin);
+
 // ADMIN MAIL
 const { getEmails, getEmail, deleteEmail } = require("./controllers/web/AWSmails");
 router.get("/api/admin/emails", requireSignin, getEmails);
@@ -86,7 +92,7 @@ router.delete("/api/admin/reservas/:id", requireSignin, deleteReservas);
 //////////// APP controllers //////////////
 ///////////////////////////////////////////
 // AUTH
-const { signup, signin, forgotPassword, resetPassword } = require("./controllers/auth");
+const { signup, signin, forgotPassword, resetPassword } = require("./controllers/app/auth");
 router.post("/api/signup", signup);
 router.post("/api/signin", signin);
 router.post("/api/forgot-password", forgotPassword);
