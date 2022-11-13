@@ -136,6 +136,9 @@ header{
     gap: 20px;
     background-color: #fff;
 }
+header > img.logo{
+    border: 12px solid transparent;
+}
 h1{
     font-size: 1.5em;
     margin: 0!important;

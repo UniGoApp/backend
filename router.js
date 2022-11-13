@@ -24,7 +24,7 @@ router.get("/unsuscribe", (req, res) => {
 router.get("/l0g1n52", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });
-router.get("/admin", (req, res) => {
+router.get("/pr15@d052", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/admin.html'));
 });
 // 401 error

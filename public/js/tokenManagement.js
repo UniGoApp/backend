@@ -14,7 +14,7 @@ const checkToken = () => {
 };
 const checkTokenOnLogin = () => {
     if(!!bearerToken && (user.rol === "ADMIN" || user.rol === "SUPER_ADMIN")){
-        location.assign('/admin');
+        location.assign('/pr15@d052');
     }
 };
 

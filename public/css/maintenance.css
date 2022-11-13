@@ -57,6 +57,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  user-select: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -10551,8 +10552,9 @@ body:before {
 }
 
 .social-icons .btn:hover{
-  background-color: #494994!important;
-  border: 4px solid #494994;
+  color:#000;
+  background-color: #6bbda3 !important;
+  border: 4px solid #6bbda3;
 }
 
 @media (min-width: 992px) {
