@@ -88,6 +88,7 @@ router.get("/api/admin/reservas", requireSignin, getReservas);
 router.post("/api/admin/reservas", requireSignin, postReservas);
 router.delete("/api/admin/reservas/:id", requireSignin, deleteReservas);
 
+
 ///////////////////////////////////////////
 //////////// APP controllers //////////////
 ///////////////////////////////////////////
@@ -126,6 +127,13 @@ const { obtenerReservas } = require("./controllers/app/reservas");
 router.get("/api/reservas", requireSignin, obtenerReservas);
 
 
+
+///////////////////////////////////////////
+/////////// OTHER controllers /////////////
+///////////////////////////////////////////
+// CONFIRM-EMAIL
+const { confirmEmail } = require("./controllers/other/email");
+router.get("/api/confirm-email/:email", confirmEmail);
 
 // ERROR HANDLING
 // 404 error
