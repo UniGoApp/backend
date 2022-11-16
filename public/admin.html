@@ -111,8 +111,8 @@
                     </aside>
                     <article>
                         <h5>Enviar nuevo correo masivo: </h5>
-                        <label for="asunto">Asunto</label>
-                        <input type="text" name="asunto">
+                        <label for="asuntoMasivo">Asunto</label>
+                        <input type="text" name="asuntoMasivo">
                         <label for="cuerpo">Cuerpo del correo</label>
                         <textarea name="cuerpo" cols="30" rows="10" spellcheck="true"></textarea>
                         <button onclick="sendNewsletter(this)">Enviar</button>
@@ -365,6 +365,33 @@
                     <div>
                         <button class="boton ghost" onclick="closeModal(this)">Cancelar</button>
                         <button class="boton primary" onclick="deleteData(this)">Borrar</button>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
+    <div id="modalEmail" class="modal-window">
+        <div>
+            <article class="modal-container">
+                <header class="modal-container-header">
+                    <h3 class="modal-container-title"></h3>
+                </header>
+                <section class="modal-container-body">
+                    <label for="cc">CC:</label>
+                    <input type="text" name="cc" id="cc" placeholder="CC">
+                    <label for="bcc">BCC:</label>
+                    <input type="text" name="bcc" id="bcc" placeholder="BCC">
+                    <label for="asunto">Asunto:</label>
+                    <input type="text" name="asunto" id="asunto" placeholder="Asunto" required>
+                    <label for="content">Cuerpo:</label>
+                    <textarea name="content" id="content" rows="10" placeholder="Contenido de la respuesta" spellcheck="true" required></textarea>
+                </section>
+                <footer class="modal-container-footer">
+                    <sub></sub>
+                    <div>
+                        <button class="boton ghost" onclick="closeModal(this)">Cancelar</button>
+                        <button class="boton primary" onclick="send(this)">Enviar</button>
                     </div>
                 </footer>
             </article>

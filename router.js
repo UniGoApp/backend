@@ -45,10 +45,13 @@ router.post("/api/admin/forgot-password", forgotPasswordAdmin);
 router.post("/api/admin/reset-password", resetPasswordAdmin);
 
 // ADMIN MAIL
-const { getEmails, getEmail, deleteEmail } = require("./controllers/web/AWSmails");
+const { getEmails, getEmail, deleteEmail, responderEmail } = require("./controllers/web/AWSmails");
+// RECEIVING AND CRUD
 router.get("/api/admin/emails", requireSignin, getEmails);
 router.get("/api/admin/email/:id", requireSignin, getEmail);
 router.delete("/api/admin/email/:id", requireSignin, deleteEmail);
+// SEND
+router.post("/api/admin/responderEmail", requireSignin, responderEmail);
 
 // ADMIN CRUD NEWSLETTER
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");

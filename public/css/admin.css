@@ -743,6 +743,16 @@ div.supermenuContainer > div.supermenu > p.shown{
     background-color: var(--blue-hover);
 }
 
+/* SEND EMAIL MODAL */
+#modalEmail .modal-container-body{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+#modalEmail .modal-container-body > *{
+    flex: 1 1 100%;
+    margin-bottom: 12px;
+}
 /* NOTIFICATIONS */
 #notifications-wrapper{
     display: flex;
