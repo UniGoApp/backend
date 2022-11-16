@@ -37,6 +37,31 @@ const fillNewsletterTable = (info) => {
 }
 
 const refreshDashboard = () => {
+
+    fetch('/api/admin/templates', requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        let targetContainer = document.getElementById('template-email-container');
+        targetContainer.innerHTML = '<div class="template template-add" onclick="openModalTemplateAdd()"> <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M22.65 34h3v-8.3H34v-3h-8.35V14h-3v8.7H14v3h8.65ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Z"/></svg></div>';
+
+        let targetMsg = document.querySelector('#newsletter > p.tab-msg');
+        if(result.error){
+            targetMsg.textContent = result.info;
+        }else{
+            const num_plantillas = result.data.TemplatesMetadata.length;
+            const plantillas = result.data.TemplatesMetadata;
+            targetMsg.textContent = `${num_plantillas} disponibles:`;
+            
+            for(let i=0; i<num_plantillas; i++){
+                targetContainer.innerHTML += `<div class="template" onclick="openTemplate(this)"><p>${plantillas[i].Name} <i class="right"></i></p></div>`;
+            }
+        }
+    })
+    .catch(error => {
+        let targetMsg = document.querySelector('#newsletter > p.tab-msg');
+        targetMsg.textContent = "Error al cargar las plantillas de AMAZON.";
+    });
+
     fetch('/api/admin/usuarios', requestOptions)
     .then(response => response.json())
     .then(result => {

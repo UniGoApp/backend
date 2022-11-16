@@ -588,6 +588,59 @@ div.supermenuContainer > div.supermenu > p.shown{
     justify-content: center;
     align-items: center;
 }
+
+/******** TAB CORREOS ********/
+#template-email-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: 12px;
+    gap: 12px;
+}
+#template-email-container * {
+    transition: all .4s;
+}
+#template-email-container > .template{
+    background-color: var(--blue);
+    color: var(--white);
+    flex: 0 0 25%;
+    border-radius: 4px;
+}
+#template-email-container > .template:hover{
+    background-color: var(--blue-hover);
+    cursor: pointer;
+}
+.template > p{
+    padding: 12px;
+    margin: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.template.template-add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+.template.template-add > svg{
+    transform: scale(0.8);
+}
+#template-email-data{
+    display: none;
+    background-color: var(--light);
+    color: var(--black);
+    border-radius: 6px;
+    padding: 12px;
+}
+#previewTemplate{
+    border: 2px solid var(--dark);
+    background-color: var(--white);
+}
 /******** TAB ARCHIVOS ********/
 #archivos textarea{
     width: 100%;
@@ -743,15 +796,17 @@ div.supermenuContainer > div.supermenu > p.shown{
     background-color: var(--blue-hover);
 }
 
-/* SEND EMAIL MODAL */
-#modalEmail .modal-container-body{
+/* SEND EMAIL MODAL AND TEMPLATE EMAIL */
+#modalEmail .modal-container-body, #modalTemplate .modal-container-body{
     display: flex;
     flex-wrap: wrap;
-    
 }
-#modalEmail .modal-container-body > *{
+#modalEmail .modal-container-body > *, #modalTemplate .modal-container-body > *{
     flex: 1 1 100%;
     margin-bottom: 12px;
+}
+#modalTemplate > div{
+    min-width: 600px;
 }
 /* NOTIFICATIONS */
 #notifications-wrapper{
