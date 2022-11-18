@@ -66,7 +66,6 @@ const getEmail = async (req, res) => {
     });
 }
 
-
 const deleteEmail = async (req, res) => {
     const id = req.params.id;
     const deleteParams = {
@@ -91,5 +90,60 @@ const deleteEmail = async (req, res) => {
     });
 };
 
+const responderEmail = async(req, res) => {
+    const dest = req.body.to;
+    const cc = req.body.cc;
+    const bcc = req.body.bcc;
+    const subject = req.body.subject;
+    const content = req.body.content;
+    // Create sendEmail params 
+    var params = {
+        Destination: {
+            BccAddresses: [bcc],
+            CcAddresses: [cc],
+            ToAddresses: [dest]
+        },
+        Message: {
+            Body: {
+                Html: {
+                Charset: "UTF-8",
+                Data: `<p>${content}</p>`
+                },
+                Text: {
+                Charset: "UTF-8",
+                Data: content
+                }
+            },
+            Subject: {
+                Charset: 'UTF-8',
+                Data: subject
+            }
+            },
+        Source: 'contacto@unigoapp.es',
+        ReplyToAddresses: ['contacto@unigoapp.es']
+    };
+  
+    // Create the promise and SES service object
+    var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+    
+    // Handle promise's fulfilled/rejected states
+    sendPromise.then(
+        function(data) {
+        // console.log(data.MessageId);
+        return res.status(200).json({
+            error: false,
+            info: `Mensaje ${data.MessageId} enviado con éxito.`,
+            data: ''
+        });
+    }).catch(
+        function(err) {
+        console.error(err, err.stack);
+        return res.status(200).json({
+            error: true,
+            info: 'No se ha podido enviar el correo.',
+            data: ''
+        });
+    });
+}
 
-module.exports = {getEmails, getEmail, deleteEmail};
+module.exports = {getEmails, getEmail, deleteEmail, responderEmail};

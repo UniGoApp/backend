@@ -47,6 +47,8 @@ const borrar = () => {
     }
 };
 
+const modal = document.getElementById('modalEmail');
+
 const responder = () => {
     if(emailContent.innerText == ""){
         return;
@@ -56,7 +58,56 @@ const responder = () => {
     let start_of_from = fromContent.split('<')[1];
     let final_from = start_of_from.split('>')[0];
     
-    //Open modal to answer email
-
-    
+    // Open modal to answer email
+    modal.classList.add('modal-opened');
+    // Append data
+    modal.querySelector('h3').innerText = `Respuesta a: ${final_from}`;
 };
+
+const send = (e) => {
+    let emailData = {};
+    emailData.to = modal.querySelector('h3').innerText.split(': ')[1];
+    emailData.bcc = modal.querySelector('#bcc').value;
+    emailData.cc = modal.querySelector('#cc').value;
+    emailData.subject = modal.querySelector('#asunto').value;
+    emailData.content = modal.querySelector('#content').value;
+
+    var raw = JSON.stringify(emailData);
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+      
+    fetch('/api/admin/responderEmail', requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        //cerrar modal
+        closeModal(e);
+        //mostrar notificacion
+        if(result.error){
+            const noti = document.querySelector('#notifications-wrapper > .notification-error');
+            noti.style.display = 'flex';
+            noti.querySelector('p').innerText = result.info;
+            setTimeout(() => {
+                noti.style.display = 'none';
+            }, 5000);
+        }else{
+            const noti = document.querySelector('#notifications-wrapper > .notification-success');
+            noti.style.display = 'flex';
+            noti.querySelector('p').innerText = result.info;
+            setTimeout(() => {
+                noti.style.display = 'none';
+            }, 5000);
+        }
+    })
+    .catch(error => {
+        const noti = document.querySelector('#notifications-wrapper > .notification-error');
+        noti.style.display = 'flex';
+        noti.querySelector('p').innerText = error;
+        setTimeout(() => {
+            noti.style.display = 'none';
+        }, 5000);
+    });
+}

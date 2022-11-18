@@ -44,20 +44,31 @@ router.post("/api/admin/signin", signinAdmin);
 router.post("/api/admin/forgot-password", forgotPasswordAdmin);
 router.post("/api/admin/reset-password", resetPasswordAdmin);
 
+// ADMIN MAIL TEMPLATES
+const { listTemplates, getTemplate, postTemplate, putTemplate, deleteTemplate } = require("./controllers/web/AWStemplates");
+router.get("/api/admin/templates", requireSignin, listTemplates);
+router.get("/api/admin/templates/:name", requireSignin, getTemplate);
+router.post("/api/admin/templates", requireSignin, postTemplate);
+router.put("/api/admin/templates/:id", requireSignin, putTemplate);
+router.delete("/api/admin/templates/:id", requireSignin, deleteTemplate);
+
 // ADMIN MAIL
-const { getEmails, getEmail, deleteEmail } = require("./controllers/web/AWSmails");
+const { getEmails, getEmail, deleteEmail, responderEmail } = require("./controllers/web/AWSmails");
+// RECEIVING AND CRUD
 router.get("/api/admin/emails", requireSignin, getEmails);
 router.get("/api/admin/email/:id", requireSignin, getEmail);
 router.delete("/api/admin/email/:id", requireSignin, deleteEmail);
+// SEND
+router.post("/api/admin/responderEmail", requireSignin, responderEmail);
 
-// ADMIN CRUD NEWSLETTER
+// ADMIN CRUD NEWSLETTER (web y archivos)
 const { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter } = require("./controllers/web/newsletter");
 router.get("/api/admin/newsletter", requireSignin, getNewsletter);
 router.post("/api/newsletter", joinNewsletter);
 router.delete("/api/newsletter", removeNewsletter);
 router.put('/api/admin/newsletter', requireSignin, updateNewsletter);
 
-// ADMIN CRUD DESTINOS
+// ADMIN CRUD DESTINOS (web y archivos)
 const { getDestinosWeb, updateDestinos } = require("./controllers/web/destinos");
 router.get('/api/destinos', getDestinosWeb); //Not singin required for web use
 router.put('/api/admin/destinos', requireSignin, updateDestinos);
@@ -87,6 +98,7 @@ const { getReservas, postReservas, deleteReservas } = require("./controllers/web
 router.get("/api/admin/reservas", requireSignin, getReservas);
 router.post("/api/admin/reservas", requireSignin, postReservas);
 router.delete("/api/admin/reservas/:id", requireSignin, deleteReservas);
+
 
 ///////////////////////////////////////////
 //////////// APP controllers //////////////
@@ -126,6 +138,13 @@ const { obtenerReservas } = require("./controllers/app/reservas");
 router.get("/api/reservas", requireSignin, obtenerReservas);
 
 
+
+///////////////////////////////////////////
+/////////// OTHER controllers /////////////
+///////////////////////////////////////////
+// CONFIRM-EMAIL
+const { confirmEmail } = require("./controllers/other/email");
+router.get("/api/confirm-email/:email", confirmEmail);
 
 // ERROR HANDLING
 // 404 error
