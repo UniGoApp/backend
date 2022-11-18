@@ -8,11 +8,11 @@ const confirmEmail = async (req, res) => {
             return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/error.html'));
         }else{
             con.execute('UPDATE `usuarios` SET `email_confirmed` = ? WHERE `email` = ?;', ['1', email], (err, result) => {
-                    if (err) {
-                        return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/error.html'));
-                    }else{
-                        return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/success.html'));
-                    }
+                if (err) {
+                    return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/error.html'));
+                }else{
+                    return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/success.html'));
+                }
             });
         }
     });
