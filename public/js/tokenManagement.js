@@ -1,5 +1,5 @@
-const bearerToken = localStorage.getItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
-let user = localStorage.getItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+const bearerToken = sessionStorage.getItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+let user = sessionStorage.getItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
 
 try{
     user = JSON.parse(user);
@@ -20,10 +20,10 @@ const checkTokenOnLogin = () => {
 
 const myHeaders = new Headers();
 myHeaders.append('Content-Type', 'application/json');
-myHeaders.append('Authorization', localStorage.getItem("tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022"));
+myHeaders.append('Authorization', sessionStorage.getItem("tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022"));
 
 const logout = () => {
-    localStorage.removeItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
-    localStorage.removeItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+    sessionStorage.removeItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
+    sessionStorage.removeItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022');
     window.location.assign('/');
 };

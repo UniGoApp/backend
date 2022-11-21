@@ -584,9 +584,6 @@ div.supermenuContainer > div.supermenu > p.shown{
 }
 #email-content{
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /******** TAB CORREOS ********/

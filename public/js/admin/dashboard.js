@@ -174,7 +174,34 @@ const refreshDashboard = () => {
                         if(result.error){
                             show.innerText = result.info;
                         }
-                        show.innerText = result.data;
+                        const util = result.data.split('MIME-Version: 1.0')[1];
+                        const dataBoundary = '--'+util.split('Content-Type: multipart/alternative; boundary="')[1].split('"')[0];
+                        let mixedBoundary ='--';
+                        util.search('multipart/mixed') != -1 ?
+                        (mixedBoundary += util.split('Content-Type: multipart/mixed; boundary="')[1].split('"')[0]) : (mixedBoundary += '');
+
+                        let emailParts = util.split(mixedBoundary);
+                        if(mixedBoundary === '--'){
+                            emailParts = util.split(dataBoundary);
+                            emailParts[1] = '';
+                            emailParts[2] = `<b>${emailParts[2].split('Content-Type: text/html; charset="UTF-8"')[1]}</b>`;
+                            emailParts[3] = 'Sin archivos adjuntos.';
+                        }else{
+                            emailParts[1] = `<b>${emailParts[1].split(dataBoundary)[2].split('Content-Type: text/html; charset="UTF-8"')[1]}</b>`;
+                            const archivo = emailParts[2].split(/\r?\n/);
+                            const largo = emailParts[2].split(/\r?\n/).length;
+                            let archivoFinal = '';
+                            for(let i =7; i<largo-1;i++){
+                                archivoFinal += archivo[i];
+                            }
+                            emailParts[2] = '';
+                            emailParts[3] = `<img src="data:image/jpeg;base64,${archivoFinal}" alt="imagen correo"/>`;
+                        }
+                        show.innerText += emailParts[0];
+                        show.innerHTML += emailParts[1];
+                        show.innerHTML += emailParts[2];
+                        show.innerHTML += emailParts[3];
+
                     })
                     .catch(error => {
                         show.textContent = "Error al cargar el correo del servidor.";

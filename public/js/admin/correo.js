@@ -48,7 +48,6 @@ const borrar = () => {
 };
 
 const modal = document.getElementById('modalEmail');
-
 const responder = () => {
     if(emailContent.innerText == ""){
         return;

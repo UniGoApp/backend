@@ -61,9 +61,9 @@ const login = () => {
             //Check token an user info received
             if(!result.error && (result.user.rol === "SUPER_ADMIN" || result.user.rol === "ADMIN")){
                 const token = 'Bearer ' + result.token;
-                localStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
+                sessionStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
                 const usuario = JSON.stringify(result.user);
-                localStorage.setItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
+                sessionStorage.setItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
                 window.location.assign('/pr15@d052');
             }else{
                 error_box.classList.remove('icons');
