@@ -1,57 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>New user email confirmation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
-    <style>
-        *,*::after,*::before{padding:0; margin: 0 auto; box-sizing: border-box; text-align: center;}
-        a{text-decoration: none; color: black;}
-        p{font-size: 18px;}
-        img{max-width: 100%;}
-        body{width:100%; height:100%;background-color: #b2dee0; font-family: 'Poppins', sans-serif; font-weight: 400;}
-        header > img{width: 200px;}
-        header, footer{margin:20px auto;}
-        body > div{width:100%; height:100%;display:flex; flex-direction:column; align-items: center;}
-        body > div > *{width: 100%; height: auto;}
-        h1{margin: 20px 30px;font-weight: 600;}
-        p.subtitle{margin: 40px 30px;}
-        #confirm{font-size: 22px;font-weight: bolder; margin: 50px auto;padding:20px 30px; background-color: #6bbda3;border-radius: 4px;box-shadow: 0px 10px 13px -7px #0e7152;}
-        div.bg-img{margin-top: 60px;}
-        div.row-3{display:flex; flex-direction:column; align-items: center; justify-content: space-evenly;}
-        div.row-3 > div{width: 80%; text-align: center; margin: 20px 0;}
-        div.row-3 img{width: 140px; margin: 0 auto;}
-    </style>
 </head>
-<body>
-    <div>
-        <header>
-            <img src="https://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/55524be8-1e8b-4329-8754-72820323b89f/1806x819.png" alt="logo unigo">
+<body style="margin:3em 0;text-align:center;font-size:18px;width:100%;height:100%;background-color:#b2dee0;font-family:'Poppins',sans-serif;font-weight:400;">
+    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;">
+        <header style="margin:20px auto;">
+            <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/38beae7b-4a00-4928-89af-0a8e0cea1821/1280x426.png" alt="nombre unigo" style="width:80%;">
         </header>
         <main>
-            <h1 class="margin-bottom">¡Gracias por descargar UniGo!</h1>
-            <p class="subtitle">Completa tu registro pulsando en el siguiente botón.</p>
-            <a href="https://www.unigoapp.es/api/confirm-email/joseto.lopez00@gmail.com" id="confirm">Confirmar Email</a>
-            <div class="bg-img"><img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/03307dc9-c665-41f4-a893-a3a3531350b5/600x539.png" alt="unigo app"></div>
-            <div class="row-3">
-                <div>
-                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/b7eea6af-90e8-4ea2-a23c-9e68cefe0124/512x512.png" alt="viaja directo">
+            <h1 class="margin-bottom" style="margin:20px 30px;font-weight:600;">¡Gracias por descargar UniGo!</h1>
+            <p class="subtitle" style="margin:40px 30px;">Completa tu registro pulsando en el siguiente botón.</p>
+            <a href="" target="_blank" id="confirm" style="font-size:22px;font-weight:bolder;margin:50px auto;padding:20px 30px;background-color:#6bbda3;border-radius:4px;box-shadow:0px 10px 13px -7px #0e7152;text-decoration:none;color:black;">Confirmar Email</a>
+            <div class="bg-img" style="margin-top:60px;"><img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/03307dc9-c665-41f4-a893-a3a3531350b5/600x539.png" alt="unigo app" style="max-width:100%;"></div>
+            <div class="row-3" style="display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;">
+                <div style="width:80%;text-align:center;margin:20px 0;">
+                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/b7eea6af-90e8-4ea2-a23c-9e68cefe0124/512x512.png" alt="viaja directo" style="width:140px;margin:0 auto;">
                     <p>Llega directo a tu campus universitario.</p>
                 </div>
-                <div>
-                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/e8fd269d-cdd0-4e27-9d14-22adfa188b2e/512x512.png" alt="ahorra dinero">
+                <div style="width:80%;text-align:center;margin:20px 0;">
+                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/e8fd269d-cdd0-4e27-9d14-22adfa188b2e/512x512.png" alt="ahorra dinero" style="width:140px;margin:0 auto;">
                     <p>Ahorra dinero compartiendo coche con otros estudiantes de tu universidad.</p>
                 </div>
-                <div>
-                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/4dbf7008-555b-4ad9-a4bc-d9ff7160ecae/512x512.png" alt="reducir huella de carbono">
+                <div style="width:80%;text-align:center;margin:20px 0;">
+                    <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/4dbf7008-555b-4ad9-a4bc-d9ff7160ecae/512x512.png" alt="reducir huella de carbono" style="width:140px;margin:0 auto;">
                     <p>Reduzcamos la huella de carbono del planeta produciendo menos CO<sub>2</sub></p>
                 </div>
             </div>
         </main>
+        <script type="application/javascript">
+            let email_to_confirm = 'jose@jose.com';
+            let url_to_request = `https://www.unigoapp.es/api/confirm-email/${email_to_confirm}`;
+            document.getElementById('confirm').setAttribute("href", url_to_request);
+        </script>
     </div>
 </body>
 </html>
