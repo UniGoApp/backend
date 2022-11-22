@@ -109,7 +109,7 @@ allButton.onclick = (e) => {
     }
 }
 
-// SUSCRIPTION
+// NEWSLETTER
 // User feedback
 let submitSuccess = document.getElementById('submitSuccessMessage');
 let submitSuccessMsg = submitSuccess.getElementsByTagName('p')[0];
@@ -144,7 +144,8 @@ myform.onsubmit = (e) => {
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-        "email": email.value
+        "email": email.value,
+        "last": new Date(1).toLocaleString() //Default date: 1/1/1970m 1:00:00
     });
 
     var requestOptions = {

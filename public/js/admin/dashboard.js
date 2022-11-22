@@ -14,7 +14,11 @@ const requestOptions = {
 let dataUsuarios, dataViajes = '';
 
 const fillNewsletterTable = (info) => {
-    const headerNewsletter  = document.querySelector('.newsletter > div > aside > table > thead > tr > th');
+    const headerNewsletter  = document.querySelector('.newsletter > div > aside > table > thead > tr');
+    const headerEmail = headerNewsletter.getElementsByTagName('th')[0];
+    const headerLast = headerNewsletter.getElementsByTagName('th')[1];
+    headerEmail.innerText = 'Usuarios suscritos';
+    headerLast.innerText = 'Último enviado';
     const tableNewsletter  = document.querySelector('.newsletter > div > aside > table > tbody');
     tableNewsletter.innerHTML = '';
     if(!info && !info.data){
@@ -22,15 +26,18 @@ const fillNewsletterTable = (info) => {
         const rowData = document.createElement('td');
         rowData.innerText = 'Error al cargar los datos.';
         row.appendChild(rowData);
+        row.appendChild(rowData);
         tableNewsletter.appendChild(row);
-        headerNewsletter.innerText = 'Usuarios suscritos';
     }else{
-        headerNewsletter.innerText = info.data.emails.length+' usuarios suscritos al boletín';
+        headerEmail.innerText = info.data.emails.length + ' usuarios suscritos al boletín';
         for(let i = 0; i<info.data.emails.length; i++){
             const row = document.createElement('tr');
-            const rowdata = document.createElement('td');
-            rowdata.innerText = info.data.emails[i];
-            row.appendChild(rowdata);
+            const rowEmail = document.createElement('td');
+            rowEmail.innerText = info.data.emails[i].email;
+            const rowLast = document.createElement('td');
+            rowLast.innerText = info.data.emails[i].last;
+            row.appendChild(rowEmail);
+            row.appendChild(rowLast);
             tableNewsletter.appendChild(row);
         }
     }
@@ -50,7 +57,6 @@ const refreshDashboard = () => {
         }else{
             const num_plantillas = result.data.TemplatesMetadata.length;
             const plantillas = result.data.TemplatesMetadata;
-            targetMsg.textContent = `${num_plantillas} disponibles:`;
             
             for(let i=0; i<num_plantillas; i++){
                 targetContainer.innerHTML += `<div class="template" onclick="openTemplate(this)"><p>${plantillas[i].Name} <i class="right"></i></p></div>`;

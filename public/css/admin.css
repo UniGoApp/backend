@@ -634,6 +634,17 @@ div.supermenuContainer > div.supermenu > p.shown{
     border-radius: 6px;
     padding: 12px;
 }
+#template-email-data span{
+    color: var(--white);
+}
+#template-email-data > span{
+    position: relative;
+    float: right;
+    clear: both;
+}
+#templateHTML{
+    word-wrap: break-word;
+}
 #previewTemplate{
     border: 2px solid var(--dark);
     background-color: var(--white);

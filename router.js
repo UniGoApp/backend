@@ -45,11 +45,10 @@ router.post("/api/admin/forgot-password", forgotPasswordAdmin);
 router.post("/api/admin/reset-password", resetPasswordAdmin);
 
 // ADMIN MAIL TEMPLATES
-const { listTemplates, getTemplate, postTemplate, putTemplate, deleteTemplate } = require("./controllers/web/AWStemplates");
+const { listTemplates, getTemplate, postTemplate, deleteTemplate } = require("./controllers/web/AWStemplates");
 router.get("/api/admin/templates", requireSignin, listTemplates);
 router.get("/api/admin/templates/:name", requireSignin, getTemplate);
 router.post("/api/admin/templates", requireSignin, postTemplate);
-router.put("/api/admin/templates/:id", requireSignin, putTemplate);
 router.delete("/api/admin/templates/:id", requireSignin, deleteTemplate);
 
 // ADMIN MAIL

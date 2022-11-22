@@ -1,8 +1,17 @@
 {
-  "lastUpdated": "Sat 12 October 2022",
+  "lastUpdated": "Tue Nov 22 2022",
   "emails": [
-    "joseto.lopez00@gmail.com",
-    "jose.to4@hotmail.com",
-    "jose.hlopez@edu.upct.es"
+    {
+      "email": "joseto.lopez00@gmail.com",
+      "last": "1/1/1970, 1:00:00"
+    },
+    {
+      "email": "jose.to4@hotmail.com",
+      "last": "21/11/2022"
+    },
+    {
+      "email": "jose.hlopez@edu.upct.es",
+      "last": "1/1/1970, 1:00:00"
+    }
   ]
 }

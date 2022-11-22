@@ -107,7 +107,8 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Usuarios suscritos</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,12 +116,8 @@
                         </table>
                     </aside>
                     <article>
-                        <h5>Enviar nuevo correo masivo: </h5>
-                        <label for="asuntoMasivo">Asunto</label>
-                        <input type="text" name="asuntoMasivo">
-                        <label for="cuerpo">Cuerpo del correo</label>
-                        <textarea name="cuerpo" cols="30" rows="10" spellcheck="true"></textarea>
-                        <button onclick="sendNewsletter(this)">Enviar</button>
+                        <h3>Enviar Newsletter</h3>
+                        <p>Seleccione una plantilla:</p>
                     </article>
                 </div>
             </section>
@@ -155,14 +152,15 @@
                 <section id="template-email-container"></section>
                 <hr>
                 <section id="template-email-data">
+                    <span class="boton" onclick="deleteTemplate(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg>Borrar</span>
                     <div>
-                        <b>Nombre:</b><p id="templateName" contenteditable="true"></p>
-                        <b>Asunto:</b><p id="templateSubject" contenteditable="true"></p>
-                        <b>Texto:</b><p id="templateText" contenteditable="true"></p>
-                        <b>HTML:</b><pre id="templateHTML" contenteditable="true"></pre>
+                        <b>Nombre:</b><p id="templateName"></p>
+                        <b>Asunto:</b><p id="templateSubject"></p>
+                        <b>Texto:</b><p id="templateText"></p>
+                        <b>HTML:</b><pre id="templateHTML"></pre>
                     </div>
-                    <!-- <b>Preview:</b>
-                    <div id="previewTemplate"></div> -->
+                    <b>Preview:</b>
+                    <div id="previewTemplate"></div>
                 </section>
             </div>
         </div>

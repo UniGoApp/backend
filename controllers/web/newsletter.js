@@ -39,6 +39,7 @@ const getNewsletter = async (req, res) => {
 
 const joinNewsletter = async (req, res) => {
     let emailToAdd = req.body.email;
+    let lastToAdd = req.body.last;
     if(!emailToAdd) return;
     
     fs.readFile(jsonDir, 'utf8', (error, data) => {
@@ -50,30 +51,34 @@ const joinNewsletter = async (req, res) => {
             });
         }
         let finalData = JSON.parse(data);
-        if(finalData.emails.includes(emailToAdd)) {
+        let newEntry = {"email": emailToAdd, "last": lastToAdd};
+
+        let checked = finalData.emails.filter((element) => element.email === emailToAdd)[0];
+        if(checked) {
             return res.status(200).json({
                 error: false,
                 info: 'Ya estás entre nuestros contactos favoritos ✨.',
                 data: ''
             });
-        };
-        finalData.emails.push(emailToAdd);
-        fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
-            if (error) {
+        }else{
+            finalData.lastUpdated = new Date().toDateString();
+            finalData.emails.push(newEntry);
+            fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
+                if (error) {
+                    return res.status(200).json({
+                        error: true,
+                        info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                        data: ''
+                    });
+                }
                 return res.status(200).json({
-                    error: true,
-                    info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                    error: false,
+                    info: '¡Te has suscrito con éxito!',
                     data: ''
                 });
-            }
-            return res.status(200).json({
-                error: false,
-                info: '¡Te has suscrito con éxito!',
-                data: ''
             });
-        });
+        }
     });
-    
 };
 
 const removeNewsletter = async (req, res) => {

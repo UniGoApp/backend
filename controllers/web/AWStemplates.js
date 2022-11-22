@@ -80,12 +80,25 @@ const postTemplate = async(req,res) => {
     });
 }
 
-const putTemplate = async(req,res) => {
-
-}
-
 const deleteTemplate = async(req,res) => {
-
+    const params = { TemplateName: req.params.id };
+    let ses = new AWS.SES({apiVersion: '2010-12-01'}).deleteTemplate(params).promise();
+    ses.then(
+        function(data) {
+        return res.status(200).json({
+            error: false,
+            info: 'Plantilla borrada con éxito.',
+            data: data
+        });
+    }).catch(
+        function(err) {
+            console.log('err :>> ', err.stack);
+        return res.status(200).json({
+            error: true,
+            info: 'Error al borrar la nueva plantilla.',
+            data: ''
+        });
+    });
 }
 
-module.exports = { listTemplates, getTemplate, postTemplate, putTemplate, deleteTemplate };
+module.exports = { listTemplates, getTemplate, postTemplate, deleteTemplate };
