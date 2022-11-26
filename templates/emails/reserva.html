@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>New user email confirmation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        ul>li::before {
+            content: "\2022";
+            color: #494994;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
+        #datos_reserva_email > *{margin: 0 0 6px 0;}
+    </style>
+</head>
+<body style="margin:0;text-align:center;font-size:18px;width:100%;height:100%;font-family:'Poppins',sans-serif;font-weight:400;">
+    <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;">
+        <header style="padding:2em 0;background-color:#b2dee0;">
+            <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/38beae7b-4a00-4928-89af-0a8e0cea1821/1280x426.png" alt="logo nombre unigo" style="width:80%;">
+        </header>
+        <main style="width:90%">
+            <h1>Confirmación de reserva</h1>
+            <h3>Numero de reserva: <span style="text-decoration:underline;text-transform:uppercase;">{{aaa}}</span></h3>
+            <hr style="border:1px solid #494994;">
+            <div style="text-align: left;">
+                <p>Sr./ Sra. {{José Tomás Hernández}}</p>
+                <p>Su reserva se ha realizado correctamente. Compruebe que sus datos son correctos.</p>
+                <p>{{Fecha}}</p>
+                <div id="datos_reserva_email" style="background-color:#b2dee0;padding:16px;border-radius:6px;">
+                    <p>Origen: {{Murcia (resumido)}}</p>
+                    <p>Destino: {{Campus de la Muralla}}</p>
+                    <p>Plazas reservadas: {{2}}</p>
+                    <p>Importe total: {{6€}}</p>
+                </div>
+                <ul style="list-style:none;">
+                    <li>Este documento es puramente informativo.</li>
+                    <li>Presente su confirmación de reserva antes de iniciar el trayecto mostrando el QR de la aplicación.</li>
+                    <li>Este e-mail ha sido enviado automáticamente, por favor, no responda al mismo. Si necesita ayuda puede contactar con nosotros mediante contacto@unigoapp.es.</li>
+                </ul>
+                <p>Desde el equipo de UniGo le deseamos un feliz viaje.</p>
+                <a href="https://unigoapp.es">www.unigoapp.es</a>
+            </div>
+        </main>
+        <footer>
+            <div>
+                <p style="font-weight:200;">Cancela tu suscripción <a id="unsuscribe" href="https://www.unigoapp.es/unsuscribe"></a>aquí</a></p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
