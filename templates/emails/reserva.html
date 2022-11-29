@@ -27,31 +27,28 @@
         <main style="width:90%">
             <h1>Confirmación de reserva</h1>
             <h3>Numero de reserva: <span style="text-decoration:underline;text-transform:uppercase;">{{aaa}}</span></h3>
-            <hr style="border:1px solid #494994;">
+            <hr style="border:1px solid #494994;background-color:#494994;">
             <div style="text-align: left;">
                 <p>Sr./ Sra. {{José Tomás Hernández}}</p>
                 <p>Su reserva se ha realizado correctamente. Compruebe que sus datos son correctos.</p>
-                <p>{{Fecha}}</p>
-                <div id="datos_reserva_email" style="background-color:#b2dee0;padding:16px;border-radius:6px;">
+                <div id="datos_reserva_email" style="background-color:#b2dee0;padding:16px;border-radius:6px;border-top: 5px solid #494994;border-bottom: 5px solid #494994;margin-bottom:30px;">
+                    <p>Reserva: {{fecha}}, {{hora}}.</p>
                     <p>Origen: {{Murcia (resumido)}}</p>
                     <p>Destino: {{Campus de la Muralla}}</p>
                     <p>Plazas reservadas: {{2}}</p>
                     <p>Importe total: {{6€}}</p>
                 </div>
+                <hr style="border:1px solid #494994;background-color:#494994;">
                 <ul style="list-style:none;">
                     <li>Este documento es puramente informativo.</li>
                     <li>Presente su confirmación de reserva antes de iniciar el trayecto mostrando el QR de la aplicación.</li>
                     <li>Este e-mail ha sido enviado automáticamente, por favor, no responda al mismo. Si necesita ayuda puede contactar con nosotros mediante contacto@unigoapp.es.</li>
                 </ul>
                 <p>Desde el equipo de UniGo le deseamos un feliz viaje.</p>
-                <a href="https://unigoapp.es">www.unigoapp.es</a>
+                <a href="https://unigoapp.es" style="padding-bottom:30px;">www.unigoapp.es</a>
             </div>
         </main>
-        <footer>
-            <div>
-                <p style="font-weight:200;">Cancela tu suscripción <a id="unsuscribe" href="https://www.unigoapp.es/unsuscribe"></a>aquí</a></p>
-            </div>
-        </footer>
+        
     </div>
 </body>
 </html>
