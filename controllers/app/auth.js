@@ -40,24 +40,23 @@ const signin = async (req, res) => {
     const { email, password } = req.body;
     con.execute('SELECT * FROM usuarios WHERE `email` = ? AND `rol` = ?;', [email, 'USER'], function (err, result) {
         if (err) {
-          console.log('err :>> ', err);
-        	return res.status(400).json({error: "Se ha producido un error."});
+            return res.status(400).json({error: "Se ha producido un error."});
         }
         if(result.length === 0){
-        	return res.status(404).json({error: "Este usuario no existe."});
+            return res.status(404).json({error: "Este usuario no existe."});
         }
-		const match = bcrypt.compareSync(password, result[0].password);
-		if (!match) {
-			return res.status(401).json({error: "Contraseña incorrecta."});
-		}
-		// create signed token
-		const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
-			expiresIn: "90d",
-		});
-		res.status(200).json({
-			token,
-			user: result[0],
-		});
+        const match = bcrypt.compareSync(password, result[0].password);
+        if (!match) {
+          return res.status(401).json({error: "Contraseña incorrecta."});
+        }
+        // create signed token
+        const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
+          expiresIn: "90d",
+        });
+        res.status(200).json({
+          token,
+          user: result[0],
+        });
     });
 };
 
