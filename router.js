@@ -21,10 +21,10 @@ router.get("/legal/terminos-y-condiciones", (req, res) => {
 router.get("/unsuscribe", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/unsuscribe.html'));
 });
-router.get("/l0g1n52", (req, res) => {
+router.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });
-router.get("/pr15@d052", (req, res) => {
+router.get("/privado", (req, res) => {
   res.sendFile(path.join(__dirname, '/public/admin.html'));
 });
 // 401 error
