@@ -1,12 +1,5 @@
 {
     "logs": [
-        {
-            "why": "Email incorrecto",
-            "email": "joseto.lopez00@gmail.co",
-            "password": "JOSETOHL1@2022Unicar",
-            "date": "29/12/2022, 13:54:21",
-            "ip": "::1",
-            "protocol": "http"
-        }
+        
     ]
 }
