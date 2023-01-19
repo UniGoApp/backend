@@ -40,7 +40,7 @@ const signin = async (req, res) => {
     const { email, password } = req.body;
     con.execute('SELECT * FROM usuarios WHERE `email` = ? AND `rol` = ?;', [email, 'USER'], function (err, result) {
         if (err) {
-          console.log('err :>> ', err);
+          console.log('El error es :>> ', err);
           return res.status(400).json({error: "Se ha producido un error."});
         }
         if(result.length === 0){

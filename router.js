@@ -133,7 +133,8 @@ const { obtenerDestinos } = require("./controllers/app/destinos");
 router.get("/api/destinos", requireSignin, obtenerDestinos);
 
 // RESERVAS
-const { obtenerReservas } = require("./controllers/app/reservas");
+const { obtenerReserva, obtenerReservas } = require("./controllers/app/reservas");
+router.get("/api/reserva/:id", requireSignin, obtenerReserva);
 router.get("/api/reservas", requireSignin, obtenerReservas);
 
 
