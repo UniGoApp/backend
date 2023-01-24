@@ -3,7 +3,7 @@ const con = require("../database");
 const obtenerViajes = async (req, res) => {
     if (req.user._rol === "USER"){
         con.execute(
-            'SELECT * FROM `viajes` WHERE `estado` = ?;', ["ACTIVO"], (err, result) => {
+            'SELECT * FROM `viajes` WHERE `status` = ?;', ["ACTIVO"], (err, result) => {
                 if (err) throw err;
                 if(result.length === 0) return res.status(200).json({
                     msg: 'No hay viajes registrados.',
@@ -29,7 +29,7 @@ const obtenerViajes = async (req, res) => {
 const publicarViajes = async (req, res) => {
     if(req.user._rol === "USER"){
         con.execute(
-            'INSERT INTO `viajes` (`id_usuario`, `origen`,`id_universidad`,`id_campus`,`precio`,`plazas`,`salida`,`observaciones`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);', [req.body.user_id, req.body.origen, req.body.id_universidad, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones], (err, result) => {
+            'INSERT INTO `viajes` (`id_user`,`origin`,`id_campus`,`price`,`seats`,`departure`,`comments`) VALUES (?, ?, ?, ?, ?, ?, ?);', [req.body.user_id, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones], (err, result) => {
                 if (err) throw err;
                 con.execute(
                     'SELECT * FROM `viajes` WHERE id = ?;', [result.insertId], (err, result2) => {
@@ -61,7 +61,7 @@ const publicarViajes = async (req, res) => {
 const modificarViajes = async (req, res) => {
     if (req.user._rol === "USER"){
         con.execute(
-            'UPDATE `viajes` SET `observaciones` = ? WHERE id = ? AND id_usuario = ?;', [req.body.observaciones, req.params.id,  req.body.id_usuario], (err, result) => {
+            'UPDATE `viajes` SET `comments` = ? WHERE id = ? AND id_user = ?;', [req.body.observaciones, req.params.id,  req.body.id_usuario], (err, result) => {
                 if (err) throw err;
                 con.execute(
                     'SELECT * FROM `viajes` WHERE id = ?;', [req.params.id], (err, result) => {
@@ -92,7 +92,7 @@ const modificarViajes = async (req, res) => {
 const borrarViajes = async (req, res) => {
     if (req.user._rol === "USER" && req.user._id === req.params.id){
         con.execute(
-            'DELETE FROM `viajes` WHERE `id` = ? AND `id_usuario` = ? AND NOT estado = ?;', [req.body.viaje_id, req.params.id, "EN CURSO"], (err, result) => {
+            'DELETE FROM `viajes` WHERE `id` = ? AND `id_user` = ? AND NOT status = ?;', [req.body.viaje_id, req.params.id, "EN CURSO"], (err, result) => {
                 if (err) throw err;
                 return res.status(200).json({
                     msg: '',
