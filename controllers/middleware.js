@@ -7,7 +7,7 @@ const requireSignin = expressJWT({
     algorithms: ['HS256'],
     onExpired: async (req, err) => {
         if (new Date() - err.inner.expiredAt < 5000) { return; }
-        console.log('Expired token!!!')
+        console.log('Token has expired. Please sign in again.')
         throw err;
     }
 });

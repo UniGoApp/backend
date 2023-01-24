@@ -3,7 +3,7 @@ const con = require("../database");
 const getViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'SELECT U.email, U.phone, U.username, V.* FROM usuarios U inner join viajes V on U.id = V.id_usuario;', (err, result) => {
+            'SELECT U.email, U.phone, U.username, V.* FROM usuarios U inner join viajes V on U.id = V.id_user;', (err, result) => {
                 if (err) console.log(err);
                 if(result.length === 0) return res.status(200).json({
                     error: true,
@@ -33,7 +33,7 @@ const postViajes = async (req, res) => {
         let time = dateTime[1].split('.')[0].replaceAll(':','');
         let id = `v_${date}_${time}`;
         con.execute(
-            'INSERT INTO viajes (`id`, `id_usuario`, `origen`,`id_campus`,`precio`,`plazas`,`salida`,`observaciones`,`estado`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [id, req.body.id_usuario, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
+            'INSERT INTO viajes (`id`, `id_user`, `origin`,`id_campus`,`price`,`seats`,`departure`,`comments`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [id, req.body.id_usuario, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
                     'SELECT * FROM viajes WHERE id = ?;', [id], (err, result2) => {
@@ -64,7 +64,7 @@ const postViajes = async (req, res) => {
 const putViajes = async (req, res) => {
     if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
         con.execute(
-            'UPDATE viajes SET `observaciones`= ?,`estado` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.params.id], (err, result) => {
+            'UPDATE viajes SET `comments`= ?,`status` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.params.id], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
                     'SELECT * FROM viajes WHERE id = ?;', [req.params.id], (err, result2) => {

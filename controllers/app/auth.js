@@ -7,30 +7,33 @@ const nodemailer = require('nodemailer');
 const signup = async (req, res) => {
     const { name, email, phone, password } = req.body;
     
-    con.execute('SELECT * FROM `usuarios` WHERE `email` = ? OR `phone` = ?', [email, phone], (err, result) => {
+    con.execute('SELECT * FROM `usuarios` WHERE `email` = ? OR `phone` = ?;', [email, phone], (err, result) => {
         if (err) return res.json({error: "Unexpected error"});
         if(result.length !== 0){
           	return res.status(409).json({error: "Email or phone already in use!"});
         } else {
-          // hash password
-          const hashedPassword = bcrypt.hashSync(password, 10);
-          const default_picture = "../assets/user_default.png";
-          con.execute('INSERT INTO `usuarios` (email, password, username, rol, phone, picture) VALUES (?, ?, ?, ?, ?, ?)', [email, hashedPassword, name, 'USER', phone, default_picture], (err, result) => {
-            if (err) return res.json({error: "Unexpected error"});
-            //console.log("User created: "+ result.insertId);
-            const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, process.env.JWT_SECRET, {
-              	expiresIn: "7d",
-            });
+            let dateTime = new Date().toJSON().split('T');
+            let date = dateTime[0].replaceAll('-','');
+            let time = dateTime[1].split('.')[0].replaceAll(':','');
+            let id = `u_${date}_${time}`;
+            // hash password
+            const hashedPassword = bcrypt.hashSync(password, 10);
+            con.execute('INSERT INTO `usuarios` (id, email, password, username, phone) VALUES (?, ?, ?, ?, ?);', [id, email, hashedPassword, name, phone], (err, result) => {
+              if (err) return res.json({error: "Unexpected error"});
+              //console.log("User created: "+ result.insertId);
+              const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, process.env.JWT_SECRET, {
+                  expiresIn: "7d",
+              });
 
-            return res.status(200).json({
-                message: "User created successfully.",
-                token,
-                user: {
-                    _id: result.insertId,
-                    email: email
-                }
+              return res.status(200).json({
+                  message: "User created successfully.",
+                  token,
+                  user: {
+                      _id: result.insertId,
+                      email: email
+                  }
+              });
             });
-          });
         }
       }
     );

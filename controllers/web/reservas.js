@@ -33,7 +33,7 @@ const postReservas = async (req, res) => {
         let time = dateTime[1].split('.')[0].replaceAll(':','');
         let id = `r_${date}_${time}`;
         con.execute(
-            'INSERT INTO reservas (id`,`id_viaje`,`id_usuario`,`leido`) VALUES (?, ?, ?, ?);', [id, req.body.id_viaje, req.body.id_usuario, req.body.leido], (err, result) => {
+            'INSERT INTO reservas (id,id_trip,id_user,num_seats,read,scored) VALUES (?, ?, ?, ?, ?, ?);', [id, req.body.id_viaje, req.body.id_usuario, req.body.plazas, req.body.leido, req.body.valorado], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
