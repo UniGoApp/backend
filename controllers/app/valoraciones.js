@@ -1,3 +1,4 @@
+const { RolesAnywhere } = require("aws-sdk");
 const con = require("../database");
 
 const obtenerValoraciones = async (req, res) => {
