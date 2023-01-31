@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nanoid = require("nanoid");
+const {nanoid} = require("nanoid");
 const con = require("../database");
 const fs = require('fs');
 const path = require('path');

@@ -2,7 +2,7 @@ const con = require("../database");
 const bcrypt = require("bcryptjs");
 
 const getUsuarios = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN"){
         con.execute(
             'SELECT * FROM usuarios WHERE NOT rol = ?;',["SUPER_ADMIN"], (err, result) => {
                 if (err) console.log('err :>> ', err);
@@ -18,7 +18,7 @@ const getUsuarios = async (req, res) => {
                 });
             }
         );
-    }else if(req.user._rol === "ADMIN"){
+    }else if(req.auth._rol === "ADMIN"){
         con.execute(
             'SELECT * FROM usuarios WHERE rol = ?;', ["USER"], (err, result) => {
                 if (err) console.log('err :>> ', err);
@@ -44,7 +44,7 @@ const getUsuarios = async (req, res) => {
 };
 
 const postUsuarios = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'SELECT * FROM usuarios WHERE email = ? OR phone = ?;', [req.body.email, req.body.phone], (err, result) => {
                 if (err) console.log('err :>> ', err);
@@ -93,7 +93,7 @@ const postUsuarios = async (req, res) => {
 };
 
 const putUsuarios = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'UPDATE usuarios SET `email` = ?,`username` = ?,`rol` = ?,`phone` = ?,`picture` = ?,`reset_code` = ?,`creation_time` = ?,`rrss` = ? WHERE id = ?;', [req.body.email, req.body.username, req.body.rol, req.body.phone, req.body.picture, req.body.resetCode, req.body.creation_time, req.body.rrss, req.params.id], (err, result) => {
                 if (err) console.log('err :>>', err);
@@ -124,7 +124,7 @@ const putUsuarios = async (req, res) => {
 };
 
 const deleteUsuarios = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'DELETE FROM usuarios WHERE id = ?;', [req.params.id], (err, result) => {
                 if (err) {

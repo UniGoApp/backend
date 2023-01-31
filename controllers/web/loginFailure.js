@@ -30,7 +30,7 @@ const getLoginsWeb = async (req, res) => {
 };
 
 const updateLogins = async (req, res) => {
-    if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
+    if( req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
         let newContent = req.body;
         if(!newContent) return;
         

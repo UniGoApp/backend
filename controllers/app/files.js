@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const upload_file = async (req, res) => {
-    // console.log('upload_file > img > user id: ', req.user._id);
+    // console.log('upload_file > img > user id: ', req.auth._id);
     const image_all = req.body.image;
     const image_data = image_all.split('data:image/jpg;base64,').pop();
     const image_name = nanoid();
@@ -19,9 +19,9 @@ const upload_file = async (req, res) => {
     fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
         if(err){
             return res.json({
-                msg: 'Error inesperado.',
+                info: 'Error inesperado.',
                 data: '',
-                info: ''
+                error: true
             });
         }
     });
@@ -29,16 +29,16 @@ const upload_file = async (req, res) => {
     const server_path = `http://192.168.1.42:8000/file/${image_file}`; //https, nombre de dominio y sin el puerto
     //Update user picture name and route
     con.execute(
-        'UPDATE `usuarios` SET `picture` = ? WHERE id = ?', [server_path, req.user._id], (err, result) => {
+        'UPDATE `usuarios` SET `picture` = ? WHERE id = ?', [server_path, req.auth._id], (err, result) => {
             if (err) {
                 return res.json({
-                    msg: 'Error inesperado.',
+                    info: 'Error inesperado.',
                     data: '',
-                    info: ''
+                    error: true
                 });
             }
             return res.status(200).json({
-                msg: '',
+                error: false,
                 data: server_path,
                 info: 'Imagen actualizada con éxito.'
             });
@@ -48,18 +48,18 @@ const upload_file = async (req, res) => {
 };
 
 const updateRrss = async (req, res) => {
-    if(req.user._id == req.params.id){
+    if(req.auth._id == req.params.id){
         con.execute(
-            'UPDATE `usuarios` SET `rrss` = ? WHERE id = ?', [req.body.value, req.user._id], (err, result) => {
+            'UPDATE `usuarios` SET `rrss` = ? WHERE id = ?', [req.body.value, req.auth._id], (err, result) => {
                 if (err) {
                     return res.json({
-                        msg: 'Error inesperado.',
+                        info: 'Error inesperado.',
                         data: '',
-                        info: ''
+                        error: true
                     });
                 }
                 return res.status(200).json({
-                    msg: '',
+                    error: false,
                     data: req.body.value,
                     info: 'Preferencias actualizadas con éxito.'
                 });

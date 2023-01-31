@@ -1,13 +1,12 @@
 require('dotenv').config();
-const expressJWT = require('express-jwt');
+const {expressjwt} = require('express-jwt');
 
 //MIDDLEWARE
-const requireSignin = expressJWT({
+const requireSignin = expressjwt({
     secret: process.env.JWT_SECRET,
     algorithms: ['HS256'],
     onExpired: async (req, err) => {
         if (new Date() - err.inner.expiredAt < 5000) { return; }
-        console.log('Token has expired. Please sign in again.')
         throw err;
     }
 });

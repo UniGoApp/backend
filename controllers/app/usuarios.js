@@ -1,17 +1,17 @@
 const con = require("../database");
 
 const obtenerUsuario = async (req, res) => {
-    if(req.user._rol === "USER" && req.user._id === req.params.id){
+    if(req.auth._rol === "USER" && req.auth._id === req.params.id){
         con.execute(
             'SELECT * FROM `usuarios` WHERE `rol` = ? AND `id` = ?;', ["USER", req.params.id], (err, result) => {
                 if (err) throw err;
                 if(result.length === 0) return res.status(200).json({
-                    msg: 'No existe el usuario solicitado.',
+                    info: 'No existe el usuario solicitado.',
                     data: '',
-                    info: ''
+                    error: false
                 });
                 return res.status(200).json({
-                    msg: '',
+                    error: false,
                     data: result,
                     info: ''
                 });
@@ -19,20 +19,20 @@ const obtenerUsuario = async (req, res) => {
         );
     }else{
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
+            info: 'Acceso no autorizado',
             data: '',
-            info: ''
+            error: true
         });
     }
 };
 
 const modificarUsuario = async (req, res) => {
-    if(req.user._rol === "USER" && req.user._id === req.params.id){
+    if(req.auth._rol === "USER" && req.auth._id === req.params.id){
         con.execute(
             'UPDATE `usuarios` SET `password` = ?,`username` = ?,`phone` = ?,`picture` = ? WHERE id = ?;', [req.body.password, req.body.username, req.body.phone, req.body.picture, req.params.id], (err, result) => {
                 if (err) throw err;
                 return res.status(200).json({
-                    msg: '',
+                    error: false,
                     data: '',
                     info: 'Usuario modificado con éxito.'
                 });
@@ -40,20 +40,20 @@ const modificarUsuario = async (req, res) => {
         );
     }else {
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
+            info: 'Acceso no autorizado',
             data: '',
-            info: ''
+            error: true
         });
     }
 };
 
 const borrarUsuario = async (req, res) => {
-    if(req.user._rol === "USER" && req.user._id === req.params.id){
+    if(req.auth._rol === "USER" && req.auth._id === req.params.id){
         con.execute(
-            'DELETE FROM `usuarios` WHERE `rol` = ? AND `id` = ?;', [req.user._rol, req.params.id], (err, result) => {
+            'DELETE FROM `usuarios` WHERE `rol` = ? AND `id` = ?;', [req.auth._rol, req.params.id], (err, result) => {
                 if (err) throw err;
                 return res.status(200).json({
-                    msg: '',
+                    error: false,
                     data: '',
                     info: 'Usuario borrado con éxito.'
                 });
@@ -61,9 +61,9 @@ const borrarUsuario = async (req, res) => {
         );
     }else{
         return res.status(403).json({
-            msg: 'Acceso no autorizado',
+            info: 'Acceso no autorizado',
             data: '',
-            info: ''
+            error: true
         });
     }
 };

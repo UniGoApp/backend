@@ -4,7 +4,7 @@ const path = require('path');
 const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
 const getNewsletter = async (req, res) => {
-    if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
+    if( req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
         fs.readFile(jsonDir, "utf8", (err, data) => {
             if (err) {
                 return res.status(200).json({
@@ -118,7 +118,7 @@ const removeNewsletter = async (req, res) => {
 };
 
 const updateNewsletter = async (req, res) => {
-    if( req.user._rol === "ADMIN" || req.user._rol === "SUPER_ADMIN"){
+    if( req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
         let newContent = req.body;
         if(!newContent) return;
         

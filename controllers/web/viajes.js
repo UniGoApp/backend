@@ -1,7 +1,7 @@
 const con = require("../database");
 
 const getViajes = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'SELECT U.email, U.phone, U.username, V.* FROM usuarios U inner join viajes V on U.id = V.id_user;', (err, result) => {
                 if (err) console.log(err);
@@ -27,7 +27,7 @@ const getViajes = async (req, res) => {
 };
 
 const postViajes = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         let dateTime = new Date().toJSON().split('T');
         let date = dateTime[0].replaceAll('-','');
         let time = dateTime[1].split('.')[0].replaceAll(':','');
@@ -62,7 +62,7 @@ const postViajes = async (req, res) => {
 };
 
 const putViajes = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'UPDATE viajes SET `comments`= ?,`status` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.params.id], (err, result) => {
                 if (err) console.log(err);
@@ -93,7 +93,7 @@ const putViajes = async (req, res) => {
 };
 
 const deleteViajes = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'DELETE FROM viajes WHERE `id` = ?;', [req.params.id], (err, result) => {
                 if (err) {

@@ -1,7 +1,7 @@
 const con = require("../database");
 
 const getReservas = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'SELECT * FROM reservas;', (err, result) => {
                 if (err) console.log(err);
@@ -27,7 +27,7 @@ const getReservas = async (req, res) => {
 };
 
 const postReservas = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         let dateTime = new Date().toJSON().split('T');
         let date = dateTime[0].replaceAll('-','');
         let time = dateTime[1].split('.')[0].replaceAll(':','');
@@ -67,7 +67,7 @@ const postReservas = async (req, res) => {
 };
 
 const deleteReservas = async (req, res) => {
-    if(req.user._rol === "SUPER_ADMIN" || req.user._rol === "ADMIN"){
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
             'DELETE FROM reservas WHERE id = ?;', [req.params.id], (err, result) => {
                 if (err) {
