@@ -6,7 +6,7 @@ AWS.config.update({
 });
 const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
-const sendNewUserEmail = (to) => {
+const sendNewUserEmail = async (to) => {
   if(!to) return false;
   const params = {
     Source: "no-reply@unigoapp.es",
@@ -18,18 +18,10 @@ const sendNewUserEmail = (to) => {
     TemplateData: "{ \"email\":\""+ to +"\" }"
   };
 
-  ses.sendTemplatedEmail(params, function(err, data) {
-    if (err) {
-      console.log(err, err.stack);
-      return false;
-    } else {
-      console.log(data); 
-      return true;
-    }
-  });
+  return await ses.sendTemplatedEmail(params);
 }
 
-const sendResetCodeEmail = (to, resetCode) => {
+const sendResetCodeEmail = async (to, resetCode) => {
   if(!to || !resetCode) return false;
   const params = {
     Destination: {
@@ -57,15 +49,7 @@ const sendResetCodeEmail = (to, resetCode) => {
     ReplyToAddresses: [ "contacto@unigoapp.es" ]
   };
 
-  ses.sendEmail(params, function(err, data) {
-    if (err) {
-      console.log(err, err.stack);
-      return false;
-    } else {
-      console.log(data); 
-      return true;
-    }
-  });
+  return await ses.sendEmail(params);
 }
 
 module.exports = { sendNewUserEmail, sendResetCodeEmail };

@@ -89,10 +89,10 @@ const forgotPassword = async (req, res) => {
       // Generate code
       const resetCode = nanoid(6).toUpperCase();
 			// save resetCode to db
-			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], function(err) {
+			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], async function(err) {
         if(err) return res.json({error: true, info: "Unexpected error", data:''});
         // Send mail
-        const didSend = sendResetCodeEmail(email, resetCode);
+        const didSend = await sendResetCodeEmail(email, resetCode);
         console.log('didSend: ', didSend);
         if(didSend){
           return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
