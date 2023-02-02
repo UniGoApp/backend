@@ -51,13 +51,7 @@ const signup = async (req, res) => {
             return res.status(200).json({
               error: false,
               info: '¡Usuario creado con éxito!',
-              data: {
-                token,
-                user: {
-                  _id: result.insertId,
-                  email: email
-                }
-              }
+              data: ''
             });
           }
         });
