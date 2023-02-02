@@ -1,5 +1,9 @@
-
 const AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: process.env.AWS_S3_accessKeyId,
+  secretAccessKey: process.env.AWS_S3_secretAccessKey,
+  region: process.env.AWS_REGION
+});
 const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
 const sendNewUserEmail = (to) => {
