@@ -104,6 +104,6 @@ dist
 .tern-port
 
 # Own files
-data/
-data/*.*
 data/loginFailure.json
+*.pem
+*.crt

@@ -8,7 +8,7 @@ const {sendNewUserEmail, sendResetCodeEmail} = require('./emails');
 const signup = async (req, res) => {
   const { name, email, phone, password } = req.body;
 
-  con.execute('SELECT * FROM usuarios WHERE email = ? OR phone = ?;', [email, phone], (err, result) => {
+  con.execute('SELECT * FROM usuarios WHERE email=? OR phone=?;', [email, phone], (err, result) => {
     if (err) return res.status(200).json({error: true, info: "Unexpected error", data:''});
     if(result.length !== 0){
       return res.status(200).json({error: true, info: "Email or phone already in use!", data:''});
@@ -23,7 +23,7 @@ const signup = async (req, res) => {
       con.execute('INSERT INTO usuarios (id, email, password, username, phone) VALUES (?, ?, ?, ?, ?);', [id, email, hashedPassword, name, phone], (err, result) => {
         if (err) return res.json({error: true, info: "Unexpected error", data:''});
         // Create token
-        const token = jwt.sign({ _id: result.insertId, _rol: result[0].rol }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ _id: id, _rol: "USER" }, process.env.JWT_SECRET, {
           expiresIn: "7d",
         });
         // Send mail
