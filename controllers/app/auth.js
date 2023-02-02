@@ -36,11 +36,11 @@ const signup = async (req, res) => {
         const params = {
           Source: "no-reply@unigoapp.es",
           Destination: {
-           ToAddresses: [ to ]
+           ToAddresses: [ email ]
           },
           ReplyToAddresses: [ "contacto@unigoapp.es" ],
           Template: 'NuevoUsuario',
-          TemplateData: "{ \"email\":\""+ to +"\" }"
+          TemplateData: "{ \"email\":\""+ email +"\" }"
         };
         ses.sendTemplatedEmail(params, function(err, data) {
           if (err) {
