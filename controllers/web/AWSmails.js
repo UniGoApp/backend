@@ -106,12 +106,12 @@ const responderEmail = async(req, res) => {
         Message: {
             Body: {
                 Html: {
-                Charset: "UTF-8",
-                Data: `<p>${content}</p>`
+                    Charset: "UTF-8",
+                    Data: `<p>${content}</p>`
                 },
                 Text: {
-                Charset: "UTF-8",
-                Data: content
+                    Charset: "UTF-8",
+                    Data: content
                 }
             },
             Subject: {

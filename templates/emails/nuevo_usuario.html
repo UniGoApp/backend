@@ -12,12 +12,12 @@
 <body style="margin:3em 0;text-align:center;font-size:18px;width:100%;height:100%;background-color:#b2dee0;font-family:'Poppins',sans-serif;font-weight:400;">
     <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;">
         <header style="margin:20px auto;">
-            <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/38beae7b-4a00-4928-89af-0a8e0cea1821/1280x426.png" alt="nombre unigo" style="width:80%;">
+            <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/f7adbab7-b125-49b6-9d93-2bb5562da1a9/857x730.png" alt="nombre unigo" style="width:40%;">
         </header>
         <main>
             <h1 class="margin-bottom" style="margin:20px 30px;font-weight:600;">¡Gracias por descargar UniGo!</h1>
             <p class="subtitle" style="margin:40px 30px;">Completa tu registro pulsando en el siguiente botón.</p>
-            <a href="" target="_blank" id="confirm" style="font-size:22px;font-weight:bolder;margin:50px auto;padding:20px 30px;background-color:#6bbda3;border-radius:4px;box-shadow:0px 10px 13px -7px #0e7152;text-decoration:none;color:black;">Confirmar Email</a>
+            <a href="https://www.unigoapp.es/api/confirm-email/{{email}}" target="_blank" style="font-size:22px;font-weight:bolder;margin:50px auto;padding:20px 30px;background-color:#6bbda3;border-radius:4px;box-shadow:0px 10px 13px -7px #0e7152;text-decoration:none;color:black;">Confirmar Email</a>
             <div class="bg-img" style="margin-top:60px;"><img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/03307dc9-c665-41f4-a893-a3a3531350b5/600x539.png" alt="unigo app" style="max-width:100%;"></div>
             <div class="row-3" style="display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;">
                 <div style="width:80%;text-align:center;margin:20px 0;">
@@ -30,15 +30,10 @@
                 </div>
                 <div style="width:80%;text-align:center;margin:20px 0;">
                     <img src="http://cdn.mcauto-images-production.sendgrid.net/1455f1ef3eff9533/4dbf7008-555b-4ad9-a4bc-d9ff7160ecae/512x512.png" alt="reducir huella de carbono" style="width:140px;margin:0 auto;">
-                    <p>Reduzcamos la huella de carbono del planeta produciendo menos CO<sub>2</sub></p>
+                    <p>Reduzcamos la huella de carbono del planeta produciendo menos CO<sub>2</sub>.</p>
                 </div>
             </div>
         </main>
-        <script type="application/javascript">
-            let email_to_confirm = 'jose@jose.com';
-            let url_to_request = `https://www.unigoapp.es/api/confirm-email/${email_to_confirm}`;
-            document.getElementById('confirm').setAttribute("href", url_to_request);
-        </script>
     </div>
 </body>
 </html>

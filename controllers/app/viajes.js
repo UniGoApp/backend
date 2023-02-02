@@ -1,12 +1,13 @@
 const con = require("../database");
 
 const obtenerViajes = async (req, res) => {
+    const user_id = req.auth._id;
     if (req.auth._rol === "USER"){
         con.execute(
-            'SELECT * FROM `viajes` WHERE `status` = ?;', ["ACTIVO"], (err, result) => {
+            'SELECT * FROM viajes WHERE status="ACTIVO" AND id_user!=? AND departure>CURRENT_DATE;', [user_id], (err, result) => {
                 if (err) throw err;
                 if(result.length === 0) return res.status(200).json({
-                    msg: 'No hay viajes registrados.',
+                    info: 'No hay viajes registrados.',
                     data: '',
                     error: true
                 });

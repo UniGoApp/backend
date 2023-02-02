@@ -64,7 +64,7 @@ const login = () => {
                 sessionStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
                 const usuario = JSON.stringify(result.user);
                 sessionStorage.setItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
-                window.location.assign('/pr15@d052');
+                window.location.assign('/privado');
             }else{
                 error_box.classList.remove('icons');
                 error_box.children[1].innerHTML = result.error;
