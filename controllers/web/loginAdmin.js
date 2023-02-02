@@ -4,7 +4,6 @@ const {nanoid} = require("nanoid");
 const con = require("../database");
 const fs = require('fs');
 const path = require('path');
-const {sendResetCodeEmail} = require('../app/emails');
 
 const logsDir = path.join(__dirname, '../../data/loginFailure.json');
 
@@ -87,13 +86,38 @@ const forgotPasswordAdmin = async (req, res) => {
 			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], function(err) {
 				if(err) return res.json({error: "Unexpected error"});
 				// Send mail
-				const didSend = sendResetCodeEmail(email, resetCode);
-				console.log('didSend: ', didSend);
-				if(didSend){
-				  return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
-				}else{
-				  return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
-				}
+				const params = {
+					Destination: {
+					 ToAddresses: [ email ]
+					}, 
+					Message: {
+					 Body: {
+					  Html: {
+					   Charset: "UTF-8", 
+					   Data: `<h4>Código: </h4><h2>${resetCode}</h2><p>Por favor borra este mensaje si no has solicitado este cambio de contraseña.</p>`
+					  }, 
+					  Text: {
+					   Charset: "UTF-8", 
+					   Data: `\n\tCódigo: ${resetCode}.\n\nPor favor borra este mensaje si no has solicitado este cambio de contraseña.`
+					  }
+					 }, 
+					 Subject: {
+					  Charset: "UTF-8", 
+					  Data: "UniGo - Reset Password Code"
+					 }
+					}, 
+					Source: "no-reply@unigoapp.es",
+					ReplyToAddresses: [ "contacto@unigoapp.es" ]
+				  };
+				  ses.sendEmail(params, function(err, data) {
+					if (err) {
+					  console.log(err, err.stack);
+					  return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
+					} else {
+					  console.log(data); 
+					  return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
+					}
+				  });
 			});
 		}
 	});

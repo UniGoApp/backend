@@ -3,7 +3,13 @@ const jwt = require("jsonwebtoken");
 const {nanoid} = require("nanoid");
 const con = require("../database");
 
-const {sendNewUserEmail, sendResetCodeEmail} = require('./emails');
+const AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: process.env.AWS_S3_accessKeyId,
+  secretAccessKey: process.env.AWS_S3_secretAccessKey,
+  region: process.env.AWS_REGION
+});
+const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
 const signup = async (req, res) => {
   const { name, email, phone, password } = req.body;
@@ -27,23 +33,34 @@ const signup = async (req, res) => {
           expiresIn: "7d",
         });
         // Send mail
-        const didSend = sendNewUserEmail(email);
-        console.log('didSend: ', didSend);
-        if(didSend){
-          return res.status(200).json({
-            error: false,
-            info: '¡Usuario creado con éxito!',
-            data: {
-              token,
-              user: {
-                _id: result.insertId,
-                email: email
+        const params = {
+          Source: "no-reply@unigoapp.es",
+          Destination: {
+           ToAddresses: [ to ]
+          },
+          ReplyToAddresses: [ "contacto@unigoapp.es" ],
+          Template: 'NuevoUsuario',
+          TemplateData: "{ \"email\":\""+ to +"\" }"
+        };
+        ses.sendTemplatedEmail(params, function(err, data) {
+          if (err) {
+            console.log(err, err.stack);
+            return res.status(200).json({error: true, info: 'Fallo al enviar el email.', data: ''});
+          } else {
+            console.log(data); 
+            return res.status(200).json({
+              error: false,
+              info: '¡Usuario creado con éxito!',
+              data: {
+                token,
+                user: {
+                  _id: result.insertId,
+                  email: email
+                }
               }
-            }
-          });
-        }else{
-          return res.status(200).json({error: true, info: 'Fallo al enviar el email.', data: ''});
-        }
+            });
+          }
+        });
       });
     }
   });
@@ -92,17 +109,41 @@ const forgotPassword = async (req, res) => {
 			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], async function(err) {
         if(err) return res.json({error: true, info: "Unexpected error", data:''});
         // Send mail
-        const didSend = await sendResetCodeEmail(email, resetCode);
-        console.log('didSend: ', didSend);
-        if(didSend){
-          return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
-        }else{
-          return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
-        }
+        const params = {
+          Destination: {
+           ToAddresses: [ email ]
+          }, 
+          Message: {
+           Body: {
+            Html: {
+             Charset: "UTF-8", 
+             Data: `<h4>Código: </h4><h2>${resetCode}</h2><p>Por favor borra este mensaje si no has solicitado este cambio de contraseña.</p>`
+            }, 
+            Text: {
+             Charset: "UTF-8", 
+             Data: `\n\tCódigo: ${resetCode}.\n\nPor favor borra este mensaje si no has solicitado este cambio de contraseña.`
+            }
+           }, 
+           Subject: {
+            Charset: "UTF-8", 
+            Data: "UniGo - Reset Password Code"
+           }
+          }, 
+          Source: "no-reply@unigoapp.es",
+          ReplyToAddresses: [ "contacto@unigoapp.es" ]
+        };
+        ses.sendEmail(params, function(err, data) {
+          if (err) {
+            console.log(err, err.stack);
+            return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
+          } else {
+            console.log(data); 
+            return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
+          }
+        });
 			});
 		}
 	});
-  
 };
 
 const resetPassword = async (req, res) => {
