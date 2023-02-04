@@ -9,12 +9,12 @@ let con = mysql.createConnection({
     database: process.env.AWS_RDS_DB_NAME
 });
 
-con.connect(function(err) {
-    if (err) {
-        console.error('Database connection failed: ' + err.stack);
-        return;
-    }
-    console.log('Connected to database.');
-});
+// con.connect(function(err) {
+//     if (err) {
+//         console.error('Database connection failed: ' + err.stack);
+//         return;
+//     }
+//     console.log('Connected to database.');
+// });
 
 module.exports = con;

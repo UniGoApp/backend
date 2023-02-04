@@ -17,7 +17,7 @@ const signup = async (req, res) => {
   con.execute('SELECT * FROM usuarios WHERE email=? OR phone=?;', [email, phone], (err, result) => {
     if (err) return res.status(200).json({error: true, info: "Unexpected error", data:''});
     if(result.length !== 0){
-      return res.status(200).json({error: true, info: "Email or phone already in use!", data:''});
+      return res.status(200).json({error: true, info: "Email o teléfono en uso.", data:''});
     } else {
       let dateTime = new Date().toJSON().split('T');
       let date = dateTime[0].replaceAll('-','');
@@ -28,10 +28,6 @@ const signup = async (req, res) => {
       // Add new user
       con.execute('INSERT INTO usuarios (id, email, password, username, phone) VALUES (?, ?, ?, ?, ?);', [id, email, hashedPassword, name, phone], (err, result) => {
         if (err) return res.json({error: true, info: "Unexpected error", data:''});
-        // Create token
-        const token = jwt.sign({ _id: id, _rol: "USER" }, process.env.JWT_SECRET, {
-          expiresIn: "7d",
-        });
         // Send mail
         const params = {
           Source: "no-reply@unigoapp.es",
@@ -62,7 +58,7 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE email=? AND rol=?;', [email, 'USER'], function (err, result) {
+    con.execute('SELECT * FROM usuarios WHERE email=?;', [email], function (err, result) {
         if (err) {
           console.log('Error de conexion: ', err);
           return res.status(400).json({error: true, info: "Se ha producido un error.", data:''});
@@ -76,7 +72,7 @@ const signin = async (req, res) => {
         }
         // create signed token
         const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
-          expiresIn: "90d",
+          expiresIn: "360d",
         });
         return res.status(200).json({
           error: false,
@@ -93,15 +89,15 @@ const forgotPassword = async (req, res) => {
 	const email = req.body.email;
 	// Find user by email
 	con.execute('SELECT * FROM usuarios WHERE email=?;', [email], function (err, result) {
-		if (err) return res.json({error: true, info: "Unexpected error", data:''});
+		if (err) return res.json({error: true, info: "Unexpected error 1", data:''});
 		if(result.length == 0){
 			return res.json({error: true, info: "Este usuario no existe.", data:''});
 		} else {
       // Generate code
       const resetCode = nanoid(6).toUpperCase();
 			// save resetCode to db
-			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], async function(err) {
-        if(err) return res.json({error: true, info: "Unexpected error", data:''});
+			con.execute('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], async function(err) {
+        if(err) return res.json({error: true, info: "Unexpected error 2", data:''});
         // Send mail
         const params = {
           Destination: {
@@ -152,11 +148,11 @@ const resetPassword = async (req, res) => {
         // hash password
         const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-        con.query('UPDATE usuarios SET password=?, reset_code="" WHERE email=?;', [hashedPassword, email], function(err) {
-          if(err) return res.json({error:true, info: "Unexpected error", data: ''});
+        con.execute('UPDATE usuarios SET password=?, reset_code="" WHERE email=?;', [hashedPassword, email], function(err) {
+          if(err) return res.json({error: true, info: "Unexpected error", data: ''});
         });
 
-        return res.json({error: false, info: '', data: "Contraseña cambiada con éxito, por favor inicie sesion."});
+        return res.json({error: false, info: 'Contraseña cambiada con éxito, por favor inicie sesion.', data: ''});
       }
     });
   } catch (err) {

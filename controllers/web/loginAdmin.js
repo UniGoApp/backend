@@ -83,7 +83,7 @@ const forgotPasswordAdmin = async (req, res) => {
 			// Generate code
 			const resetCode = nanoid(12).toUpperCase();
 			// save resetCode to db
-			con.query('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], function(err) {
+			con.execute('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], function(err) {
 				if(err) return res.json({error: "Unexpected error"});
 				// Send mail
 				const params = {
@@ -135,7 +135,7 @@ const resetPasswordAdmin = async (req, res) => {
         // hash password
         const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-        con.query('UPDATE usuarios SET password=?, resetCode="" WHERE email=?;', [hashedPassword, email], function(err) {
+        con.execute('UPDATE usuarios SET password=?, resetCode="" WHERE email=?;', [hashedPassword, email], function(err) {
           if(err) return res.json({error:true, info: "Unexpected error", data: ''});
         });
 
