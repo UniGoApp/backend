@@ -69,7 +69,7 @@ router.put('/api/admin/newsletter', requireSignin, updateNewsletter);
 
 // ADMIN CRUD DESTINOS (web y archivos)
 const { getDestinosWeb, updateDestinos } = require("./controllers/web/destinos");
-router.get('/api/destinos', getDestinosWeb); //Not singin required for web use
+router.get('/api/web/destinos', getDestinosWeb); //Not singin required for web use
 router.put('/api/admin/destinos', requireSignin, updateDestinos);
 //No admin crud --> Only modifying through the json archive manually
 
@@ -122,15 +122,16 @@ router.put("/api/usuarios/:id", requireSignin, modificarUsuario);
 router.delete("/api/usuarios/:id", requireSignin, borrarUsuario);
 
 // VIAJES
-const { obtenerViajes, publicarViajes, modificarViajes, borrarViajes } = require("./controllers/app/viajes");
+const { obtenerViajes, misViajes, publicarViajes, modificarViajes, borrarViajes } = require("./controllers/app/viajes");
 router.get("/api/viajes", requireSignin, obtenerViajes);
+router.get("/api/misviajes", requireSignin, misViajes);
 router.post("/api/viajes", requireSignin, publicarViajes);
 router.put("/api/viajes/:id", requireSignin, modificarViajes);
 router.delete("/api/viajes/:id", requireSignin, borrarViajes);
 
 // DESTINOS
-// const { obtenerDestinos } = require("./controllers/app/destinos");
-// router.get("/api/destinos", requireSignin, obtenerDestinos);
+const { obtenerDestinos } = require("./controllers/app/destinos");
+router.get("/api/destinos", requireSignin, obtenerDestinos);
 
 // RESERVAS
 const { obtenerReserva, obtenerReservas } = require("./controllers/app/reservas");
@@ -140,7 +141,6 @@ router.get("/api/reservas", requireSignin, obtenerReservas);
 // VALORACIONES
 const { obtenerValoraciones } = require("./controllers/app/valoraciones");
 router.get("/api/valoraciones", requireSignin, obtenerValoraciones);
-
 
 
 ///////////////////////////////////////////

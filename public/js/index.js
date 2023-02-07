@@ -38,7 +38,7 @@ const prevButton = document.querySelector('.controls div.prev');
 const nextButton = document.querySelector('.controls div.next');
 const allButton = document.querySelector('.controls > button');
 
-fetch('/api/destinos')
+fetch('/api/web/destinos')
 .then(response => response.json())
 .then(result => {
     if(result.error){

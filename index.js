@@ -27,6 +27,4 @@ app.use((_, res, next) => {
 app.use(express.static('public'));
 app.use("/", router);
 
-const port = 3000;
-
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(3000, () => console.log("Server running on port 3000."));

@@ -207,7 +207,7 @@ function guardar_newsletter(){
 // DESTINOS
 let textarea_destinos = document.getElementById('destinos_json');
 let destinos_txt, original_destinos_json = '';
-fetch('/api/destinos', requestOptions)
+fetch('/api/web/destinos', requestOptions)
 .then(response => response.json())
 .then(result => { 
     if(result.error){

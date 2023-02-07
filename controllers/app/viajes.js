@@ -27,6 +27,25 @@ const obtenerViajes = async (req, res) => {
     }
 };
 
+const misViajes = async (req, res) => {
+    const user_id = req.auth._id;
+    con.execute(
+        'SELECT * FROM viajes WHERE id_user=?;', [user_id], (err, result) => {
+            if (err) throw err;
+            if(result.length === 0) return res.status(200).json({
+                info: 'No ha publicado ningun viaje todavía.',
+                data: '',
+                error: true
+            });
+            return res.status(200).json({
+                error: false,
+                data: result,
+                info: ''
+            });
+        }
+    );
+};
+
 const publicarViajes = async (req, res) => {
     if(req.auth._rol === "USER"){
         con.execute(
@@ -111,4 +130,4 @@ const borrarViajes = async (req, res) => {
     }
 };
 
-module.exports = { obtenerViajes, publicarViajes, modificarViajes, borrarViajes };
+module.exports = { obtenerViajes, misViajes, publicarViajes, modificarViajes, borrarViajes };
