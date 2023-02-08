@@ -130,8 +130,8 @@ router.put("/api/viajes/:id", requireSignin, modificarViajes);
 router.delete("/api/viajes/:id", requireSignin, borrarViajes);
 
 // DESTINOS
-const { obtenerDestinos } = require("./controllers/app/destinos");
-router.get("/api/destinos", requireSignin, obtenerDestinos);
+const { obtenerCampus } = require("./controllers/app/campus");
+router.get("/api/campus", requireSignin, obtenerCampus);
 
 // RESERVAS
 const { obtenerReserva, obtenerReservas } = require("./controllers/app/reservas");
