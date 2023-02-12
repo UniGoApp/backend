@@ -7,7 +7,7 @@ const obtenerCampus = async (req, res) => {
                 console.log(err);
                 return res.status(200).json({
                     error: true,
-                    info: 'Error inesperado en la base de datos.',
+                    info: 'Error con la base de datos.',
                     data:''
                 });
             }

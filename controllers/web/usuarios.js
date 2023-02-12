@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const getUsuarios = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN"){
         con.execute(
-            'SELECT * FROM usuarios WHERE NOT rol = ?;',["SUPER_ADMIN"], (err, result) => {
+            'SELECT * FROM usuarios WHERE NOT rol=?;',["SUPER_ADMIN"], (err, result) => {
                 if (err) console.log('err :>> ', err);
                 if(result.length === 0) return res.status(200).json({
                     error: true,

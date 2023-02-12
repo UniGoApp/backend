@@ -1,21 +1,15 @@
 const con = require("../database");
-const nanoid = require('nanoid');
 const fs = require('fs');
 const path = require('path');
+const { idMaker } = require("../../helpers/idMaker");
 
 const upload_file = async (req, res) => {
-    // console.log('upload_file > img > user id: ', req.auth._id);
     const image_all = req.body.image;
     const image_data = image_all.split('data:image/jpg;base64,').pop();
-    const image_name = nanoid();
-    const image_type = '.jpg';
-    const image_file = image_name.concat(image_type);
+    const image_file = `${idMaker('i')}.jpg`;
 
     const upload_path = path.resolve(__dirname, `../../public/img/users/${image_file}`);
-    // let writeFileStream = fs.createWriteStream(upload_path);
-    // writeFileStream.write(image_data);
-    // writeFileStream.end();
-
+    
     fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
         if(err){
             return res.json({
@@ -26,34 +20,31 @@ const upload_file = async (req, res) => {
         }
     });
 
-    const server_path = `http://192.168.1.42:8000/file/${image_file}`; //https, nombre de dominio y sin el puerto
-    //Update user picture name and route
     con.execute(
-        'UPDATE `usuarios` SET `picture` = ? WHERE id = ?', [server_path, req.auth._id], (err, result) => {
+        'UPDATE usuarios SET picture=? WHERE id=?', [image_file, req.auth._id], (err, result) => {
             if (err) {
                 return res.json({
-                    info: 'Error inesperado.',
-                    data: '',
-                    error: true
+                    error: true,
+                    info: 'No se ha podido actualizar la foto de perfil.',
+                    data: ''
                 });
             }
             return res.status(200).json({
                 error: false,
-                data: server_path,
+                data: image_file,
                 info: 'Imagen actualizada con éxito.'
             });
         }
     );
-
 };
 
 const updateRrss = async (req, res) => {
-    if(req.auth._id == req.params.id){
+    if(req.params.id == req.auth._id){
         con.execute(
-            'UPDATE `usuarios` SET `rrss` = ? WHERE id = ?', [req.body.value, req.auth._id], (err, result) => {
+            'UPDATE usuarios SET rrss=? WHERE id=?;', [req.body.value, req.auth._id], (err, result) => {
                 if (err) {
                     return res.json({
-                        info: 'Error inesperado.',
+                        info: 'No se ha podido cambiar. Si el error persiste póngase en contacto con nosotros.',
                         data: '',
                         error: true
                     });
@@ -61,15 +52,14 @@ const updateRrss = async (req, res) => {
                 return res.status(200).json({
                     error: false,
                     data: req.body.value,
-                    info: 'Preferencias actualizadas con éxito.'
+                    info: ''
                 });
             }
         );
     }
 };
 
-
-//USERS
+// users picture
 const getFile = async (req, res) => {
     const path_name = path.resolve(__dirname, '../../public/img/users');
     const options = {
@@ -85,7 +75,6 @@ const getFile = async (req, res) => {
     res.sendFile(fileName, options, (err) => {
         if (err) {
             console.log('err :>> ', err);
-            res.redirect('/404');
         }
     });
 };

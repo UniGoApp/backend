@@ -122,26 +122,30 @@ router.put("/api/usuarios/:id", requireSignin, modificarUsuario);
 router.delete("/api/usuarios/:id", requireSignin, borrarUsuario);
 
 // VIAJES
-const { obtenerViajes, misViajes, publicarViajes, modificarViajes, borrarViajes } = require("./controllers/app/viajes");
+const { obtenerViajes, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
 router.get("/api/viajes", requireSignin, obtenerViajes);
 router.get("/api/misviajes", requireSignin, misViajes);
-router.post("/api/viajes", requireSignin, publicarViajes);
-router.put("/api/viajes/:id", requireSignin, modificarViajes);
-router.delete("/api/viajes/:id", requireSignin, borrarViajes);
+router.post("/api/viajes", requireSignin, publicarViaje);
+router.put("/api/viajes/:id", requireSignin, modificarViaje);
+router.delete("/api/viajes/:id", requireSignin, borrarViaje);
 
 // DESTINOS
 const { obtenerCampus } = require("./controllers/app/campus");
 router.get("/api/campus", requireSignin, obtenerCampus);
 
 // RESERVAS
-const { obtenerReserva, obtenerReservas } = require("./controllers/app/reservas");
+const { obtenerReserva, obtenerReservas, publicarReserva, borrarReserva } = require("./controllers/app/reservas");
 router.get("/api/reserva/:id", requireSignin, obtenerReserva);
 router.get("/api/reservas", requireSignin, obtenerReservas);
+router.post("/api/reservas", requireSignin, publicarReserva);
+router.delete("/api/reservas/:id", requireSignin, borrarReserva);
 
 // VALORACIONES
-const { obtenerValoraciones } = require("./controllers/app/valoraciones");
+const { obtenerValoraciones, publicarValoracion, modificarValoracion, borrarValoracion } = require("./controllers/app/valoraciones");
 router.get("/api/valoraciones", requireSignin, obtenerValoraciones);
-
+router.post("/api/valoraciones", requireSignin, publicarValoracion);
+router.put("/api/valoraciones/:id", requireSignin, modificarValoracion);
+router.delete("/api/valoraciones/:id", requireSignin, borrarValoracion);
 
 ///////////////////////////////////////////
 /////////// OTHER controllers /////////////

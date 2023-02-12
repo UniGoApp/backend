@@ -1,4 +1,5 @@
 const con = require("../database");
+const idMaker = require("../../helpers/idMaker");
 
 const obtenerValoraciones = async (req, res) => {
     const user_id = req.auth._id;
@@ -7,11 +8,12 @@ const obtenerValoraciones = async (req, res) => {
         FROM valoraciones AS v
         INNER JOIN usuarios AS from_user ON v.from_user = from_user.id
         INNER JOIN usuarios AS to_user ON v.to_user = to_user.id
-        WHERE v.from_user=? OR v.to_user=?;`, [user_id,user_id], (err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
-            }
+        WHERE v.from_user=? OR v.to_user=?;`, [user_id, user_id], (err, result) => {
+            if (err) return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'Parece que algo ha ido mal...'
+            });
             if(result.length === 0) {
                 return res.status(200).json({error: true, info: 'No hay reservas registradas.', data:''});
             }else{
@@ -25,4 +27,51 @@ const obtenerValoraciones = async (req, res) => {
     );
 };
 
-module.exports = { obtenerValoraciones };
+// Publicar valoracion
+const publicarValoracion = async (req, res) => {
+    const id_val = idMaker('r');
+    con.execute('INSERT INTO valoraciones (id, id_trip, from_user, to_user, score, comment) VALUES (?,?,?,?,?,?);', [id_val, req.body.id_trip, req.auth._id, req.body.to_user, req.body.score, req.body.comment], (err, result) => {
+        if (err) return res.status(200).json({
+            error: true,
+            data: '',
+            info: 'Parece que algo ha ido mal...'
+        });
+        return res.status(200).json({
+            error: false,
+            data: 'Viaje valorado con éxito.',
+            info: ''
+        });
+    });
+};
+
+const modificarValoracion = async (req, res) => {
+    con.execute('UPDATE valoraciones SET score=?, comment=? WHERE id=? AND from_user=?;', [req.body.score, req.body.comment, req.params.id, req.auth._id], (err, result) => {
+        if (err) return res.status(200).json({
+            error: true,
+            data: '',
+            info: 'Parece que algo ha ido mal...'
+        });
+        return res.status(200).json({
+            error: false,
+            data: 'Valoración modificada con éxito.',
+            info: ''
+        });
+    });
+};
+
+const borrarValoracion = async (req, res) => {
+    con.execute('DELETE FROM valoraciones WHERE id=? AND from_user=?;', [req.params.id,req.auth._id], (err, result) => {
+        if (err) return res.status(200).json({
+            error: true,
+            data: '',
+            info: 'Parece que algo ha ido mal...'
+        });
+        return res.status(200).json({
+            error: false,
+            data: 'Valoración borrada con éxito.',
+            info: ''
+        });
+    });
+};
+
+module.exports = { obtenerValoraciones, publicarValoracion, modificarValoracion, borrarValoracion };

@@ -34,10 +34,16 @@ const obtenerUsuario = async (req, res) => {
 };
 
 const modificarUsuario = async (req, res) => {
-    if(req.auth._rol === "USER" && req.auth._id === req.params.id){
+    if(req.params.id == req.auth._id){
         con.execute(
-            'UPDATE `usuarios` SET `password` = ?,`username` = ?,`phone` = ?,`picture` = ? WHERE id = ?;', [req.body.password, req.body.username, req.body.phone, req.body.picture, req.params.id], (err, result) => {
-                if (err) throw err;
+            'UPDATE usuarios SET password=?, username=?, phone=?, picture=? WHERE id=?;', [req.body.password, req.body.username, req.body.phone, req.body.picture, req.auth._id], (err, result) => {
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        data: '',
+                        info: 'No se ha podido modificar el usuario.'
+                    });
+                }
                 return res.status(200).json({
                     error: false,
                     data: '',
@@ -45,32 +51,32 @@ const modificarUsuario = async (req, res) => {
                 });
             }
         );
-    }else {
+    }else{
         return res.status(403).json({
-            info: 'Acceso no autorizado',
+            error: false,
             data: '',
-            error: true
+            info: 'No tienes permisos suficientes.'
         });
     }
 };
 
 const borrarUsuario = async (req, res) => {
-    if(req.auth._rol === "USER" && req.auth._id === req.params.id){
+    if(req.params.id == req.auth._id){
         con.execute(
-            'DELETE FROM `usuarios` WHERE `rol` = ? AND `id` = ?;', [req.auth._rol, req.params.id], (err, result) => {
+            'DELETE FROM usuarios WHERE id=?;', [req.auth._id], (err, result) => {
                 if (err) throw err;
                 return res.status(200).json({
                     error: false,
-                    data: '',
-                    info: 'Usuario borrado con éxito.'
+                    data: 'Usuario borrado con éxito.',
+                    info: ''
                 });
             }
         );
     }else{
         return res.status(403).json({
-            info: 'Acceso no autorizado',
+            error: false,
             data: '',
-            error: true
+            info: 'No tienes permisos suficientes.'
         });
     }
 };
