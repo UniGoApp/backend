@@ -1,4 +1,8 @@
 const con = require("../database");
+const fs = require('fs');
+const path = require('path');
+
+const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
 const obtenerUsuario = async (req, res) => {
     const user_id = req.params.id;
@@ -36,7 +40,7 @@ const obtenerUsuario = async (req, res) => {
 const modificarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
         con.execute(
-            'UPDATE usuarios SET password=?, username=?, phone=?, picture=? WHERE id=?;', [req.body.password, req.body.username, req.body.phone, req.body.picture, req.auth._id], (err, result) => {
+            'UPDATE usuarios SET password=?, username=?, bio=?, id_campus=? WHERE id=?;', [req.body.password, req.body.username, req.body.bio, req.body.id_campus, req.auth._id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
@@ -81,4 +85,90 @@ const borrarUsuario = async (req, res) => {
     }
 };
 
-module.exports = { obtenerUsuario, modificarUsuario, borrarUsuario };
+const updateRrss = async (req, res) => {
+    if(req.params.id == req.auth._id){
+        let email = req.body.email;
+        let rrss = req.body.rrss;
+        let id = req.auth._id;
+        con.execute('UPDATE usuarios SET rrss=? WHERE id=?;', [rrss, id], (err, result) => {
+            if (err) return res.json({
+                info: 'No se ha podido cambiar. Si el error persiste póngase en contacto con nosotros.',
+                data: '',
+                error: true
+            });
+            if(rrss == "ACTIVE"){
+                // Se suscribe
+                fs.readFile(jsonDir, 'utf8', (error, data) => {
+                    if(error){
+                        return res.status(200).json({
+                            error: true,
+                            info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                            data: ''
+                        });
+                    }
+                    let finalData = JSON.parse(data);
+                    let newEntry = {"email": email, "last": new Date(0).toLocaleString()};
+            
+                    let checked = finalData.emails.filter((element) => element.email === email)[0];
+                    if(checked) {
+                        return res.status(200).json({
+                            error: false,
+                            info: '¡Ya estas en la lista! 🎉',
+                            data: ''
+                        });
+                    }else{
+                        finalData.lastUpdated = new Date().toDateString();
+                        finalData.emails.push(newEntry);
+                        fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
+                            if (error) {
+                                return res.status(200).json({
+                                    error: true,
+                                    info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                                    data: ''
+                                });
+                            }
+                            return res.status(200).json({
+                                error: false,
+                                data: '¡Ya estas en la lista! 🎉',
+                                info: ''
+                            });
+                        });
+                    }
+                });
+            }else{
+                // Se desuscribe
+                fs.readFile(jsonDir, 'utf8', (error, data) => {
+                    if(error){
+                        return res.status(200).json({
+                            error: true,
+                            info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                            data: ''
+                        });
+                    }
+                    let finalData = JSON.parse(data);
+                    let index = finalData.emails.indexOf(email);
+                    if(index === -1) return res.status(200).json({error: false, data: 'Ya no recibirás más correos comerciales.', info: ''});
+            
+                    finalData.emails.splice(index, 1);
+            
+                    fs.writeFile(jsonDir, JSON.stringify(finalData, null, 2), (error) => {
+                        if (error) {
+                            return res.status(200).json({
+                                error: true,
+                                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                                data: ''
+                            });
+                        }
+                        return res.status(200).json({
+                            error: false,
+                            data: 'Ya no recibirás más correos comerciales.',
+                            info: ''
+                        });
+                    });
+                });
+            }
+        });
+    }
+};
+
+module.exports = { obtenerUsuario, modificarUsuario, borrarUsuario, updateRrss };

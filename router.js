@@ -110,16 +110,16 @@ router.post("/api/forgot-password", forgotPassword);
 router.post("/api/reset-password", resetPassword);
 
 // FILES
-const { upload_file, getFile, updateRrss } = require("./controllers/app/files");
-router.post("/api/upload-image", requireSignin, upload_file);
-router.get("/file/:name", requireSignin, getFile);
-router.put("/api/rrss/:id", requireSignin, updateRrss);
+const { uploadPicture, getUserPic } = require("./controllers/app/files");
+router.post("/api/upload-image", requireSignin, uploadPicture);
+router.get("/file/:name", requireSignin, getUserPic);
 
 // USUARIOS
-const { obtenerUsuario, modificarUsuario, borrarUsuario } = require("./controllers/app/usuarios");
+const { obtenerUsuario, modificarUsuario, borrarUsuario, updateRrss } = require("./controllers/app/usuarios");
 router.get("/api/usuarios/:id", requireSignin, obtenerUsuario);
 router.put("/api/usuarios/:id", requireSignin, modificarUsuario);
 router.delete("/api/usuarios/:id", requireSignin, borrarUsuario);
+router.put("/api/rrss/:id", requireSignin, updateRrss);
 
 // VIAJES
 const { obtenerViajes, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");

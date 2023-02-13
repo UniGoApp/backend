@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { idMaker } = require("../../helpers/idMaker");
 
-const upload_file = async (req, res) => {
+const uploadPicture = async (req, res) => {
     const image_all = req.body.image;
     const image_data = image_all.split('data:image/jpg;base64,').pop();
     const image_file = `${idMaker('i')}.jpg`;
@@ -38,29 +38,7 @@ const upload_file = async (req, res) => {
     );
 };
 
-const updateRrss = async (req, res) => {
-    if(req.params.id == req.auth._id){
-        con.execute(
-            'UPDATE usuarios SET rrss=? WHERE id=?;', [req.body.value, req.auth._id], (err, result) => {
-                if (err) {
-                    return res.json({
-                        info: 'No se ha podido cambiar. Si el error persiste póngase en contacto con nosotros.',
-                        data: '',
-                        error: true
-                    });
-                }
-                return res.status(200).json({
-                    error: false,
-                    data: req.body.value,
-                    info: ''
-                });
-            }
-        );
-    }
-};
-
-// users picture
-const getFile = async (req, res) => {
+const getUserPic = async (req, res) => {
     const path_name = path.resolve(__dirname, '../../public/img/users');
     const options = {
         root: path_name,
@@ -79,4 +57,4 @@ const getFile = async (req, res) => {
     });
 };
 
-module.exports = { upload_file, getFile, updateRrss };
+module.exports = { uploadPicture, getUserPic };
