@@ -3,8 +3,11 @@ const cors = require("cors");
 const morgan = require("morgan");
 const compression = require('compression');
 
-//routes
 const router = require("./router");
+// const adminRoutes = require("./adminRouter");
+// const webRoutes = require("./webRouter");
+// const appRoutes = require("./appRouter");
+
 const app = express();
 app.set('trust proxy',true);
 
@@ -16,7 +19,6 @@ app.use(cors());
 app.use(morgan('combined', {
     skip: function (req, res) { return res.statusCode < 400 }
 }));
-
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -26,5 +28,8 @@ app.use((_, res, next) => {
 // route middlewares
 app.use(express.static('public'));
 app.use("/", router);
+// app.use("/", webRoutes);
+// app.use("/api/admin", adminRoutes);
+// app.use("/api/app", appRoutes);
 
 app.listen(3000, () => console.log("Server running on port 3000."));

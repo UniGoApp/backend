@@ -44,7 +44,7 @@ const misViajes = async (req, res) => {
 
 const publicarViaje = async (req, res) => {
     const id = idMaker('t');
-    con.execute('INSERT INTO viajes (`id`,`id_user`,`origin`,`id_campus`,`price`,`seats`,`departure`,`comments`) VALUES (?,?,?,?,?,?,?,?);', [id,req.auth._id, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones], (err, result) => {
+    con.execute('INSERT INTO viajes (id,id_user,origin,id_campus,price,seats,departure,comments) VALUES (?,?,?,?,?,?,?,?);', [id,req.auth._id, req.body.origin, req.body.id_campus, req.body.price, req.body.seats, req.body.departure, req.body.comments], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',

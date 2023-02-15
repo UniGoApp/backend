@@ -44,21 +44,6 @@ const publicarValoracion = async (req, res) => {
     });
 };
 
-const modificarValoracion = async (req, res) => {
-    con.execute('UPDATE valoraciones SET score=?, comment=? WHERE id=? AND from_user=?;', [req.body.score, req.body.comment, req.params.id, req.auth._id], (err, result) => {
-        if (err) return res.status(200).json({
-            error: true,
-            data: '',
-            info: 'Parece que algo ha ido mal...'
-        });
-        return res.status(200).json({
-            error: false,
-            data: 'Valoración modificada con éxito.',
-            info: ''
-        });
-    });
-};
-
 const borrarValoracion = async (req, res) => {
     con.execute('DELETE FROM valoraciones WHERE id=? AND from_user=?;', [req.params.id,req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
@@ -74,4 +59,4 @@ const borrarValoracion = async (req, res) => {
     });
 };
 
-module.exports = { obtenerValoraciones, publicarValoracion, modificarValoracion, borrarValoracion };
+module.exports = { obtenerValoraciones, publicarValoracion, borrarValoracion };

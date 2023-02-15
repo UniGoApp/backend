@@ -141,10 +141,9 @@ router.post("/api/reservas", requireSignin, publicarReserva);
 router.delete("/api/reservas/:id", requireSignin, borrarReserva);
 
 // VALORACIONES
-const { obtenerValoraciones, publicarValoracion, modificarValoracion, borrarValoracion } = require("./controllers/app/valoraciones");
+const { obtenerValoraciones, publicarValoracion, borrarValoracion } = require("./controllers/app/valoraciones");
 router.get("/api/valoraciones", requireSignin, obtenerValoraciones);
 router.post("/api/valoraciones", requireSignin, publicarValoracion);
-router.put("/api/valoraciones/:id", requireSignin, modificarValoracion);
 router.delete("/api/valoraciones/:id", requireSignin, borrarValoracion);
 
 ///////////////////////////////////////////
