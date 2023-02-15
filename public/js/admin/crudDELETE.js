@@ -95,6 +95,17 @@ const showDeleteForm = (e) => {
                 modal.querySelector('p').innerText = JSON.stringify(data_viaje, null, '\t');
             };
             break;
+        case 'campus':
+            modal.querySelector('h4').innerText = "Campus: ";
+            let data_campus = {};
+            const info_campus = target.getElementsByTagName('td');
+            data_campus.id = info_campus[0].innerText;
+            data_campus.name = info_campus[1].innerText;
+            data_campus.university = info_campus[2].innerText;
+            data_campus.region = info_campus[3].innerText;
+            data_campus.icon = info_campus[4].innerText;
+            modal.querySelector('p').innerText = JSON.stringify(data_campus, null, '\t');
+            break;
         default:
             break;
     }
@@ -105,9 +116,12 @@ const deleteData = (e) => {
     if(raw_data == '') return;
     const data = JSON.parse(raw_data);
     // Url en funcion del h4
-    let modal_id = document.querySelector('#modalDelete h4').innerText.toLowerCase().split(':')[0]+'s';
+    let modal_id = document.querySelector('#modalDelete h4').innerText.toLowerCase().split(':')[0];
+    if(modal_id !== "campus"){
+        modal_id = modal_id+'s';
+    }
     
-    const url = `/api/admin/${modal_id}/${data.id}`;
+    const url = `/${modal_id}/${data.id}`;
     var requestOptions = {
         method: 'DELETE',
         headers: myHeaders,
@@ -127,6 +141,9 @@ const deleteData = (e) => {
                 noti.style.display = 'none';
             }, 5000);
         }else{
+            // Delete row
+
+            // Show notification 
             const noti = document.querySelector('#notifications-wrapper > .notification-success');
             noti.style.display = 'flex';
             noti.querySelector('p').innerText = result.info;
@@ -142,22 +159,5 @@ const deleteData = (e) => {
         setTimeout(() => {
             noti.style.display = 'none';
         }, 5000);
-    })
-    .finally(()=>{
-        //refrescar los datos
-        switch (modal_id) {
-            case 'usuarios':
-                // Delete row
-                break;
-            case 'viajes':
-                // Delete card
-                break;
-            case 'reservas':
-                // Delete row
-                break;
-            default:
-                location.reload();
-                break;
-        }
     });
 };

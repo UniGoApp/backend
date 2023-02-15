@@ -3,10 +3,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const compression = require('compression');
 
-const router = require("./router");
-// const adminRoutes = require("./adminRouter");
-// const webRoutes = require("./webRouter");
-// const appRoutes = require("./appRouter");
+const routerWeb = require("./routerWeb");
+const routerApp = require("./routerApp");
 
 const app = express();
 app.set('trust proxy',true);
@@ -25,11 +23,11 @@ app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
+
 // route middlewares
 app.use(express.static('public'));
-app.use("/", router);
-// app.use("/", webRoutes);
-// app.use("/api/admin", adminRoutes);
-// app.use("/api/app", appRoutes);
+
+app.use("/", routerWeb);
+app.use("/api", routerApp);
 
 app.listen(3000, () => console.log("Server running on port 3000."));

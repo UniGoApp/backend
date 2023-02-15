@@ -14,7 +14,7 @@ const borrar = () => {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch(`/api/admin/email/${email_id}`, requestOptions)
+        fetch(`/email/${email_id}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result.error){
@@ -66,20 +66,18 @@ const responder = () => {
 const send = (e) => {
     let emailData = {};
     emailData.to = modal.querySelector('h3').innerText.split(': ')[1];
-    emailData.bcc = modal.querySelector('#bcc').value;
-    emailData.cc = modal.querySelector('#cc').value;
     emailData.subject = modal.querySelector('#asunto').value;
     emailData.content = modal.querySelector('#content').value;
 
-    var raw = JSON.stringify(emailData);
-    var requestOptions = {
+    const raw = JSON.stringify(emailData);
+    const requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
     };
       
-    fetch('/api/admin/responderEmail', requestOptions)
+    fetch('/responderEmail', requestOptions)
     .then(response => response.json())
     .then(result => {
         //cerrar modal

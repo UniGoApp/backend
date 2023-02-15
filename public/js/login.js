@@ -55,7 +55,7 @@ const login = () => {
             redirect: 'follow'
         };
 
-        fetch("/api/admin/signin", requestOptions)
+        fetch("/signin", requestOptions)
         .then(response => response.json())
         .then(result => {
             //Check token an user info received

@@ -1,0 +1,57 @@
+const express = require("express");
+const router = express.Router();
+
+// MIDDLEWARES
+const { requireSignin } = require('./controllers/middleware');
+
+// AUTH
+const { signup, signin, forgotPassword, resetPassword } = require("./controllers/app/auth");
+router.post("/signup", signup);
+router.post("/signin", signin);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
+
+// FILES
+const { uploadPicture, getUserPic } = require("./controllers/app/files");
+router.post("/upload-image", requireSignin, uploadPicture);
+router.get("/file/:name", requireSignin, getUserPic);
+
+// USUARIOS
+const { obtenerUsuario, modificarUsuario, borrarUsuario, updateRrss } = require("./controllers/app/usuarios");
+router.get("/usuarios/:id", requireSignin, obtenerUsuario);
+router.put("/usuarios/:id", requireSignin, modificarUsuario);
+router.delete("/usuarios/:id", requireSignin, borrarUsuario);
+router.put("/rrss/:id", requireSignin, updateRrss);
+
+// VIAJES
+const { obtenerViajes, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
+router.get("/viajes", requireSignin, obtenerViajes);
+router.get("/misviajes", requireSignin, misViajes);
+router.post("/viajes", requireSignin, publicarViaje);
+router.put("/viajes/:id", requireSignin, modificarViaje);
+router.delete("/viajes/:id", requireSignin, borrarViaje);
+
+// DESTINOS
+const { obtenerCampus } = require("./controllers/app/campus");
+router.get("/campus", requireSignin, obtenerCampus);
+
+// RESERVAS
+const { obtenerReserva, obtenerReservas, publicarReserva, borrarReserva } = require("./controllers/app/reservas");
+router.get("/reserva/:id", requireSignin, obtenerReserva);
+router.get("/reservas", requireSignin, obtenerReservas);
+router.post("/reservas", requireSignin, publicarReserva);
+router.delete("/reservas/:id", requireSignin, borrarReserva);
+
+// VALORACIONES
+const { obtenerValoraciones, publicarValoracion, borrarValoracion } = require("./controllers/app/valoraciones");
+router.get("/valoraciones", requireSignin, obtenerValoraciones);
+router.post("/valoraciones", requireSignin, publicarValoracion);
+router.delete("/valoraciones/:id", requireSignin, borrarValoracion);
+
+// ERROR HANDLING
+// 404 error
+router.get("*", (req, res) => {
+  res.json({error: true, info: 'Esta ruta no existe.', data:''});
+});
+
+module.exports = router;

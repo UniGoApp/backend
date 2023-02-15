@@ -3,7 +3,7 @@ const con = require("../database");
 const getViajes = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
-            'SELECT U.email, U.phone, U.username, V.* FROM usuarios U inner join viajes V on U.id = V.id_user;', (err, result) => {
+            'SELECT * FROM viajes;', (err, result) => {
                 if (err) console.log(err);
                 if(result.length === 0) return res.status(200).json({
                     error: true,

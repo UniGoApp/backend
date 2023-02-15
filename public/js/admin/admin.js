@@ -10,22 +10,6 @@ window.addEventListener('load', (event) => {
     document.querySelector('#loader').classList.toggle('oculto');
 });
 
-const search = (e) => {
-    const table = e.parentNode.parentNode.parentNode.parentNode.getElementsByTagName('table')[0];
-    const trs = table.querySelectorAll('tbody > tr');
-    const filter = document.querySelector('#searchQueryInput').value;
-    const filter2 = document.querySelector('#user-type > span.active').innerText;
-    const regex = new RegExp(filter, 'i');
-    const isFoundInTds = td => regex.test(td.innerHTML);
-    const isFound = childrenArr => childrenArr.some(isFoundInTds);
-    const setTrStyleDisplay = ({ style, children }) => {
-        style.display =
-        (isFound([...children]) && (children[3].innerText === filter2 || filter2 === "ALL")) ? '' : 'none' ;
-    }
-    trs.forEach(setTrStyleDisplay)
-    //Si quito filter 2 y parentesis global despues del && lo hago util para cualquier searchBar
-};
-
 const tabsHandler = (e) => {
     //Visual changes in navigation: 
     const parent = e.parentNode;

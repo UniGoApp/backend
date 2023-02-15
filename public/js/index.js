@@ -38,7 +38,7 @@ const prevButton = document.querySelector('.controls div.prev');
 const nextButton = document.querySelector('.controls div.next');
 const allButton = document.querySelector('.controls > button');
 
-fetch('/api/web/destinos')
+fetch('/destinos')
 .then(response => response.json())
 .then(result => {
     if(result.error){
@@ -158,7 +158,7 @@ myform.onsubmit = (e) => {
         redirect: 'follow'
     };
 
-    fetch("/api/newsletter", requestOptions)
+    fetch("/newsletter", requestOptions)
     .then(response => response.json())
     .then(result => {
         if(result.error){

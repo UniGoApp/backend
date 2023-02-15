@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "why": "Contraseña incorrecta",
+            "cause": "Contraseña incorrecta",
             "email": "joseto.lopez00@gmail.com",
             "password": "JOSETOHL1@2022-Unicar",
             "date": "13/2/2023, 10:09:38",

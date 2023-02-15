@@ -20,7 +20,7 @@ const showPutForm = (e) => {
     switch (tabName) {
         case 'usuarios':
             modal.querySelector('h4').innerText = "Usuario: ";
-            let data_user = {id:'', email:'', username:'', rol:'', phone:'', picture:'', resetCode:'', creation_time:'', rrss:''};
+            let data_user = {id:'', email:'', username:'', rol:'', phone:'', picture:'', reset_code:'', creation_time:'', rrss:''};
             const elements = target.getElementsByTagName('TD');
             data_user.id = elements[0].innerText;
             data_user.email = elements[1].innerText;
@@ -28,7 +28,7 @@ const showPutForm = (e) => {
             data_user.rol = elements[3].innerText;
             data_user.phone = elements[4].innerText;
             data_user.picture = elements[5].innerText;
-            data_user.resetCode = elements[6].innerText;
+            data_user.reset_code = elements[6].innerText;
             data_user.creation_time = elements[7].innerText;
             data_user.rrss = elements[8].innerText;
             modal.querySelector('p').innerText = JSON.stringify(data_user, null, '\t');
@@ -107,7 +107,7 @@ const putData = (e) => {
     const data = JSON.parse(raw_data);
     let modal_id = document.querySelector('#modalPut h4').innerText.toLowerCase().split(':')[0]+'s';
     
-    const url = `/api/admin/${modal_id}/${data.id}`;
+    const url = `/${modal_id}/${data.id}`;
     var raw = JSON.stringify(data);
     var requestOptions = {
         method: 'PUT',
@@ -129,6 +129,9 @@ const putData = (e) => {
                 noti.style.display = 'none';
             }, 5000);
         }else{
+            // Delete row
+
+            // Show notification 
             const noti = document.querySelector('#notifications-wrapper > .notification-success');
             noti.style.display = 'flex';
             noti.querySelector('p').innerText = result.info;
@@ -144,19 +147,5 @@ const putData = (e) => {
         setTimeout(() => {
             noti.style.display = 'none';
         }, 5000);
-    })
-    .finally( () => {
-        //refrescar los datos
-        switch (modal_id) {
-            case 'usuarios':
-                // Add row
-                break;
-            case 'viajes':
-                // Add row
-                break;
-            default:
-                location.reload();
-                break;
-        }
     });
 };

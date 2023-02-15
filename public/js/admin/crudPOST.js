@@ -300,6 +300,53 @@ const showPostForm = (e) => {
                 modal.querySelector('p').innerText = JSON.stringify(data_viaje, null, '\t');
             };
             break;
+        case 'campus':
+            modal.querySelector('h4').innerText = "Campus: ";
+            const campus_name = document.createElement('input');
+            campus_name.type = "text";
+            campus_name.placeholder = "Campus";
+            campus_name.style.width = '100%';
+            campus_name.style.marginBottom = '10px';
+            const campus_university = document.createElement('input');
+            campus_university.type = "text";
+            campus_university.placeholder = "University";
+            campus_university.style.width = '100%';
+            campus_university.style.marginBottom = '10px';
+            const campus_region = document.createElement('input');
+            campus_region.type = "text";
+            campus_region.placeholder = "Region";
+            campus_region.style.width = '100%';
+            campus_region.style.marginBottom = '10px';
+            const campus_icon = document.createElement('input');
+            campus_icon.type = "text";
+            campus_icon.placeholder = "Icon";
+            campus_icon.style.width = '100%';
+            campus_icon.style.marginBottom = '10px';
+
+            modal.querySelector('section.modal-container-body > div').appendChild(campus_name);
+            modal.querySelector('section.modal-container-body > div').appendChild(campus_university);
+            modal.querySelector('section.modal-container-body > div').appendChild(campus_region);
+            modal.querySelector('section.modal-container-body > div').appendChild(campus_icon);
+
+            let data_campus = {name: '', university: '', region: '', icon: ''};
+
+            campus_name.oninput = () => {
+                data_campus.name = campus_name.value;
+                modal.querySelector('p').innerText = JSON.stringify(data_campus, null, '\t');
+            }
+            campus_university.oninput = () => {
+                data_campus.university = campus_university.value;
+                modal.querySelector('p').innerText = JSON.stringify(data_campus, null, '\t');
+            }
+            campus_region.oninput = () => {
+                data_campus.region = campus_region.value;
+                modal.querySelector('p').innerText = JSON.stringify(data_campus, null, '\t');
+            }
+            campus_icon.oninput = () => {
+                data_campus.icon = campus_icon.value;
+                modal.querySelector('p').innerText = JSON.stringify(data_campus, null, 4);
+            }
+            break;
         default:
             break;
     }
@@ -310,7 +357,7 @@ const postData = (e) => {
     //FETCH con la url en funcion del h4
     let modal_id = document.querySelector('#modalPost h4').innerText.toLowerCase().split(':')[0];
 
-    const url = `/api/admin/${modal_id}`;
+    const url = `/${modal_id}`;
     var raw = JSON.stringify(data);
     var requestOptions = {
         method: 'POST',
@@ -333,6 +380,9 @@ const postData = (e) => {
                 noti.style.display = 'none';
             }, 5000);
         }else{
+            // Delete row
+
+            // Show notification 
             const noti = document.querySelector('#notifications-wrapper > .notification-success');
             noti.style.display = 'flex';
             noti.querySelector('p').innerText = result.info;
@@ -348,19 +398,5 @@ const postData = (e) => {
         setTimeout(() => {
             noti.style.display = 'none';
         }, 5000);
-    })
-    .finally( () => {
-        //refrescar los datos
-        switch (modal_id) {
-            case 'usuarios':
-                // Add row
-                break;
-            case 'viajes':
-                // Add row
-                break;
-            default:
-                location.reload();
-                break;
-        }
     });
 };

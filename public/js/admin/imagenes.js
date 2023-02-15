@@ -1,3 +1,4 @@
+// tabs controller
 const menuNameImagenes = 'imagenes';
 const menuImagenes = document.getElementById(menuNameImagenes+'-menu');
 const enlaces_menu_imagenes = menuImagenes.getElementsByTagName('p');

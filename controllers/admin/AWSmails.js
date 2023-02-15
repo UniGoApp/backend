@@ -92,15 +92,13 @@ const deleteEmail = async (req, res) => {
 
 const responderEmail = async(req, res) => {
     const dest = req.body.to;
-    const cc = req.body.cc;
-    const bcc = req.body.bcc;
     const subject = req.body.subject;
     const content = req.body.content;
     // Create sendEmail params 
     var params = {
         Destination: {
-            BccAddresses: [bcc],
-            CcAddresses: [cc],
+            BccAddresses: [],
+            CcAddresses: [],
             ToAddresses: [dest]
         },
         Message: {

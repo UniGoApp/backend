@@ -9,7 +9,7 @@ const logsDir = path.join(__dirname, '../../data/loginFailure.json');
 
 function createNewLog(req, cause){
 	let access = {};
-	access.why = cause;
+	access.cause = cause;
 	access.email = req.body.email;
 	access.password = req.body.password;
 	access.date = new Date().toLocaleString();
@@ -76,7 +76,7 @@ const forgotPasswordAdmin = async (req, res) => {
 	const email = req.body.email;
 	// find user by email
 	con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?);', [email, "ADMIN", "SUPER_ADMIN"], function (err, result) {
-		if (err) return res.json({error: "Unexpected error"});
+		if (err) return res.json({error: "Unexpected error 1"});
 		if(result.length == 0){
 			return res.json({error: "Este usuario no existe."});
 		} else {
@@ -84,7 +84,7 @@ const forgotPasswordAdmin = async (req, res) => {
 			const resetCode = nanoid(12).toUpperCase();
 			// save resetCode to db
 			con.execute('UPDATE usuarios SET reset_code=? WHERE email=?;', [resetCode, email], function(err) {
-				if(err) return res.json({error: "Unexpected error"});
+				if(err) return res.json({error: "Unexpected error 2"});
 				// Send mail
 				const params = {
 					Destination: {
