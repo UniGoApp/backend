@@ -52,7 +52,9 @@ const obtenerReservas = async (req, res) => {
 
 const publicarReserva = async (req, res) => {
     const id_res = idMaker('b');
-    con.execute('INSERT INTO reservas (id, id_trip, id_user, num_seats) VALUES (?,?,?,?);', [id_res, req.body.id_trip, req.auth._id, req.body.num_seats], (err, result) => {
+    const id_user = req.auth._id;
+    const {id_trip, num_seats, username, date, time, origin, campus, price} = req.body;
+    con.execute('INSERT INTO reservas (id, id_trip, id_user, num_seats) VALUES (?,?,?,?);', [id_res, id_trip, id_user, num_seats], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -65,22 +67,21 @@ const publicarReserva = async (req, res) => {
                 ToAddresses: [ email ]
             },
             ReplyToAddresses: [ "contacto@unigoapp.es" ],
-            Template: 'NuevaReserva',
-            TemplateData: "{ \"email\":\""+ email +"\" }"
+            Template: 'ConfirmacionReserva',
+            TemplateData: "{ \"id_reserva\":\""+ id_res +"\", \"username\":\""+ username +"\", \"date\":\""+ date +"\", \"time\":\""+ time +"\", \"origin\":\""+ origin +"\", \"campus\":\""+ campus +"\", \"num_seats\":\""+ num_seats +"\", \"price\":\""+ price +"\" }"
         };
         ses.sendTemplatedEmail(params, function(err, data) {
             if (err) {
-                console.log('Error >> ', err.stack);
                 return res.status(200).json({error: true, info: 'Fallo al enviar el email.', data: ''});
             } else {
-                console.log(data);
+                return res.status(200).json({
+                    error: false,
+                    data: 'Reserva confirmada con éxito.',
+                    info: ''
+                });
             }
         });
-        return res.status(200).json({
-            error: false,
-            data: 'Reserva confirmada con éxito.',
-            info: ''
-        });
+        
     });
 };
 

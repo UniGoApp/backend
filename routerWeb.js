@@ -98,6 +98,11 @@ router.get("/reservas", requireSignin, getReservas);
 router.post("/reservas", requireSignin, postReservas);
 router.delete("/reservas/:id", requireSignin, deleteReservas);
 
+// ADMIN CRUD IMAGENES
+const { getUnisImg, getUsersImg } = require("./controllers/admin/imagenes");
+router.get("/uni-imgs", requireSignin, getUnisImg);
+router.get("/user-imgs", requireSignin, getUsersImg);
+
 // ERROR HANDLING
 // 404 error
 router.get("*", (req, res) => {

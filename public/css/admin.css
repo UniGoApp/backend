@@ -674,26 +674,27 @@ div.supermenuContainer > div.supermenu > p.shown{
     cursor: not-allowed;
 }
 /******** TAB IMAGENES ********/
-#imagenes-universidades > p{
+#imagenes > div > section > p{
     font-family: 'SF PD THIN', serif;
 }
-#imagenes-universidades > div{
+#imagenes > div > section > div{
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    
 }
-#imagenes-universidades > div > div{
-    flex-basis: calc(20% - 10px);
-    padding: 12px;
+#imagenes > div > section > div > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 4px;
-    text-align: center;
+    padding: 12px;
     background-color: var(--light);
     color: var(--black);
     margin: 0 10px 10px 0;
 }
-#imagenes-universidades img{
-    max-width: 100px;
+#imagenes img{
+    max-width: 124px;
 }
 /******** OTHERS ********/
 /* POP UPS */
