@@ -25,7 +25,7 @@ app.use((_, res, next) => {
 });
 
 app.use(express.static('public'));
-app.use("/", routerWeb);
 app.use("/api", routerApp);
+app.use("/", routerWeb);
 
 app.listen(3000, () => console.log("Server running on port 3000."));

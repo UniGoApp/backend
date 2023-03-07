@@ -12,14 +12,17 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 
 // FILES
-const { uploadPicture, getUserPic } = require("./controllers/app/files");
+const { uploadPicture, getUserPic, getUniPic } = require("./controllers/app/files");
 router.post("/upload-image", requireSignin, uploadPicture);
-router.get("/file/:name", requireSignin, getUserPic);
+router.get("/file/user/:name", requireSignin, getUserPic);
+router.get("/file/uni/:name", requireSignin, getUniPic);
 
 // USUARIOS
-const { obtenerUsuario, modificarUsuario, borrarUsuario, updateRrss } = require("./controllers/app/usuarios");
+const { obtenerUsuario, modificarUsuario, modificarUniversidad, modificarPassword, borrarUsuario, updateRrss } = require("./controllers/app/usuarios");
 router.get("/usuarios/:id", requireSignin, obtenerUsuario);
 router.put("/usuarios/:id", requireSignin, modificarUsuario);
+router.put("/usuarios/universidad/:id", requireSignin, modificarUniversidad);
+router.put("/usuarios/password/:id", requireSignin, modificarPassword);
 router.delete("/usuarios/:id", requireSignin, borrarUsuario);
 router.put("/rrss/:id", requireSignin, updateRrss);
 

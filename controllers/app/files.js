@@ -57,4 +57,23 @@ const getUserPic = async (req, res) => {
     });
 };
 
-module.exports = { uploadPicture, getUserPic };
+const getUniPic = async (req, res) => {
+    const path_name = path.resolve(__dirname, '../../public/img/universidades');
+    const options = {
+        root: path_name,
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+    
+    const fileName = req.params.name;
+    res.sendFile(fileName, options, (err) => {
+        if (err) {
+            console.log('err :>> ', err);
+        }
+    });
+};
+
+module.exports = { uploadPicture, getUserPic, getUniPic };

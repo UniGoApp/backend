@@ -4,6 +4,7 @@ const {nanoid} = require("nanoid");
 const con = require("../database");
 const { idMaker } = require("../../helpers/idMaker");
 const AWS = require('aws-sdk');
+const { updateRrss } = require("./usuarios");
 AWS.config.update({
   accessKeyId: process.env.AWS_S3_accessKeyId,
   secretAccessKey: process.env.AWS_S3_secretAccessKey,
@@ -58,9 +59,8 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE email=?;', [email], function (err, result) {
+    con.execute('SELECT id,username,password,email,phone,rol,bio,picture,creation_time,rrss,email_confirmed,university FROM usuarios WHERE email=?;', [email], function (err, result) {
         if (err) {
-          console.log('Error de conexion: ', err);
           return res.status(400).json({error: true, info: "Se ha producido un error.", data:''});
         }
         if(result.length === 0){
@@ -79,7 +79,19 @@ const signin = async (req, res) => {
           info: '',
           data:{
             token,
-            user: result[0],
+            user: {
+              id: result[0].id, 
+              username: result[0].username,
+              email: result[0].email,
+              phone: result[0].phone,
+              rol: result[0].rol,
+              bio: result[0].bio,
+              picture: result[0].picture,
+              creation_time: result[0]. creation_time,
+              rrss: result[0].rrss,
+              email_confirmed: result[0].email_confirmed,
+              university: result[0].university
+            },
           }
         });
     });

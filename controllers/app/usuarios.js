@@ -1,6 +1,8 @@
 const con = require("../database");
 const fs = require('fs');
 const path = require('path');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
@@ -40,7 +42,7 @@ const obtenerUsuario = async (req, res) => {
 const modificarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
         con.execute(
-            'UPDATE usuarios SET password=?, username=?, bio=?, id_campus=? WHERE id=?;', [req.body.password, req.body.username, req.body.bio, req.body.id_campus, req.auth._id], (err, result) => {
+            'UPDATE usuarios SET username=?, bio=? WHERE id=?;', [req.body.username, req.body.bio, req.auth._id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
@@ -50,14 +52,71 @@ const modificarUsuario = async (req, res) => {
                 }
                 return res.status(200).json({
                     error: false,
-                    data: '',
-                    info: 'Usuario modificado con éxito.'
+                    info: '',
+                    data: 'Usuario modificado con éxito.'
                 });
             }
         );
     }else{
         return res.status(403).json({
-            error: false,
+            error: true,
+            data: '',
+            info: 'No tienes permisos suficientes.'
+        });
+    }
+};
+
+const modificarUniversidad = async (req, res) => {
+    if(req.params.id == req.auth._id){
+        con.execute(
+            'UPDATE usuarios SET university=? WHERE id=?;', [req.body.university, req.auth._id], (err, result) => {
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        data: '',
+                        info: 'No se ha podido cambiar tu universidad.'
+                    });
+                }
+                return res.status(200).json({
+                    error: false,
+                    info: '',
+                    data: 'Universidad elegida con éxito.'
+                });
+            }
+        );
+    }else{
+        return res.status(403).json({
+            error: true,
+            data: '',
+            info: 'No tienes permisos suficientes.'
+        });
+    }
+};
+
+const modificarPassword = async (req, res) => {
+    if(req.params.id == req.auth._id){
+        // hash password
+        const password = req.body.password;
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        con.execute(
+            'UPDATE usuarios SET password=? WHERE id=?;', [hashedPassword, req.auth._id], (err, result) => {
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        data: '',
+                        info: 'No se ha podido cambiar tu contraseña.'
+                    });
+                }
+                return res.status(200).json({
+                    error: false,
+                    info: '',
+                    data: 'Contraseña modificada con éxito.'
+                });
+            }
+        );
+    }else{
+        return res.status(403).json({
+            error: true,
             data: '',
             info: 'No tienes permisos suficientes.'
         });
@@ -78,7 +137,7 @@ const borrarUsuario = async (req, res) => {
         );
     }else{
         return res.status(403).json({
-            error: false,
+            error: true,
             data: '',
             info: 'No tienes permisos suficientes.'
         });
@@ -171,4 +230,4 @@ const updateRrss = async (req, res) => {
     }
 };
 
-module.exports = { obtenerUsuario, modificarUsuario, borrarUsuario, updateRrss };
+module.exports = { obtenerUsuario, modificarUsuario, modificarUniversidad, modificarPassword, borrarUsuario, updateRrss };
