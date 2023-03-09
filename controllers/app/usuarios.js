@@ -3,13 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { idMaker } = require("../../helpers/idMaker");
 
 const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
 const obtenerUsuario = async (req, res) => {
     const user_id = req.params.id;
     con.execute(
-        'SELECT u.id_campus, u.bio, u.creation_time, c.name AS campus, c.university, c.region, c.icon FROM usuarios AS u LEFT JOIN campus AS c ON c.id=u.id_campus WHERE u.id=?;', [user_id], (err, result1) => {
+        'SELECT university, bio, creation_time FROM usuarios WHERE id=?;', [user_id], (err, result1) => {
             if (err) throw err;
             if(result1.length === 0) return res.status(200).json({
                 info: 'No existe el usuario solicitado.',
@@ -41,22 +42,64 @@ const obtenerUsuario = async (req, res) => {
 
 const modificarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
-        con.execute(
-            'UPDATE usuarios SET username=?, bio=? WHERE id=?;', [req.body.username, req.body.bio, req.auth._id], (err, result) => {
-                if (err) {
+        const username = req.body.username;
+        const bio = req.body.bio;
+        const {base64, name} = req.body.picture;
+        if(base64.length == 0 || name.length == 0){
+            con.execute('UPDATE usuarios SET username=?, bio=? WHERE id=?;', [username, bio, req.auth._id], (err, result) => {
+                    if (err) {
+                        return res.status(200).json({
+                            error: true,
+                            data: '',
+                            info: 'No se ha podido modificar el usuario.'
+                        });
+                    }
                     return res.status(200).json({
-                        error: true,
-                        data: '',
-                        info: 'No se ha podido modificar el usuario.'
+                        error: false,
+                        info: '',
+                        data: 'Usuario modificado con éxito.'
                     });
                 }
-                return res.status(200).json({
-                    error: false,
-                    info: '',
-                    data: 'Usuario modificado con éxito.'
+            );
+        }else{
+            // Get previous image name and delete it
+            con.execute('SELECT picture FROM usuarios WHERE id=?;', [req.auth._id], (err, result) => {
+                if (err) console.log(err);
+                const previous_path = path.resolve(__dirname, `../../public/img/users/${result[0].picture}`);
+                fs.rm(previous_path, {force: true}, function(err){
+                    err && console.log(err);
                 });
-            }
-        );
+            });
+            // Get image info
+            const image_data = base64.split(';base64,')[1];
+            const upload_path = path.resolve(__dirname, `../../public/img/users/${name}`);
+            con.execute('UPDATE usuarios SET picture=?, username=?, bio=? WHERE id=?;', [name, username, bio, req.auth._id], (err, result) => {
+                    if (err) {
+                        return res.status(200).json({
+                            error: true,
+                            data: '',
+                            info: 'No se ha podido modificar el usuario.'
+                        });
+                    }
+                    // Save img to file
+                    fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
+                        if(err){
+                            return res.json({
+                                error: true,
+                                data: '',
+                                info: 'No se ha podido modificar el usuario.'
+                            });
+                        }else{
+                            return res.status(200).json({
+                                error: false,
+                                info: '',
+                                data: 'Usuario modificado con éxito.'
+                            });
+                        }
+                    });
+                }
+            );
+        }
     }else{
         return res.status(403).json({
             error: true,

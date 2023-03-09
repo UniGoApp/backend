@@ -29,11 +29,6 @@ const misViajes = async (req, res) => {
             data: '',
             info: 'Parece que algo ha ido mal...'
         });
-        if(result.length === 0) return res.status(200).json({
-            info: 'No tienes ningún viaje publicado.',
-            data: '',
-            error: true
-        });
         return res.status(200).json({
             error: false,
             data: result,

@@ -12,8 +12,7 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 
 // FILES
-const { uploadPicture, getUserPic, getUniPic } = require("./controllers/app/files");
-router.post("/upload-image", requireSignin, uploadPicture);
+const { getUserPic, getUniPic } = require("./controllers/app/files");
 router.get("/file/user/:name", requireSignin, getUserPic);
 router.get("/file/uni/:name", requireSignin, getUniPic);
 
