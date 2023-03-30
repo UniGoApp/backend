@@ -4,7 +4,9 @@ const {nanoid} = require("nanoid");
 const con = require("../database");
 const { idMaker } = require("../../helpers/idMaker");
 const AWS = require('aws-sdk');
-const { updateRrss } = require("./usuarios");
+const path = require('path');
+const fs = require('fs');
+
 AWS.config.update({
   accessKeyId: process.env.AWS_S3_accessKeyId,
   secretAccessKey: process.env.AWS_S3_secretAccessKey,
@@ -13,21 +15,31 @@ AWS.config.update({
 const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
 const signup = async (req, res) => {
-  const { name, email, phone, password } = req.body;
+  const { name, email, phone, password, bio, picture } = req.body;
   con.execute('SELECT * FROM usuarios WHERE email=? OR phone=?;', [email, phone], (err, result) => {
     if (err) return res.status(200).json({error: true, info: "Unexpected error", data:''});
     if(result.length !== 0){
       return res.status(200).json({error: true, info: "Email o teléfono en uso.", data:''});
     } else {
-      // let dateTime = new Date().toJSON().split('T');
-      // let date = dateTime[0].replaceAll('-','');
-      // let time = dateTime[1].split('.')[0].replaceAll(':','');
-      // let id = `u_${date}_${time}`;
+      if(!bio) bio = '';
+      let picName;
+      if(!picture || picture.length == 0){
+        picName = 'user_default.png';
+      }else{
+        picName = idMaker('i');
+        // Get image info
+        const image_data = picture.split(';base64,')[1];
+        const upload_path = path.resolve(__dirname, `../../public/img/users/${picName}`);
+        // Save img to file
+        fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
+          err && console.log(err);
+        });
+      }
       const id = idMaker('u');
       // Hash password
       const hashedPassword = bcrypt.hashSync(password, 10);
       // Add new user
-      con.execute('INSERT INTO usuarios (id, email, password, username, phone) VALUES (?, ?, ?, ?, ?);', [id, email, hashedPassword, name, phone], (err, result) => {
+      con.execute('INSERT INTO usuarios (id, email, password, username, phone, bio, picture) VALUES (?, ?, ?, ?, ?, ?, ?);', [id, email, hashedPassword, name, phone, bio, picName], (err, result) => {
         if (err) return res.json({error: true, info: "Unexpected error", data:''});
         // Send mail
         const params = {
@@ -40,17 +52,36 @@ const signup = async (req, res) => {
           TemplateData: "{ \"email\":\""+ email +"\" }"
         };
         ses.sendTemplatedEmail(params, function(err, data) {
-          if (err) {
-            console.log(err, err.stack);
-            return res.status(200).json({error: true, info: 'Fallo al enviar el email.', data: ''});
-          } else {
-            console.log(data); 
+          err && console.log('Error al enviar email: ', err);
+          // create signed token
+          const token = jwt.sign({ _id: id, _rol: 'USER' }, process.env.JWT_SECRET, {
+            expiresIn: "360d",
+          });
+          con.execute('SELECT creation_time,email_confirmed,university FROM usuarios WHERE id=?;', [id], function (err, resultUser) {
+            if (err) {
+              return res.status(400).json({error: true, info: "Se ha producido un error, inicie sesión.", data:''});
+            }
             return res.status(200).json({
               error: false,
               info: '¡Usuario creado con éxito!',
-              data: ''
+              data:{
+                token,
+                user: {
+                  id: id, 
+                  username: name,
+                  email: email,
+                  phone: phone,
+                  rol: 'USER',
+                  bio: bio,
+                  picture: picName,
+                  rrss: 'ACTIVE',
+                  creation_time: resultUser[0].creation_time,
+                  email_confirmed: resultUser[0].email_confirmed,
+                  university: resultUser[0].university
+                },
+              }
             });
-          }
+          });
         });
       });
     }
@@ -87,7 +118,7 @@ const signin = async (req, res) => {
               rol: result[0].rol,
               bio: result[0].bio,
               picture: result[0].picture,
-              creation_time: result[0]. creation_time,
+              creation_time: result[0].creation_time,
               rrss: result[0].rrss,
               email_confirmed: result[0].email_confirmed,
               university: result[0].university
@@ -139,7 +170,6 @@ const forgotPassword = async (req, res) => {
             console.log(err, err.stack);
             return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
           } else {
-            console.log(data); 
             return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
           }
         });

@@ -1,7 +1,6 @@
 const con = require("../database");
 const fs = require('fs');
 const path = require('path');
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { idMaker } = require("../../helpers/idMaker");
 
