@@ -25,6 +25,10 @@ router.put("/usuarios/password/:id", requireSignin, modificarPassword);
 router.delete("/usuarios/:id", requireSignin, borrarUsuario);
 router.put("/rrss/:id", requireSignin, updateRrss);
 
+// REPORTS
+const {postReports} = require("./controllers/reports");
+router.post("/reports", requireSignin, postReports);
+
 // VIAJES
 const { obtenerViajes, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
 router.get("/viajes", requireSignin, obtenerViajes);

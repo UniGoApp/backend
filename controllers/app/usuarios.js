@@ -18,10 +18,10 @@ const obtenerUsuario = async (req, res) => {
                 error: true
             });
             con.execute(
-                'SELECT * FROM valoraciones WHERE to_user=?;', [user_id], (err, result2) => {
+                'SELECT v.id,v.from_user,v.score,v.comment, u.username,u.picture,u.email_confirmed FROM valoraciones v LEFT JOIN usuarios u ON u.id=v.from_user WHERE to_user=?;', [user_id], (err, result2) => {
                     if (err) throw err;
                     con.execute(
-                        'SELECT * FROM viajes WHERE status=? AND id_user=?;', ['ACTIVO', user_id], (err, result3) => {
+                        'SELECT v.*, c.* FROM viajes v INNER JOIN campus c ON c.id=v.id_campus WHERE v.id_user=?;', [user_id], (err, result3) => {
                             if (err) throw err;
                             return res.status(200).json({
                                 error: false,
@@ -44,8 +44,8 @@ const modificarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
         const username = req.body.username;
         const bio = req.body.bio;
-        const {base64, name} = req.body.picture;
-        if(base64.length == 0 || name.length == 0){
+        const base64 = req.body.picture;
+        if(base64.length == 0){
             con.execute('UPDATE usuarios SET username=?, bio=? WHERE id=?;', [username, bio, req.auth._id], (err, result) => {
                     if (err) {
                         return res.status(200).json({
@@ -70,10 +70,12 @@ const modificarUsuario = async (req, res) => {
                     err && console.log(err);
                 });
             });
+            // Make new id for the img
+            const id_image = idMaker('i');
             // Get image info
             const image_data = base64.split(';base64,')[1];
-            const upload_path = path.resolve(__dirname, `../../public/img/users/${name}`);
-            con.execute('UPDATE usuarios SET picture=?, username=?, bio=? WHERE id=?;', [name, username, bio, req.auth._id], (err, result) => {
+            const upload_path = path.resolve(__dirname, `../../public/img/users/${id_image}`);
+            con.execute('UPDATE usuarios SET picture=?, username=?, bio=? WHERE id=?;', [id_image, username, bio, req.auth._id], (err, result) => {
                     if (err) {
                         return res.status(200).json({
                             error: true,
@@ -92,8 +94,8 @@ const modificarUsuario = async (req, res) => {
                         }else{
                             return res.status(200).json({
                                 error: false,
-                                info: '',
-                                data: 'Usuario modificado con éxito.'
+                                info: 'Usuario modificado con éxito.',
+                                data: id_image
                             });
                         }
                     });
@@ -178,6 +180,8 @@ const borrarUsuario = async (req, res) => {
                 });
             }
         );
+        // Meter en una tabla de tipo historial para prevenir problemas si un usuario tima y se borra la aplicacion para que no lo pillen
+        // ...
     }else{
         return res.status(403).json({
             error: true,

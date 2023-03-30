@@ -85,6 +85,11 @@ router.post("/usuarios", requireSignin, postUsuarios);
 router.put("/usuarios/:id", requireSignin, putUsuarios); 
 router.delete("/usuarios/:id", requireSignin, deleteUsuarios);
 
+// ADMIN CRUD REPORTS
+const {getReports, deleteReports} = require("./controllers/reports");
+router.get("/reports", requireSignin, getReports);
+router.delete("/reports/:id", requireSignin, deleteReports);
+
 // ADMIN CRUD VIAJES
 const { getViajes, postViajes, putViajes, deleteViajes } = require("./controllers/admin/viajes");
 router.get("/viajes", requireSignin, getViajes);
