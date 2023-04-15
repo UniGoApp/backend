@@ -4,7 +4,7 @@ const path = require('path');
 const { requireSignin } = require('./controllers/middleware'); //AUTH Middleware
 
 // SERVER OPTIONS
-const maintenance = true;
+const maintenance = false;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {
@@ -67,8 +67,9 @@ router.delete("/email/:id", requireSignin, deleteEmail);
 router.post("/responderEmail", requireSignin, responderEmail);
 
 // ADMIN CRUD DESTINOS (web y archivos)
-const { getCampus, postCampus, updateCampus, deleteCampus } = require("./controllers/campus");
+const { getCampus, getUniversidades, postCampus, updateCampus, deleteCampus } = require("./controllers/campus");
 router.get('/campus', getCampus); //Not singin required for web use
+router.get('/universidades', getUniversidades); //Not singin required for web use
 router.post('/campus', requireSignin, postCampus);
 router.put('/campus/:id', requireSignin, updateCampus);
 router.delete('/campus/:id', requireSignin, deleteCampus);
@@ -79,16 +80,17 @@ router.get('/logins', requireSignin, getLoginsWeb);
 router.put('/logins', requireSignin, updateLogins);
 
 // ADMIN CRUD USUARIOS
-const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios } = require("./controllers/admin/usuarios");
+const { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios, borrarImagenUsuario } = require("./controllers/admin/usuarios");
 router.get("/usuarios", requireSignin, getUsuarios);
 router.post("/usuarios", requireSignin, postUsuarios);
-router.put("/usuarios/:id", requireSignin, putUsuarios); 
+router.put("/usuarios/:id", requireSignin, putUsuarios);
+router.put("/usuarios_img/:id", requireSignin, borrarImagenUsuario);
 router.delete("/usuarios/:id", requireSignin, deleteUsuarios);
 
 // ADMIN CRUD REPORTS
 const {getReports, deleteReports} = require("./controllers/reports");
-router.get("/reports", requireSignin, getReports);
-router.delete("/reports/:id", requireSignin, deleteReports);
+router.get("/incidencias", requireSignin, getReports);
+router.delete("/incidencias/:id", requireSignin, deleteReports);
 
 // ADMIN CRUD VIAJES
 const { getViajes, postViajes, putViajes, deleteViajes } = require("./controllers/admin/viajes");

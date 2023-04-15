@@ -70,36 +70,35 @@ const modificarUsuario = async (req, res) => {
                 });
             });
             // Make new id for the img
-            const id_image = idMaker('i');
+            const id_image = idMaker('i')+'.png';
             // Get image info
             const image_data = base64.split(';base64,')[1];
             const upload_path = path.resolve(__dirname, `../../public/img/users/${id_image}`);
             con.execute('UPDATE usuarios SET picture=?, username=?, bio=? WHERE id=?;', [id_image, username, bio, req.auth._id], (err, result) => {
-                    if (err) {
-                        return res.status(200).json({
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        data: '',
+                        info: 'No se ha podido modificar el usuario.'
+                    });
+                }
+                // Save img to file
+                fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
+                    if(err){
+                        return res.json({
                             error: true,
                             data: '',
                             info: 'No se ha podido modificar el usuario.'
                         });
+                    }else{
+                        return res.status(200).json({
+                            error: false,
+                            info: 'Usuario modificado con éxito.',
+                            data: id_image
+                        });
                     }
-                    // Save img to file
-                    fs.writeFile(upload_path, image_data, {encoding: 'base64'}, function(err) {
-                        if(err){
-                            return res.json({
-                                error: true,
-                                data: '',
-                                info: 'No se ha podido modificar el usuario.'
-                            });
-                        }else{
-                            return res.status(200).json({
-                                error: false,
-                                info: 'Usuario modificado con éxito.',
-                                data: id_image
-                            });
-                        }
-                    });
-                }
-            );
+                });
+            });
         }
     }else{
         return res.status(403).json({

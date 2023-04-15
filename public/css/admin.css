@@ -692,9 +692,38 @@ div.supermenuContainer > div.supermenu > p.shown{
     background-color: var(--light);
     color: var(--black);
     margin: 0 10px 10px 0;
+    max-width: 148px;
 }
 #imagenes img{
     max-width: 124px;
+}
+#imageViewer{
+    border-radius: 4px;
+    padding: 14px;
+    display:none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: var(--blue);
+}
+#imageViewer > svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#imageViewer > img{
+    max-width: 60vw;
+    max-height: 60vh;
+    margin-top: 36px;
+}
+#imagenes-usuarios > div button{
+    border: none;
+    background-color: transparent;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
 }
 /******** OTHERS ********/
 /* POP UPS */

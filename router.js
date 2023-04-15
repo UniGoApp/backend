@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 // SERVER OPTIONS
-const maintenance = true;
+const maintenance = false;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {

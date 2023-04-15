@@ -368,6 +368,57 @@ const refreshDashboard = () => {
         let target = document.querySelector('#bbdd-campus > p.tab-msg');
         target.textContent="Error al cargar los destinos del servidor.";
     });
+
+    fetch('/incidencias', requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        const section = document.getElementById('bbdd-incidencias');
+        //Msg target
+        const tabmsg = section.getElementsByClassName('tab-msg')[0];
+        //Data targets
+        const thead = section.getElementsByTagName('thead')[0];
+        const tbody = section.getElementsByTagName('tbody')[0];
+        //Remove previous data:
+        thead.innerHTML="";
+        tbody.innerHTML="";
+        if(result.error){
+            tabmsg.innerText = result.info;
+            document.querySelector('#bbdd-incidencias > table').style.display = 'none';
+        }else{
+            //Table headings
+            const trhead = document.createElement('tr');
+            const keys = Object.keys(result.data[0]);
+            keys.forEach( key => {
+                const th = document.createElement('th');
+                th.innerText = key;
+                trhead.appendChild(th);
+            });
+            let thActions = document.createElement('th');
+            thActions.innerText = "Options";
+            trhead.appendChild(thActions);
+            thead.appendChild(trhead);
+            //Table content
+            result.data.forEach(msg => {
+                const trbody = document.createElement('tr');
+                for(let d = 0; d < keys.length; d++){
+                    const td = document.createElement('td');
+                    let key = keys[d];
+                    td.innerText = msg[key];
+                    trbody.appendChild(td);
+                }
+                const td = document.createElement('td');
+                td.innerHTML = `<div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
+                trbody.appendChild(td);
+                tbody.appendChild(trbody);
+            });
+        }
+    })
+    .catch(error => {
+        console.log('error :>> ', error);
+        let target = document.querySelector('#bbdd-incidencias > p.tab-msg');
+        target.textContent="Error al cargar las incidencias del servidor.";
+    });
+
 };
 
 refreshDashboard();

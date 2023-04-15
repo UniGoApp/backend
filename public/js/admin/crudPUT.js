@@ -129,7 +129,7 @@ const putData = (e) => {
                 noti.style.display = 'none';
             }, 5000);
         }else{
-            // Delete row
+            // Update row
 
             // Show notification 
             const noti = document.querySelector('#notifications-wrapper > .notification-success');

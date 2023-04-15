@@ -18,6 +18,24 @@ const getCampus = async (req, res) => {
     });
 };
 
+const getUniversidades = async (req, res) => {
+    con.execute(`SELECT DISTINCT university, icon, region, COUNT(university) as numCampus FROM campus GROUP BY university;`, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(200).json({
+                error: true,
+                info: 'Error con la base de datos.',
+                data:''
+            });
+        }
+        return res.status(200).json({
+            error: false,
+            info: '',
+            data: result
+        });
+    });
+};
+
 const postCampus = async (req, res) => {
     if(req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN") {
         con.execute(`INSERT INTO campus (name, university, region, icon) VALUES (?,?,?,?);`,[req.body.name, req.body.university, req.body.region, req.body.icon] , (err, result) => {
@@ -95,4 +113,4 @@ const deleteCampus = async (req, res) => {
     }
 };
 
-module.exports = { getCampus, postCampus, updateCampus, deleteCampus };
+module.exports = { getCampus, getUniversidades, postCampus, updateCampus, deleteCampus };

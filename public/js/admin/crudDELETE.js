@@ -106,6 +106,17 @@ const showDeleteForm = (e) => {
             data_campus.icon = info_campus[4].innerText;
             modal.querySelector('p').innerText = JSON.stringify(data_campus, null, '\t');
             break;
+        case 'incidencias':
+            modal.querySelector('h4').innerText = "Incidencia: ";
+            let data_incidencias = {};
+            const info_incidencias = target.getElementsByTagName('td');
+            data_incidencias.id = info_incidencias[0].innerText;
+            data_incidencias.name = info_incidencias[1].innerText;
+            data_incidencias.university = info_incidencias[2].innerText;
+            data_incidencias.region = info_incidencias[3].innerText;
+            data_incidencias.icon = info_incidencias[4].innerText;
+            modal.querySelector('p').innerText = JSON.stringify(data_incidencias, null, '\t');
+            break;
         default:
             break;
     }
@@ -142,11 +153,19 @@ const deleteData = (e) => {
             }, 5000);
         }else{
             // Delete row
-
+            const rows = document.querySelectorAll(`#bbdd-${modal_id} tbody > tr`);
+            for (let i = 0; i < rows.length; i++) {
+                if(rows[i].querySelector('td').textContent = data.id){
+                    rows[i].style.display="none";
+                }
+                if (rows.length <= 1){
+                    
+                }
+            }
             // Show notification 
             const noti = document.querySelector('#notifications-wrapper > .notification-success');
             noti.style.display = 'flex';
-            noti.querySelector('p').innerText = result.info;
+            noti.querySelector('p').innerText = result.data;
             setTimeout(() => {
                 noti.style.display = 'none';
             }, 5000);

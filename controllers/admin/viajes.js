@@ -105,8 +105,8 @@ const deleteViajes = async (req, res) => {
                 }
                 return res.status(200).json({
                     error: false,
-                    info: 'Viaje borrado con éxito.',
-                    data: result
+                    info: '',
+                    data: 'Viaje borrado con éxito.'
                 });
             }
         );

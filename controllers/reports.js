@@ -4,14 +4,12 @@ const con = require("./database");
 const getReports = async (req, res) => {
     if(req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN") {
         con.execute(`SELECT * FROM reports ORDER BY fecha;`, (err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(200).json({
-                    error: true,
-                    info: 'Error con la base de datos.',
-                    data:''
-                });
-            }
+            if (err) console.log(err);
+            if(result.length === 0) return res.status(200).json({
+                error: true,
+                info: 'No hay incidencias registradas.',
+                data: ''
+            });
             return res.status(200).json({
                 error: false,
                 info: '',

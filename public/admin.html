@@ -33,7 +33,7 @@
         <div id="info-unigo">
             <img src="./img/logos/unigoBN.png" alt="UNIGO ICON LOGO" id="logo-main">
             <h2>UniGo App</h2>
-            <h6>Admin Panel v2.1.1</h6>
+            <h6>Admin Panel v2.1.2</h6>
         </div>
         <div id="menu">
             <ul>
@@ -91,7 +91,7 @@
         <div id="dashboard" class="visible">
             <h1 class="section-title">Dashboard</h1>
             <p class="refreshBtn" onclick="refreshDashboard()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" onclick="refreshDashboard()"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 20q-3.35 0-5.675-2.325Q4 15.35 4 12q0-3.35 2.325-5.675Q8.65 4 12 4q1.725 0 3.3.713 1.575.712 2.7 2.037V4h2v7h-7V9h4.2q-.8-1.4-2.187-2.2Q13.625 6 12 6 9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.925 0 3.475-1.1T17.65 14h2.1q-.7 2.65-2.85 4.325Q14.75 20 12 20Z"/></svg>
                 <b>Refresh data</b>
             </p>
             <section class="summary">
@@ -168,6 +168,7 @@
                 <p>Viajes</p>
                 <p>Reservas</p>
                 <p>Campus</p>
+                <p>Incidencias</p>
             </div>
             <div style="padding-bottom: 16px;">
                 <section id="bbdd-usuarios">
@@ -247,6 +248,23 @@
                         </tbody>
                     </table>
                 </section>
+                <section id="bbdd-incidencias">
+                    <p class="tab-msg"></p>
+                    <div class="crud-menu">
+                        <div id="incidencias-search">
+                            <div class="searchBar">
+                                <input id="incidencias-searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" onkeyup="search(this)"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="var(--light)"><path d="m19.6 21-6.3-6.3q-.75.6-1.725.95Q10.6 16 9.5 16q-2.725 0-4.612-1.887Q3 12.225 3 9.5q0-2.725 1.888-4.613Q6.775 3 9.5 3t4.613 1.887Q16 6.775 16 9.5q0 1.1-.35 2.075-.35.975-.95 1.725l6.3 6.3ZM9.5 14q1.875 0 3.188-1.312Q14 11.375 14 9.5q0-1.875-1.312-3.188Q11.375 5 9.5 5 7.625 5 6.312 6.312 5 7.625 5 9.5q0 1.875 1.312 3.188Q7.625 14 9.5 14Z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </section>
             </div>
         </div>
 
@@ -282,13 +300,17 @@
             </div>
             <div>
                 <section id="imagenes-universidades">
-                    <p>Estas imágenes son las actualmente asignadas a su respectiva universidad.</p>
+                    <p></p>
                     <div></div>
                 </section>
                 <section id="imagenes-usuarios">
-                    <p>Estas imágenes son las actualmente asignadas a su respectivo usuario.</p>
+                    <p></p>
                     <div></div>
                 </section>
+                <div id="imageViewer">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" fill="white" onclick="closeImageViewer(this)"><path d="m12.45 37.65-2.1-2.1L21.9 24 10.35 12.45l2.1-2.1L24 21.9l11.55-11.55 2.1 2.1L26.1 24l11.55 11.55-2.1 2.1L24 26.1Z"/></svg>
+                    <img src="" alt="">
+                </div>
             </div>
         </div>
     </main>

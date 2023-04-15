@@ -1,5 +1,7 @@
 const con = require("../database");
 const bcrypt = require("bcryptjs");
+const fs = require('fs');
+const path = require('path');
 
 const getUsuarios = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN"){
@@ -136,8 +138,8 @@ const deleteUsuarios = async (req, res) => {
                 }
                 return res.status(200).json({
                     error: false,
-                    info: 'Usuario borrado con éxito.',
-                    data: result
+                    info: '',
+                    data: 'Usuario borrado con éxito.'
                 });
             }
         );
@@ -150,4 +152,29 @@ const deleteUsuarios = async (req, res) => {
     }
 };
 
-module.exports = { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios };
+const borrarImagenUsuario = async (req, res) => {
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
+        const previous_path = path.resolve(__dirname, `../../public/img/users/${req.body.old_image}`);
+        fs.rm(previous_path, {force: true}, function(err){
+            err && console.log(err);
+        });
+        con.execute(
+            'UPDATE usuarios SET picture=? WHERE id=?;', ['user_default.png', req.params.id], (err, result) => {
+                if (err) console.log('err :>>', err);
+                return res.status(200).json({
+                    error: false,
+                    info: 'Imagen actualizada con éxito.',
+                    data: ''
+                });
+            }
+        );
+    }else{
+        return res.status(403).json({
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
+        });
+    }
+};
+
+module.exports = { getUsuarios, postUsuarios, putUsuarios, deleteUsuarios, borrarImagenUsuario };
