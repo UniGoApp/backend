@@ -4,7 +4,7 @@ const path = require('path');
 const { requireSignin } = require('./controllers/middleware'); //AUTH Middleware
 
 // SERVER OPTIONS
-const maintenance = false;
+const maintenance = true;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {
