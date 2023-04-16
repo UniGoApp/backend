@@ -692,10 +692,16 @@ div.supermenuContainer > div.supermenu > p.shown{
     background-color: var(--light);
     color: var(--black);
     margin: 0 10px 10px 0;
-    max-width: 148px;
+    max-width: 154px;
+}
+#imagenes section p{
+    text-align: center;
+}
+#imagenes section img{
+    cursor: pointer;
 }
 #imagenes img{
-    max-width: 124px;
+    max-width: 130px;
 }
 #imageViewer{
     border-radius: 4px;
@@ -711,6 +717,7 @@ div.supermenuContainer > div.supermenu > p.shown{
     position: absolute;
     top: 0;
     right: 0;
+    cursor: pointer;
 }
 #imageViewer > img{
     max-width: 60vw;

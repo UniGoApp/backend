@@ -43,22 +43,37 @@ fetch('/user-imgs', requestOptions)
 .then(result => {
     if(!result.error){
         for(let i=0; i<result.data.length; i++){
-            userImgContainer.innerHTML += `<div><img src="./img/users/${result.data[i].picture}" alt="usuario ${result.data[i].id}" /><p>Usuario: ${result.data[i].id}</p><button onclick="borrarImagenUsuario(this)">Borrar imagen</button></div>`;
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            img.src = `./img/users/${result.data[i].picture}`;
+            img.alt = `imagen de usuario ${result.data[i].id}`;
+            const p = document.createElement('p');
+            p.textContent = `Usuario: ${result.data[i].id}`;
+            const button = document.createElement('button');
+            button.addEventListener('click', borrarImagenUsuario);
+            button.textContent = 'Borrar imagen';
+            div.appendChild(img);
+            div.appendChild(p);
+            result.data[i].picture !== 'user_default.png' && div.appendChild(button);
+            userImgContainer.appendChild(div);
         }
     }else{
         userMSG.textContent = result.info;
     }
 })
 .catch(err => {
+    console.log('err :>> ', err);
     userMSG.textContent = "Error al cargar las imagenes.";
 }).finally( () => {
-    const imgs = userImgContainer.querySelectorAll('img');
+    // Click event for users and unis
+    const imgs = document.querySelectorAll('#imagenes > div > section img');
     for (let i = 0; i < imgs.length; i++) {
         imgs[i].addEventListener('click', (e) => {
             const url = e.target.src;
             document.getElementById('imageViewer').style.display='block';
             document.querySelector('#imageViewer > img').src=url;
             document.querySelector('#imageViewer > img').alt='Imagen de usuario';
+            document.querySelector('#imageViewer > p').textContent='Subdirectorio de la imagen: /img'+url.split('img')[1];
         });
     }
 });
@@ -70,18 +85,17 @@ const closeImageViewer = (e) => {
 };
 
 const borrarImagenUsuario = (e) =>{
-    const id_user = e.parentNode.getElementsByTagName('p')[0].textContent.split(': ')[1];
-    const user_image = e.parentNode.getElementsByTagName('img')[0];
+    const id_user = e.target.parentNode.getElementsByTagName('p')[0].textContent.split(': ')[1];
+    const user_image = e.target.parentNode.getElementsByTagName('img')[0];
     const old_image = user_image.src.split('/users/')[1];
-    const new_image = user_image.src.split('/users/')[0] + '/users/user_default.png';
+    const new_image = './img/users/user_default.png';
     if (window.confirm("¿Está seguro de borrar la imagen?")) {
-        const requestOptions = {
+        fetch(`/usuarios_img/${id_user}`, {
             method: 'PUT',
             headers: myHeaders,
             credentials: "same-origin",
             body: JSON.stringify({old_image})
-        };
-        fetch(`/usuarios_img/${id_user}`, requestOptions)
+        })
         .then(response => response.json())
         .then(result => {
             if(result.error){
@@ -94,6 +108,7 @@ const borrarImagenUsuario = (e) =>{
             }else{
                 // Update img
                 user_image.src=new_image;
+                e.target.style.display="none";
                 const noti = document.querySelector('#notifications-wrapper > .notification-success');
                 noti.style.display = 'flex';
                 noti.querySelector('p').innerText = result.info;
