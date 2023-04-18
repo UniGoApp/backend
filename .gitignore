@@ -107,3 +107,4 @@ dist
 data/loginFailure.json
 *.pem
 *.crt
+public/img/users/user_default.png

@@ -26,7 +26,7 @@ const signup = async (req, res) => {
       if(!picture || picture.length == 0){
         picName = 'user_default.png';
       }else{
-        picName = idMaker('i');
+        picName = idMaker('i')+'.png';
         // Get image info
         const image_data = picture.split(';base64,')[1];
         const upload_path = path.resolve(__dirname, `../../public/img/users/${picName}`);
