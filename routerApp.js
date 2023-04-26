@@ -5,11 +5,14 @@ const router = express.Router();
 const { requireSignin } = require('./controllers/middleware');
 
 // AUTH
-const { signup, signin, forgotPassword, resetPassword } = require("./controllers/app/auth");
+const { signup, signin, forgotPassword, resetPassword, getAuthCode, verifyUser } = require("./controllers/app/auth");
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+router.post("/get-auth-code", requireSignin, getAuthCode);
+router.post("/verify", requireSignin, verifyUser);
+
 
 // FILES
 const { getUserPic, getUniPic } = require("./controllers/app/files");

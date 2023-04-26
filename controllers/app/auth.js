@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {nanoid} = require("nanoid");
+const {nanoid, customAlphabet} = require("nanoid");
 const con = require("../database");
 const { idMaker } = require("../../helpers/idMaker");
 const AWS = require('aws-sdk');
@@ -88,6 +88,70 @@ const signup = async (req, res) => {
   });
 };
 
+const getAuthCode = async (req, res) => {
+  const id_user = req.auth._id;
+  const email = req.body.email;
+  // Generate code
+  const nanoidNumbers = customAlphabet('1234567890', 4);
+  const authCode = nanoidNumbers(4);
+  // save resetCode to db
+  con.execute('UPDATE usuarios SET auth_code=? WHERE email=? AND id=?;', [authCode, email, id_user], async function(err, data) {
+    if(err || data.affectedRows < 1) return res.json({error: true, info: "Ha ocurrido un problema con su solicitud, inténtelo más adelante.", data:''});
+    // Send mail
+    const params = {
+      Destination: {
+       ToAddresses: [ email ]
+      }, 
+      Message: {
+       Body: {
+        Html: {
+         Charset: "UTF-8", 
+         Data: `<h4>Código de verificación: </h4><h2>${authCode}</h2><p>Por favor borra este mensaje si no has solicitado este código.</p>`
+        }, 
+        Text: {
+         Charset: "UTF-8", 
+         Data: `\n\tCódigo de verificación: ${authCode}.\n\nPor favor borra este mensaje si no has solicitado este código.`
+        }
+       }, 
+       Subject: {
+        Charset: "UTF-8", 
+        Data: "UniGo - Auth Code"
+       }
+      }, 
+      Source: "no-reply@unigoapp.es",
+      ReplyToAddresses: [ "contacto@unigoapp.es" ]
+    };
+    ses.sendEmail(params, function(err, data) {
+      if (err) {
+        console.log(err, err.stack);
+        return res.json({error: true, info: 'Fallo al enviar el email.', data: ''});
+      } else {
+        return res.json({error: false, info: '', data: 'Código enviado con éxito.'});
+      }
+    });
+  });
+};
+
+const verifyUser = async (req,res) => {
+  const code = req.body.code;
+  const id_user = req.auth._id;
+  con.execute('SELECT auth_code FROM usuarios WHERE id=?;', [id_user], function (err, result) {
+    if (err) {
+      return res.status(400).json({error: true, info: "Se ha producido un error.", data:''});
+    }
+    let sameCode = result[0].auth_code === code;
+    if(sameCode){
+      con.execute('UPDATE usuarios SET auth_code="", email_confirmed=1 WHERE id=?;', [id_user], async function(err) {
+        if(err) {
+          return res.json({error: true, info: "Error al verificar el perfil del usuario.", data:''});
+        }
+        return res.json({error: false, info: '', data:'Perfil verificado con éxito.'});
+      });
+    }else{
+      return res.json({error: true, info: "Error al verificar el perfil del usuario.", data:''});
+    }
+  });
+};
 const signin = async (req, res) => {
     const { email, password } = req.body;
     con.execute('SELECT id,username,password,email,phone,rol,bio,picture,creation_time,rrss,email_confirmed,university FROM usuarios WHERE email=?;', [email], function (err, result) {
@@ -150,11 +214,11 @@ const forgotPassword = async (req, res) => {
            Body: {
             Html: {
              Charset: "UTF-8", 
-             Data: `<h4>Código: </h4><h2>${resetCode}</h2><p>Por favor borra este mensaje si no has solicitado este cambio de contraseña.</p>`
+             Data: `<h4>Código: </h4><h2>${resetCode}</h2><p>Por favor borra este mensaje si no has solicitado este código.</p>`
             }, 
             Text: {
              Charset: "UTF-8", 
-             Data: `\n\tCódigo: ${resetCode}.\n\nPor favor borra este mensaje si no has solicitado este cambio de contraseña.`
+             Data: `\n\tCódigo: ${resetCode}.\n\nPor favor borra este mensaje si no has solicitado este código.`
             }
            }, 
            Subject: {
@@ -197,4 +261,4 @@ const resetPassword = async (req, res) => {
   });
 };
 
-module.exports = {signup, signin, forgotPassword, resetPassword};
+module.exports = {signup, signin, forgotPassword, resetPassword, getAuthCode, verifyUser};
