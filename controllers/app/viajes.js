@@ -22,8 +22,33 @@ const obtenerViajes = async (req, res) => {
     });
 };
 
+const detallesViaje = async (req, res) => {
+    const user_id = req.auth._id;
+    con.execute('SELECT * FROM viajes WHERE id=? LIMIT 1;', [req.params.id], (err, result) => {
+        if (err) return res.status(200).json({
+            error: true,
+            data: '',
+            info: 'Parece que algo ha ido mal...'
+        });
+        if(result.length === 0) return res.status(200).json({
+            info: 'Este viaje no existe.',
+            data: '',
+            error: true
+        });
+        let visitas = result[0].visualizaciones + 1;
+        if(result[0].id_user != user_id){
+            con.execute('UPDATE viajes SET visualizaciones=? WHERE id=?;', [visitas, req.params.id]);
+        }
+        return res.status(200).json({
+            error: false,
+            data: result,
+            info: ''
+        });
+    });
+};
+
 const misViajes = async (req, res) => {
-    con.execute('SELECT * FROM viajes WHERE id_user=? ORDER BY departure;', [req.auth._id], (err, result) => {
+    con.execute('SELECT v.id, v.origin, v.price, v.seats, v.departure, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY v.departure;', [req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -83,4 +108,4 @@ const borrarViaje = async (req, res) => {
     });
 };
 
-module.exports = { obtenerViajes, misViajes, publicarViaje, modificarViaje, borrarViaje };
+module.exports = { obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje };
