@@ -37,7 +37,7 @@ const getUniPic = async (req, res) => {
     const fileName = req.params.name;
     res.sendFile(fileName, options, (err) => {
         if (err) {
-            res.sendFile('uni_default.png', options, (err) => {
+            res.sendFile('default.png', options, (err) => {
                 if (err) {
                     console.log('err :>> ', err);
                 }

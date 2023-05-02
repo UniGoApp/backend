@@ -24,7 +24,7 @@ const obtenerViajes = async (req, res) => {
 
 const detallesViaje = async (req, res) => {
     const user_id = req.auth._id;
-    con.execute('SELECT * FROM viajes WHERE id=? LIMIT 1;', [req.params.id], (err, result) => {
+    con.execute('SELECT v.*, u.username, u.picture AS user_image, c.name, c.university, c.region, c.icon, c.banner FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON c.id=v.id_campus WHERE v.id=?;', [req.params.id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -41,7 +41,7 @@ const detallesViaje = async (req, res) => {
         }
         return res.status(200).json({
             error: false,
-            data: result,
+            data: result[0],
             info: ''
         });
     });
