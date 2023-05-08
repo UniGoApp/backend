@@ -9,7 +9,7 @@ const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 const obtenerUsuario = async (req, res) => {
     const user_id = req.params.id;
     con.execute(
-        'SELECT university, bio, creation_time FROM usuarios WHERE id=?;', [user_id], (err, result1) => {
+        'SELECT university, bio, creation_time, id, email_confirmed, username, picture FROM usuarios WHERE id=?;', [user_id], (err, result1) => {
             if (err) throw err;
             if(result1.length === 0) return res.status(200).json({
                 info: 'No existe el usuario solicitado.',

@@ -24,7 +24,7 @@ const obtenerViajes = async (req, res) => {
 
 const detallesViaje = async (req, res) => {
     const user_id = req.auth._id;
-    con.execute('SELECT v.*, u.username, u.picture AS user_image, c.name, c.university, c.region, c.icon, c.banner FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON c.id=v.id_campus WHERE v.id=?;', [req.params.id], (err, result) => {
+    con.execute('SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner, SUM(r.num_seats) AS bookings, ROUND(AVG(val.score),1) AS ratings FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id LEFT JOIN valoraciones val ON val.to_user=v.id_user WHERE v.id=?;', [req.params.id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -39,10 +39,17 @@ const detallesViaje = async (req, res) => {
         if(result[0].id_user != user_id){
             con.execute('UPDATE viajes SET visualizaciones=? WHERE id=?;', [visitas, req.params.id]);
         }
-        return res.status(200).json({
-            error: false,
-            data: result[0],
-            info: ''
+        con.execute('SELECT * FROM reservas WHERE id_trip=?;', [req.params.id], (err2, result2) => {
+            if (err2 || result2.length === 0) return res.status(200).json({
+                error: false,
+                data: {...result[0], bookings_arr: []},
+                info: ''
+            });
+            return res.status(200).json({
+                error: false,
+                data: {...result[0], bookings_arr: result2},
+                info: ''
+            });
         });
     });
 };
