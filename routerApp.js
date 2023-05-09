@@ -34,7 +34,7 @@ router.post("/reports", requireSignin, postReports);
 
 // VIAJES
 const { obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
-router.get("/viajes", requireSignin, obtenerViajes);
+router.get("/viajes/:date/:university", requireSignin, obtenerViajes);
 router.get("/viaje/:id", requireSignin, detallesViaje);
 router.get("/misviajes", requireSignin, misViajes);
 router.post("/viajes", requireSignin, publicarViaje);

@@ -3,7 +3,9 @@ const idMaker = require('../../helpers/idMaker');
 
 const obtenerViajes = async (req, res) => {
     const user_id = req.auth._id;
-    con.execute('SELECT * FROM viajes WHERE status="ACTIVO" AND id_user!=? AND departure>CURRENT_DATE ORDER BY departure LIMIT 10;', [user_id], (err, result) => {
+    const date = req.params.date;
+    const university = req.params.university;
+    con.execute('SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.university = ? AND v.departure > ? AND v.departure < ADDDATE(?, INTERVAL 1 DAY) ORDER BY v.departure;', [user_id, university, date, date], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -24,7 +26,16 @@ const obtenerViajes = async (req, res) => {
 
 const detallesViaje = async (req, res) => {
     const user_id = req.auth._id;
-    con.execute('SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner, SUM(r.num_seats) AS bookings, ROUND(AVG(val.score),1) AS ratings FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id LEFT JOIN valoraciones val ON val.to_user=v.id_user WHERE v.id=?;', [req.params.id], (err, result) => {
+    // con.execute('SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner, SUM(r.num_seats) AS bookings, ROUND(AVG(val.score),1) AS ratings FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON v.id_campus=c.id LEFT JOIN reservas r ON v.id=r.id_trip LEFT JOIN valoraciones val ON v.id_user=val.to_user WHERE v.id=?;', [req.params.id], (err, result) => {
+    con.execute(`SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner,
+    COALESCE(bookings.bookings_count, 0) AS bookings,
+    COALESCE(ratings.average_score, 0) AS ratings
+    FROM viajes v
+    LEFT JOIN usuarios u ON v.id_user = u.id
+    LEFT JOIN campus c ON v.id_campus = c.id
+    LEFT JOIN ( SELECT id_trip, SUM(num_seats) AS bookings_count FROM reservas GROUP BY id_trip ) AS bookings ON v.id = bookings.id_trip
+    LEFT JOIN ( SELECT to_user, ROUND(AVG(score), 1) AS average_score FROM valoraciones GROUP BY to_user ) AS ratings ON v.id_user = ratings.to_user
+    WHERE v.id = ?;`, [req.params.id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
