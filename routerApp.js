@@ -33,11 +33,12 @@ const {postReports} = require("./controllers/reports");
 router.post("/reports", requireSignin, postReports);
 
 // VIAJES
-const { obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
-router.get("/viajes/:date/:university", requireSignin, obtenerViajes);
+const { topViajes, obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
+router.get("/viajes", requireSignin, topViajes);
+router.post("/viajes", requireSignin, obtenerViajes);
 router.get("/viaje/:id", requireSignin, detallesViaje);
-router.get("/misviajes", requireSignin, misViajes);
-router.post("/viajes", requireSignin, publicarViaje);
+router.get("/mis-viajes", requireSignin, misViajes);
+router.post("/nuevo-viaje", requireSignin, publicarViaje);
 router.put("/viajes/:id", requireSignin, modificarViaje);
 router.delete("/viajes/:id", requireSignin, borrarViaje);
 

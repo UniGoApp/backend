@@ -1,11 +1,9 @@
 const con = require("../database");
 const idMaker = require('../../helpers/idMaker');
 
-const obtenerViajes = async (req, res) => {
+const topViajes = async (req, res) => {
     const user_id = req.auth._id;
-    const date = req.params.date;
-    const university = req.params.university;
-    con.execute('SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.university = ? AND v.departure > ? AND v.departure < ADDDATE(?, INTERVAL 1 DAY) ORDER BY v.departure;', [user_id, university, date, date], (err, result) => {
+    con.execute('SELECT v.id, v.origin, v.price, v.departure, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure > CURRENT_DATE() ORDER BY v.visualizaciones DESC LIMIT 3;', [user_id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -22,6 +20,68 @@ const obtenerViajes = async (req, res) => {
             info: ''
         });
     });
+};
+
+const obtenerViajes = async (req, res) => {
+    const user_id = req.auth._id;
+    const date = req.body.fecha || 'CURRENT_DATE()';
+    const id_campus = req.body.id_campus || -1;
+    const university = req.body.university || -1;
+    if(university !== -1 && id_campus !== -1 ){
+        con.execute('SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.id = ? AND v.departure > ? AND v.departure < ADDDATE(?, INTERVAL 1 DAY) ORDER BY v.departure LIMIT 8;', [user_id, id_campus, date, date], (err, result) => {
+            if (err) return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'Parece que algo ha ido mal...'
+            });
+            if(result.length === 0) return res.status(200).json({
+                info: 'No hay viajes disponibles.',
+                data: '',
+                error: true
+            });
+            return res.status(200).json({
+                error: false,
+                data: result,
+                info: ''
+            });
+        });
+    }else if(university !== -1 && id_campus === -1 ){
+        con.execute('SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.university = ? AND v.departure > ? AND v.departure < ADDDATE(?, INTERVAL 1 DAY) ORDER BY v.departure LIMIT 8;', [user_id, university, date, date], (err, result) => {
+            if (err) return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'Parece que algo ha ido mal...'
+            });
+            if(result.length === 0) return res.status(200).json({
+                info: 'No hay viajes disponibles.',
+                data: '',
+                error: true
+            });
+            return res.status(200).json({
+                error: false,
+                data: result,
+                info: ''
+            });
+        });
+    }else{
+        con.execute('SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure > ? AND v.departure < ADDDATE(?, INTERVAL 1 DAY) ORDER BY v.departure DESC LIMIT 8;', [user_id, date, date], (err, result) => {
+            if (err) return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'Parece que algo ha ido mal...'
+            });
+            if(result.length === 0) return res.status(200).json({
+                info: 'No hay viajes disponibles.',
+                data: '',
+                error: true
+            });
+            return res.status(200).json({
+                error: false,
+                data: result,
+                info: ''
+            });
+        });
+    }
 };
 
 const detallesViaje = async (req, res) => {
@@ -126,4 +186,4 @@ const borrarViaje = async (req, res) => {
     });
 };
 
-module.exports = { obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje };
+module.exports = { topViajes, obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje };

@@ -20,7 +20,7 @@ const obtenerUsuario = async (req, res) => {
                 'SELECT v.id,v.from_user,v.score,v.comment, u.username,u.picture,u.email_confirmed FROM valoraciones v LEFT JOIN usuarios u ON v.from_user=u.id WHERE to_user=?;', [user_id], (err, result2) => {
                     if (err) throw err;
                     con.execute(
-                        'SELECT v.*, c.name, c.university, c.region, c.icon, c.banner FROM viajes v INNER JOIN campus c ON v.id_campus=c.id WHERE v.id_user=?;', [user_id], (err, result3) => {
+                        'SELECT v.*, c.name, c.university, c.region, c.icon, c.banner FROM viajes v INNER JOIN campus c ON v.id_campus=c.id WHERE v.id_user=? ORDER BY v.departure DESC LIMIT 3;', [user_id], (err, result3) => {
                             if (err) throw err;
                             return res.status(200).json({
                                 error: false,
