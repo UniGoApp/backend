@@ -33,9 +33,10 @@ const {postReports} = require("./controllers/reports");
 router.post("/reports", requireSignin, postReports);
 
 // VIAJES
-const { topViajes, obtenerViajes, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
+const { topViajes, obtenerViajesDia, obtenerViajesGeneral, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");
 router.get("/viajes", requireSignin, topViajes);
-router.post("/viajes", requireSignin, obtenerViajes);
+router.get("/viajes-general", requireSignin, obtenerViajesGeneral);
+router.post("/viajes", requireSignin, obtenerViajesDia);
 router.get("/viaje/:id", requireSignin, detallesViaje);
 router.get("/mis-viajes", requireSignin, misViajes);
 router.post("/nuevo-viaje", requireSignin, publicarViaje);

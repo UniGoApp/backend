@@ -1,4 +1,5 @@
 const con = require("../database");
+const { idMaker } = require('../../helpers/idMaker');
 const AWS = require('aws-sdk');
 AWS.config.update({
   accessKeyId: process.env.AWS_S3_accessKeyId,
@@ -11,7 +12,7 @@ const obtenerReserva = async (req, res) => {
     const user_id = req.auth._id;
     const reserva_id = req.params.id;
     con.execute(
-        'SELECT r.id AS id_reserva, r.id_trip, r.id_user AS pasajero, r.num_seats, v.origin, v.id_campus, v.price, v.seats AS total_seats, v.departure, v.comments, c.name AS campus, c.university, c.region, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON c.id=v.id_campus WHERE r.id_user=? AND r.id=?;', [user_id,reserva_id], (err, result) => {
+        'SELECT r.id AS id_reserva, r.id_trip, r.id_user AS pasajero, r.num_seats, v.origin, v.id_campus, v.price, v.seats AS total_seats, v.departure_date AS date, v.departure_time AS time, v.comments, c.name AS campus, c.university, c.region, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON c.id=v.id_campus WHERE r.id_user=? AND r.id=?;', [user_id,reserva_id], (err, result) => {
             if (err) {
                 console.log(err);
                 return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
@@ -32,7 +33,7 @@ const obtenerReserva = async (req, res) => {
 const obtenerReservas = async (req, res) => {
     const user_id = req.auth._id;
     con.execute(
-        'SELECT r.*, v.id_campus, v.departure, c.name AS campus, c.university, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON v.id_campus=c.id WHERE r.id_user=?;', [user_id], (err, result) => {
+        'SELECT r.*, v.id_campus, v.departure_date AS date, v.departure_time AS time, c.name AS campus, c.university, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON v.id_campus=c.id WHERE r.id_user=?;', [user_id], (err, result) => {
             if (err) {
                 console.log(err);
                 return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
@@ -53,7 +54,7 @@ const obtenerReservas = async (req, res) => {
 const publicarReserva = async (req, res) => {
     const id_res = idMaker('b');
     const id_user = req.auth._id;
-    const {id_trip, num_seats, username, date, time, origin, campus, price} = req.body;
+    const {id_trip, num_seats, username, email, date, time, origin, campus, price} = req.body;
     con.execute('INSERT INTO reservas (id, id_trip, id_user, num_seats) VALUES (?,?,?,?);', [id_res, id_trip, id_user, num_seats], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
@@ -76,8 +77,8 @@ const publicarReserva = async (req, res) => {
             } else {
                 return res.status(200).json({
                     error: false,
-                    data: 'Reserva confirmada con éxito.',
-                    info: ''
+                    data: '',
+                    info: 'Reserva confirmada con éxito.'
                 });
             }
         });

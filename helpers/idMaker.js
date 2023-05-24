@@ -4,6 +4,6 @@ const idMaker = (inicial) => {
     let time = dateTime[1].split('.')[0].replaceAll(':','');
     let id = `${inicial}_${date}_${time}`;
     return id;
-}
+};
 
-module.exports = {idMaker}
+module.exports = {idMaker};
