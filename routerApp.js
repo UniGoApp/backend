@@ -48,9 +48,10 @@ const { obtenerCampus } = require("./controllers/app/campus");
 router.get("/campus", requireSignin, obtenerCampus);
 
 // RESERVAS
-const { obtenerReserva, obtenerReservas, publicarReserva, borrarReserva } = require("./controllers/app/reservas");
-router.get("/reserva/:id", requireSignin, obtenerReserva);
+const { comprobarReserva, obtenerReserva, obtenerReservas, publicarReserva, borrarReserva } = require("./controllers/app/reservas");
 router.get("/reservas", requireSignin, obtenerReservas);
+router.get("/reserva/:id", requireSignin, obtenerReserva);
+router.post("/reserva", requireSignin, comprobarReserva);
 router.post("/reservas", requireSignin, publicarReserva);
 router.delete("/reservas/:id", requireSignin, borrarReserva);
 

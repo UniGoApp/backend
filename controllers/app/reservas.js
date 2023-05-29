@@ -8,6 +8,24 @@ AWS.config.update({
 });
 const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
+const comprobarReserva = async (req, res) => {
+    const user_id = req.auth._id;
+    const trip_id = req.body.id_trip;
+    con.execute("SELECT id, num_seats FROM reservas WHERE id_user=? AND id_trip=?;", [user_id, trip_id], (err, result) => {
+            if (err) return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
+            if(result.length === 0) {
+                return res.status(200).json({error: true, info: 'No existe ninguna reserva registrada para este viaje.', data:''});
+            }else{
+                return res.status(200).json({
+                    error: false,
+                    info: '',
+                    data: result
+                });
+            }
+        }
+    );
+};
+
 const obtenerReserva = async (req, res) => {
     const user_id = req.auth._id;
     const reserva_id = req.params.id;
@@ -101,4 +119,4 @@ const borrarReserva = async (req, res) => {
     });
 };
 
-module.exports = { obtenerReserva, obtenerReservas, publicarReserva, borrarReserva };
+module.exports = { comprobarReserva, obtenerReserva, obtenerReservas, publicarReserva, borrarReserva };

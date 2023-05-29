@@ -10,7 +10,7 @@ const obtenerUsuario = async (req, res) => {
     const user_id = req.params.id;
     con.execute(
         'SELECT university, bio, creation_time, id, email_confirmed, username, picture FROM usuarios WHERE id=?;', [user_id], (err, result1) => {
-            if (err) throw err;
+            if (err) return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
             if(result1.length === 0) return res.status(200).json({
                 info: 'No existe el usuario solicitado.',
                 data: '',
@@ -18,10 +18,10 @@ const obtenerUsuario = async (req, res) => {
             });
             con.execute(
                 'SELECT v.id,v.from_user,v.score,v.comment, u.username,u.picture,u.email_confirmed FROM valoraciones v LEFT JOIN usuarios u ON v.from_user=u.id WHERE to_user=?;', [user_id], (err, result2) => {
-                    if (err) throw err;
+                    if (err) return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
                     con.execute(
                         "SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.region, c.icon, c.banner FROM viajes v INNER JOIN campus c ON v.id_campus=c.id WHERE v.id_user=? ORDER BY v.departure_date ASC LIMIT 3;", [user_id], (err, result3) => {
-                            if (err) throw err;
+                            if (err) return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
                             return res.status(200).json({
                                 error: false,
                                 data: {
@@ -170,7 +170,7 @@ const borrarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
         con.execute(
             'DELETE FROM usuarios WHERE id=?;', [req.auth._id], (err, result) => {
-                if (err) throw err;
+                if (err) return res.status(200).json({error: true, info: 'No se ha podido borrar el usuario.', data:''});
                 return res.status(200).json({
                     error: false,
                     data: 'Usuario borrado con éxito.',
