@@ -47,7 +47,7 @@ const obtenerViajesDia = async (req, res) => {
         });
     }else if(university !== -1 && id_campus === -1 ){
         con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.university=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, university, date], (err, result) => {
-            if (err) { console.log(err); return res.status(200).json({
+            if (err) {return res.status(200).json({
                 error: true,
                 data: '',
                 info: 'Parece que algo ha ido mal...'
@@ -87,7 +87,7 @@ const obtenerViajesDia = async (req, res) => {
 const obtenerViajesGeneral = async (req, res) => {
     const user_id = req.auth._id;
     // const sql0 = "SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure > CURRENT_DATE() ORDER BY v.departure DESC LIMIT 8;";
-    const sql = "SELECT DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, JSON_ARRAYAGG(JSON_OBJECT('date', v.departure_date, 'time', v.departure_time, 'status', v.status, 'id', v.id, 'origin', v.origin, 'price', v.price, 'name', c.name, 'icon', c.icon)) AS viajes FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure_date > CURRENT_DATE() GROUP BY date ORDER BY date ASC LIMIT 8;";
+    const sql = "SELECT DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, JSON_ARRAYAGG(JSON_OBJECT('date', v.departure_date, 'time', v.departure_time, 'status', v.status, 'id', v.id, 'origin', v.origin, 'price', v.price, 'name', c.name, 'icon', c.icon)) AS viajes FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure_date >= CURRENT_DATE() GROUP BY date ORDER BY date ASC LIMIT 8;";
     con.execute(sql, [user_id], (err, result) => {
         if (err) {
             return res.status(200).json({
@@ -111,7 +111,7 @@ const obtenerViajesGeneral = async (req, res) => {
 const detallesViaje = async (req, res) => {
     const user_id = req.auth._id;
     // con.execute('SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner, SUM(r.num_seats) AS bookings, ROUND(AVG(val.score),1) AS ratings FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON v.id_campus=c.id LEFT JOIN reservas r ON v.id=r.id_trip LEFT JOIN valoraciones val ON v.id_user=val.to_user WHERE v.id=?;', [req.params.id], (err, result) => {
-    con.execute(`SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner,
+    con.execute(`SELECT v.*, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS departure_date, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner,
     COALESCE(bookings.bookings_count, 0) AS bookings,
     COALESCE(ratings.average_score, 0) AS ratings
     FROM viajes v
@@ -150,7 +150,7 @@ const detallesViaje = async (req, res) => {
 };
 
 const misViajes = async (req, res) => {
-    con.execute('SELECT v.id, v.origin, v.price, v.seats, v.departure_date AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;', [req.auth._id], (err, result) => {
+    con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;", [req.auth._id], (err, result) => {
         if (err) {
             console.log('err :>> ', err);
             return res.status(200).json({
