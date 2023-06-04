@@ -61,7 +61,7 @@
                 redirect: 'follow'
             };
 
-            fetch("/api/newsletter", requestOptions)
+            fetch("/newsletter", requestOptions)
             .then(response => response.json())
             .then(result => {
                 if(result.error === 'error'){

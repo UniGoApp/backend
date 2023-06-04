@@ -95,7 +95,8 @@ const removeNewsletter = async (req, res) => {
         }
         let finalData = JSON.parse(data);
 
-        let index = finalData.emails.indexOf(emailToRemove);
+        let item = finalData.emails.filter(item => item.email === emailToRemove);
+        let index = finalData.emails.indexOf(item[0]);
         if(index === -1) return res.status(200).json({error: true, info: 'No te encontramos en nuestra lista de noticias, si quieres volver a suscribirte puedes hacerlo desde la web. Y si no, ya está todo listo.', data: ''});
 
         finalData.emails.splice(index, 1);
