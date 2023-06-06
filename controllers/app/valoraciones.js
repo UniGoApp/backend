@@ -1,5 +1,5 @@
 const con = require("../database");
-const idMaker = require("../../helpers/idMaker");
+const {idMaker} = require("../../helpers/idMaker");
 
 const obtenerValoraciones = async (req, res) => {
     const user_id = req.auth._id;
@@ -36,10 +36,17 @@ const publicarValoracion = async (req, res) => {
             data: '',
             info: 'Parece que algo ha ido mal...'
         });
-        return res.status(200).json({
-            error: false,
-            data: 'Viaje valorado con éxito.',
-            info: ''
+        con.execute('UPDATE reservas SET scored=1 WHERE id=? AND id_trip=? AND id_user=?;', [req.body.id_booking, req.body.id_trip, req.auth._id], (err, result) => {
+            if (err) return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'Parece que algo ha ido mal...'
+            });
+            return res.status(200).json({
+                error: false,
+                data: '',
+                info: 'Valoración registrada con éxito.'
+            });
         });
     });
 };
