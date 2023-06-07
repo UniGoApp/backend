@@ -44,7 +44,7 @@ const modificarUsuario = async (req, res) => {
         const username = req.body.username;
         const bio = req.body.bio;
         const base64 = req.body.picture;
-        if(base64.length == 0){
+        if(!base64){
             con.execute('UPDATE usuarios SET username=?, bio=? WHERE id=?;', [username, bio, req.auth._id], (err, result) => {
                     if (err) {
                         return res.status(200).json({
