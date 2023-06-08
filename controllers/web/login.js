@@ -136,10 +136,10 @@ const resetPasswordAdmin = async (req, res) => {
         const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
         con.execute('UPDATE usuarios SET password=?, resetCode="" WHERE email=?;', [hashedPassword, email], function(err) {
-          if(err) return res.json({error:true, info: "Unexpected error", data: ''});
+          if(err) return res.json({error: true, info: "Unexpected error", data: ''});
         });
 
-        return res.json({error: false, info: '', data: "Contraseña cambiada con éxito, por favor inicie sesion."});
+        return res.json({error: false, info: '', data: "Contraseña cambiada con éxito, por favor inicie sesión."});
       }
     });
 };
