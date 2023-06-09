@@ -22,15 +22,15 @@ function createNewLog(req, cause){
 			fs.writeFile(logsDir, JSON.stringify(json, null, 4), (err) => {});
 		});
 	}catch(err){
-		console.log('err :>> ', err);
+		console.log('No se ha podido crear un registro de fallo de login en administración: ', err);
 	}
 }
 
 function checkEmail(req, res){
 	const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE `email` = ? AND (`rol` = ? OR `rol` = ?);', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
+    con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?);', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
         if (err) {
-        	return res.status(400).json({error: "Se ha producido un error."});
+        	return res.status(400).json({error: "Se ha producido un error. Inténtelo de nuevo más tarde."});
         }
         if(result.length === 0){
 			createNewLog(req, 'Email incorrecto');
@@ -57,7 +57,7 @@ const signinAdmin = async (req, res) => {
 	//Check if IP is trying to access at least 3 times
 	let count = 0;
 	fs.readFile(logsDir, "utf8", function (err, data) {
-		if(err) console.log('Error reading loginFailure file :>> ', err);
+		if(err) console.log('Error reading data/loginFailure.json file: ', err);
 		var json = JSON.parse(data);
 		json.logs.forEach(failureInfo => {
 			if(req.ip == failureInfo.ip){
