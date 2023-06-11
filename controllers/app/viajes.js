@@ -151,18 +151,24 @@ const detallesViaje = async (req, res) => {
 
 const misViajes = async (req, res) => {
     con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;", [req.auth._id], (err, result) => {
-        if (err) {
-            console.log('err :>> ', err);
-            return res.status(200).json({
+        if (err) return res.status(200).json({
             error: true,
             data: '',
             info: 'Parece que algo ha ido mal...'
-        });}
-        return res.status(200).json({
-            error: false,
-            data: result,
-            info: ''
         });
+        if(result.length === 0 || !result[0].id) {
+            return res.status(200).json({
+                error: true,
+                data: '',
+                info: 'No tienes ningún viaje publicado.'
+            });
+        }else{
+            return res.status(200).json({
+                error: false,
+                data: result,
+                info: ''
+            });
+        }
     });
 };
 

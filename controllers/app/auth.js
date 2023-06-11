@@ -15,7 +15,7 @@ AWS.config.update({
 const ses = new AWS.SES({apiVersion: '2010-12-01'});
 
 const signup = async (req, res) => {
-  const { name, email, phone, password, bio, picture } = req.body;
+  let { name, email, phone, password, bio, picture } = req.body;
   con.execute('SELECT * FROM usuarios WHERE email=? OR phone=?;', [email, phone], (err, result) => {
     if (err) return res.status(200).json({error: true, info: "Unexpected error", data:''});
     if(result.length !== 0){
