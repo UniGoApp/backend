@@ -1,20 +1,3 @@
 {
-    "logs": [
-        {
-            "cause": "Contraseña incorrecta",
-            "email": "joseto.lopez00@gmail.com",
-            "password": "JOSETOHL1@2022-Unicar",
-            "date": "13/2/2023, 10:09:38",
-            "ip": "::1",
-            "protocol": "http"
-        },
-        {
-            "cause": "Contraseña incorrecta",
-            "email": "joseto.lopez00@gmail.com",
-            "password": "JOSETOHL1@2023-Unicar",
-            "date": "16/4/2023, 15:44:18",
-            "ip": "::1",
-            "protocol": "http"
-        }
-    ]
+    "logs": []
 }

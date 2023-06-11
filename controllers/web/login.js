@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {nanoid} = require("nanoid");
+const { nanoid } = require("nanoid");
 const con = require("../database");
 const fs = require('fs');
 const path = require('path');
@@ -28,7 +28,7 @@ function createNewLog(req, cause){
 
 function checkEmail(req, res){
 	const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?);', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
+    con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?) LIMIT 1;', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
         if (err) {
         	return res.status(400).json({error: "Se ha producido un error. Inténtelo de nuevo más tarde."});
         }
@@ -128,18 +128,18 @@ const resetPasswordAdmin = async (req, res) => {
     const { email, newPassword, resetCode } = req.body;
     // find user based on email and resetCode
     con.execute('SELECT * FROM usuarios WHERE email=? AND reset_code=?;', [email, resetCode], function (err, result) {
-      if (err) return res.json({error:true, info: "Unexpected error", data: ''});
+      if (err) return res.json({error:true, info: "Unexpected error", data: ""});
       if(result.length == 0){
-        return res.json({error:true, info: "Email o código introducido no es válido.", data:''});
+        return res.json({error:true, info: "Email o código introducido no es válido.", data:""});
       } else {
         // hash password
         const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
         con.execute('UPDATE usuarios SET password=?, resetCode="" WHERE email=?;', [hashedPassword, email], function(err) {
-          if(err) return res.json({error: true, info: "Unexpected error", data: ''});
+          if(err) return res.json({error: true, info: "Unexpected error", data: ""});
         });
 
-        return res.json({error: false, info: '', data: "Contraseña cambiada con éxito, por favor inicie sesión."});
+        return res.json({error: false, info: "Contraseña cambiada con éxito, por favor inicie sesión.", data: ""});
       }
     });
 };
