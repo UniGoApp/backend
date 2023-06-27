@@ -32,22 +32,22 @@ const showPostForm = (e) => {
             username.placeholder = "Username";
             username.style.width = '100%';
             username.style.marginBottom = '10px';
-            const rol = document.createElement('select');
-            rol.name = "rol";
-            rol.style.width = '49%';
-            rol.style.marginRight = '10px';
+            const role = document.createElement('select');
+            role.name = "role";
+            role.style.width = '49%';
+            role.style.marginRight = '10px';
             let values = [];
-            if(user.rol === "ADMIN"){
+            if(user.role === "ADMIN"){
                 values = ["USER", "ADMIN"];
-            }else if(user.rol === "SUPER_ADMIN"){
+            }else if(user.role === "SUPER_ADMIN"){
                 values = ["USER", "ADMIN", "SUPER_ADMIN"];
             }
             for(i=0; i<values.length; i++){
                 const opt_rol = document.createElement('option');
                 opt_rol.value = values[i];
-                opt_rol.innerText = 'ROL: '+values[i];
+                opt_rol.innerText = 'ROLE: '+values[i];
                 if(i === 0) opt_rol.defaultSelected = true;
-                rol.appendChild(opt_rol);
+                role.appendChild(opt_rol);
             }
 
             const rrss = document.createElement('select');
@@ -71,11 +71,11 @@ const showPostForm = (e) => {
             modal.querySelector('section.modal-container-body > div').appendChild(email);
             modal.querySelector('section.modal-container-body > div').appendChild(password);
             modal.querySelector('section.modal-container-body > div').appendChild(username);
-            modal.querySelector('section.modal-container-body > div').appendChild(rol);
+            modal.querySelector('section.modal-container-body > div').appendChild(role);
             modal.querySelector('section.modal-container-body > div').appendChild(phone);
             modal.querySelector('section.modal-container-body > div').appendChild(rrss);
 
-            let data_user = {email: '', password: '', username: '', rol: 'USER', phone: '', rrss:'ACTIVE'};
+            let data_user = {email: '', password: '', username: '', role: 'USER', phone: '', rrss:'ACTIVE'};
 
             email.oninput = () => {
                 data_user.email = email.value;
@@ -93,8 +93,8 @@ const showPostForm = (e) => {
                 data_user.phone = phone.value;
                 modal.querySelector('p').innerText = JSON.stringify(data_user, null, '\t');
             }
-            rol.onchange = () => {
-                data_user.rol = rol.value;
+            role.onchange = () => {
+                data_user.role = role.value;
                 modal.querySelector('p').innerText = JSON.stringify(data_user, null, '\t');
             }
             rrss.onchange = () => {
@@ -115,7 +115,7 @@ const showPostForm = (e) => {
             opt_user_def.defaultSelected = true;
             select_user.appendChild(opt_user_def);
             for(i=0; i<dataUsuarios.data.length; i++){
-                if(dataUsuarios.data[i].rol == "USER"){
+                if(dataUsuarios.data[i].role == "USER"){
                     const opt_user = document.createElement('option');
                     opt_user.value = i;
                     opt_user.innerText = dataUsuarios.data[i].email + " - " + dataUsuarios.data[i].phone;

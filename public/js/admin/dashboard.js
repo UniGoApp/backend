@@ -369,7 +369,7 @@ const refreshDashboard = () => {
         target.textContent="Error al cargar los destinos del servidor.";
     });
 
-    fetch('/incidencias', requestOptions)
+    fetch('/reportes', requestOptions)
     .then(response => response.json())
     .then(result => {
         const section = document.getElementById('bbdd-incidencias');

@@ -20,12 +20,12 @@ const showPutForm = (e) => {
     switch (tabName) {
         case 'usuarios':
             modal.querySelector('h4').innerText = "Usuario: ";
-            let data_user = {id:'', email:'', username:'', rol:'', phone:'', picture:'', reset_code:'', creation_time:'', rrss:''};
+            let data_user = {id:'', email:'', username:'', role:'', phone:'', picture:'', reset_code:'', creation_time:'', rrss:''};
             const elements = target.getElementsByTagName('TD');
             data_user.id = elements[0].innerText;
             data_user.email = elements[1].innerText;
             data_user.username = elements[2].innerText;
-            data_user.rol = elements[3].innerText;
+            data_user.role = elements[3].innerText;
             data_user.phone = elements[4].innerText;
             data_user.picture = elements[5].innerText;
             data_user.reset_code = elements[6].innerText;

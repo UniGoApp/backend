@@ -36,7 +36,7 @@ const showDeleteForm = (e) => {
             data_user.id = info_usuario[0].innerText;
             data_user.email = info_usuario[1].innerText;
             data_user.username = info_usuario[2].innerText;
-            data_user.rol = info_usuario[3].innerText;
+            data_user.role = info_usuario[3].innerText;
             data_user.phone = info_usuario[4].innerText;
             modal.querySelector('p').innerText = JSON.stringify(data_user, null, '\t');
             break;

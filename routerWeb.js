@@ -88,9 +88,9 @@ router.put("/usuarios_img/:id", requireSignin, borrarImagenUsuario);
 router.delete("/usuarios/:id", requireSignin, deleteUsuarios);
 
 // ADMIN CRUD REPORTS
-const {getReports, deleteReports} = require("./controllers/reports");
-router.get("/incidencias", requireSignin, getReports);
-router.delete("/incidencias/:id", requireSignin, deleteReports);
+const {getReports, deleteReports} = require("./controllers/reportes");
+router.get("/reportes", requireSignin, getReports);
+router.delete("/reportes/:id", requireSignin, deleteReports);
 
 // ADMIN CRUD VIAJES
 const { getViajes, postViajes, putViajes, deleteViajes } = require("./controllers/admin/viajes");

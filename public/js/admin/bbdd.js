@@ -60,6 +60,6 @@ const toggleUserType = (e) => {
     trs.forEach(setTrStyleDisplay);
 };
 
-if(user.rol !== 'SUPER_ADMIN'){
+if(user.role !== 'SUPER_ADMIN'){
     document.getElementById('user-type').style.display = 'none';
 }

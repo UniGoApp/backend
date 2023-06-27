@@ -28,7 +28,7 @@ function createNewLog(req, cause){
 
 function checkEmail(req, res){
 	const { email, password } = req.body;
-    con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?) LIMIT 1;', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
+    con.execute('SELECT * FROM usuarios WHERE email=? AND (role=? OR role=?) LIMIT 1;', [email, 'ADMIN', 'SUPER_ADMIN'], function (err, result) {
         if (err) {
         	return res.status(400).json({error: "Se ha producido un error. Inténtelo de nuevo más tarde."});
         }
@@ -42,7 +42,7 @@ function checkEmail(req, res){
 			return res.status(401).json({error: "Contraseña incorrecta."});
 		}
 		// -> create signed token
-		const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
+		const token = jwt.sign({ _id: result[0].id, _rol: result[0].role }, process.env.JWT_SECRET, {
 			expiresIn: "3d",
 		});
 		// -> send response
@@ -75,7 +75,7 @@ const signinAdmin = async (req, res) => {
 const forgotPasswordAdmin = async (req, res) => {
 	const email = req.body.email;
 	// find user by email
-	con.execute('SELECT * FROM usuarios WHERE email=? AND (rol=? OR rol=?);', [email, "ADMIN", "SUPER_ADMIN"], function (err, result) {
+	con.execute('SELECT * FROM usuarios WHERE email=? AND (role=? OR role=?);', [email, "ADMIN", "SUPER_ADMIN"], function (err, result) {
 		if (err) return res.json({error: "Unexpected error 1"});
 		if(result.length == 0){
 			return res.json({error: "Este usuario no existe."});

@@ -8,12 +8,12 @@ try{
 }
 
 const checkToken = () => {
-    if(!bearerToken || !user || user.rol === "USER"){
+    if(!bearerToken || !user || user.role === "USER"){
         window.location.assign('/');
     }
 };
 const checkTokenOnLogin = () => {
-    if(!!bearerToken && (user.rol === "ADMIN" || user.rol === "SUPER_ADMIN")){
+    if(!!bearerToken && (user.role === "ADMIN" || user.role === "SUPER_ADMIN")){
         location.assign('/privado');
     }
 };

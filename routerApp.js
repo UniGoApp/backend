@@ -29,8 +29,8 @@ router.delete("/usuarios/:id", requireSignin, borrarUsuario);
 router.put("/rrss/:id", requireSignin, updateRrss);
 
 // REPORTS
-const {postReports} = require("./controllers/reports");
-router.post("/reports", requireSignin, postReports);
+const {postReports} = require("./controllers/reportes");
+router.post("/reportes", requireSignin, postReports);
 
 // VIAJES
 const { topViajes, obtenerViajesDia, obtenerViajesGeneral, detallesViaje, misViajes, publicarViaje, modificarViaje, borrarViaje } = require("./controllers/app/viajes");

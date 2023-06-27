@@ -59,7 +59,7 @@ const login = () => {
         .then(response => response.json())
         .then(result => {
             //Check token an user info received
-            if(!result.error && (result.user.rol === "SUPER_ADMIN" || result.user.rol === "ADMIN")){
+            if(!result.error && (result.user.role === "SUPER_ADMIN" || result.user.role === "ADMIN")){
                 const token = 'Bearer ' + result.token;
                 sessionStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
                 const usuario = JSON.stringify(result.user);

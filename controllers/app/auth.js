@@ -71,7 +71,7 @@ const signup = async (req, res) => {
                   username: name,
                   email: email,
                   phone: phone,
-                  rol: 'USER',
+                  role: 'USER',
                   bio: bio,
                   picture: picName,
                   rrss: 'ACTIVE',
@@ -154,7 +154,7 @@ const verifyUser = async (req,res) => {
 };
 const signin = async (req, res) => {
     const { email, password } = req.body;
-    con.execute('SELECT id,username,password,email,phone,rol,bio,picture,creation_time,rrss,email_confirmed,university FROM usuarios WHERE email=?;', [email], function (err, result) {
+    con.execute('SELECT id,username,password,email,phone,role,bio,picture,creation_time,rrss,email_confirmed,university FROM usuarios WHERE email=?;', [email], function (err, result) {
         if (err) {
           return res.status(400).json({error: true, info: "Se ha producido un error.", data:''});
         }
@@ -166,7 +166,7 @@ const signin = async (req, res) => {
           return res.status(401).json({error: true, info: "Contraseña incorrecta.", data:''});
         }
         // create signed token
-        const token = jwt.sign({ _id: result[0].id, _rol: result[0].rol }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ _id: result[0].id, _rol: result[0].role }, process.env.JWT_SECRET, {
           expiresIn: "360d",
         });
         return res.status(200).json({
@@ -179,7 +179,7 @@ const signin = async (req, res) => {
               username: result[0].username,
               email: result[0].email,
               phone: result[0].phone,
-              rol: result[0].rol,
+              role: result[0].role,
               bio: result[0].bio,
               picture: result[0].picture,
               creation_time: result[0].creation_time,
