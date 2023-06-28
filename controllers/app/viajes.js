@@ -3,7 +3,7 @@ const idMaker = require('../../helpers/idMaker');
 
 const topViajes = async (req, res) => {
     const user_id = req.auth._id;
-    con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure_date > CURRENT_DATE() ORDER BY v.visualizaciones DESC LIMIT 3;", [user_id], (err, result) => {
+    con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.destination=c.id WHERE v.id_user!=? AND v.departure_date > CURRENT_DATE() ORDER BY v.visualizaciones DESC LIMIT 3;", [user_id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -25,10 +25,10 @@ const topViajes = async (req, res) => {
 const obtenerViajesDia = async (req, res) => {
     const user_id = req.auth._id;
     const date = req.body.fecha.split('T')[0] || 'CURRENT_DATE()';
-    const id_campus = req.body.id_campus || -1;
+    const destination = req.body.destination || '';
     const university = req.body.university || -1;
-    if(university !== -1 && id_campus !== -1 ){
-        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.id=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, id_campus, date], (err, result) => {
+    if(university !== -1 && destination !== '' ){
+        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.destination=c.id WHERE v.id_user!=? AND c.id=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, destination, date], (err, result) => {
             if (err) return res.status(200).json({
                 error: true,
                 data: '',
@@ -45,8 +45,8 @@ const obtenerViajesDia = async (req, res) => {
                 info: ''
             });
         });
-    }else if(university !== -1 && id_campus === -1 ){
-        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND c.university=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, university, date], (err, result) => {
+    }else if(university !== -1 && destination === '' ){
+        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.destination=c.id WHERE v.id_user!=? AND c.university=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, university, date], (err, result) => {
             if (err) {return res.status(200).json({
                 error: true,
                 data: '',
@@ -64,7 +64,7 @@ const obtenerViajesDia = async (req, res) => {
             });
         });
     }else{
-        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, date], (err, result) => {
+        con.execute("SELECT v.id, v.origin, v.price, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.destination=c.id WHERE v.id_user!=? AND v.departure_date=? ORDER BY date ASC LIMIT 8;", [user_id, date], (err, result) => {
             if (err) return res.status(200).json({
                 error: true,
                 data: '',
@@ -86,8 +86,7 @@ const obtenerViajesDia = async (req, res) => {
 
 const obtenerViajesGeneral = async (req, res) => {
     const user_id = req.auth._id;
-    // const sql0 = "SELECT v.*, c.name, c.icon FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure > CURRENT_DATE() ORDER BY v.departure DESC LIMIT 8;";
-    const sql = "SELECT DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, JSON_ARRAYAGG(JSON_OBJECT('date', v.departure_date, 'time', v.departure_time, 'status', v.status, 'id', v.id, 'origin', v.origin, 'price', v.price, 'name', c.name, 'icon', c.icon)) AS viajes FROM viajes v LEFT JOIN campus c ON v.id_campus=c.id WHERE v.id_user!=? AND v.departure_date >= CURRENT_DATE() GROUP BY date ORDER BY date ASC LIMIT 8;";
+    const sql = "SELECT DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, JSON_ARRAYAGG(JSON_OBJECT('date', v.departure_date, 'time', v.departure_time, 'status', v.status, 'id', v.id, 'origin', v.origin, 'price', v.price, 'name', c.name, 'icon', c.icon)) AS viajes FROM viajes v LEFT JOIN campus c ON v.destination=c.id WHERE v.id_user!=? AND v.departure_date >= CURRENT_DATE() GROUP BY date ORDER BY date ASC LIMIT 8;";
     con.execute(sql, [user_id], (err, result) => {
         if (err) {
             return res.status(200).json({
@@ -110,13 +109,12 @@ const obtenerViajesGeneral = async (req, res) => {
 
 const detallesViaje = async (req, res) => {
     const user_id = req.auth._id;
-    // con.execute('SELECT v.*, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner, SUM(r.num_seats) AS bookings, ROUND(AVG(val.score),1) AS ratings FROM viajes v LEFT JOIN usuarios u ON v.id_user=u.id LEFT JOIN campus c ON v.id_campus=c.id LEFT JOIN reservas r ON v.id=r.id_trip LEFT JOIN valoraciones val ON v.id_user=val.to_user WHERE v.id=?;', [req.params.id], (err, result) => {
     con.execute(`SELECT v.*, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS departure_date, u.username, u.picture AS user_image, u.email_confirmed, c.name, c.university, c.region, c.icon, c.banner,
     COALESCE(bookings.bookings_count, 0) AS bookings,
     COALESCE(ratings.average_score, 0) AS ratings
     FROM viajes v
     LEFT JOIN usuarios u ON v.id_user = u.id
-    LEFT JOIN campus c ON v.id_campus = c.id
+    LEFT JOIN campus c ON v.destination = c.id
     LEFT JOIN ( SELECT id_trip, SUM(num_seats) AS bookings_count FROM reservas GROUP BY id_trip ) AS bookings ON v.id = bookings.id_trip
     LEFT JOIN ( SELECT to_user, ROUND(AVG(score), 1) AS average_score FROM valoraciones GROUP BY to_user ) AS ratings ON v.id_user = ratings.to_user
     WHERE v.id = ?;`, [req.params.id], (err, result) => {
@@ -150,7 +148,7 @@ const detallesViaje = async (req, res) => {
 };
 
 const misViajes = async (req, res) => {
-    con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.id_campus LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;", [req.auth._id], (err, result) => {
+    con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.destination LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;", [req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -174,7 +172,7 @@ const misViajes = async (req, res) => {
 
 const publicarViaje = async (req, res) => {
     const id = idMaker('t');
-    con.execute('INSERT INTO viajes (id,id_user,origin,id_campus,price,seats,departure_date,departure_time,comments) VALUES (?,?,?,?,?,?,?,?,?);', [id,req.auth._id, req.body.origin, req.body.id_campus, req.body.price, req.body.seats, req.body.date, req.body.time, req.body.comments], (err, result) => {
+    con.execute('INSERT INTO viajes (id, id_user, origin, destination, price, seats, departure_date, departure_time, comments) VALUES (?,?,?,?,?,?,?,?,?);', [id,req.auth._id, req.body.origin, req.body.destination, req.body.price, req.body.seats, req.body.date, req.body.time, req.body.comments], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',

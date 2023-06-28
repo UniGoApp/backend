@@ -29,7 +29,7 @@ const comprobarReserva = async (req, res) => {
 const obtenerReserva = async (req, res) => {
     const user_id = req.auth._id;
     const reserva_id = req.params.id;
-    con.execute("SELECT r.id AS id_reserva, r.id_trip, r.id_user AS pasajero, r.num_seats, v.origin, v.id_campus, v.price, v.seats AS total_seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.comments, c.name AS campus, c.university, c.region, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON c.id=v.id_campus WHERE r.id_user=? AND r.id=?;", [user_id,reserva_id], (err, result) => {
+    con.execute("SELECT r.id AS id_reserva, r.id_trip, r.id_user AS pasajero, r.num_seats, v.origin, v.destination, v.price, v.seats AS total_seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.comments, c.name AS campus, c.university, c.region, c.icon FROM reservas AS r LEFT JOIN viajes AS v ON r.id_trip=v.id LEFT JOIN campus AS c ON c.id=v.destination WHERE r.id_user=? AND r.id=?;", [user_id,reserva_id], (err, result) => {
             if (err) {
                 console.log(err);
                 return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});
@@ -48,7 +48,7 @@ const obtenerReserva = async (req, res) => {
 };
 
 const obtenerReservas = async (req, res) => {
-    con.execute("SELECT r.*, v.id_campus, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, c.name AS campus, c.university, c.icon FROM reservas AS r INNER JOIN viajes AS v ON r.id_trip=v.id INNER JOIN campus AS c ON v.id_campus=c.id WHERE r.id_user=? AND v.departure_date >= CURDATE();", [req.auth._id], (err, result) => {
+    con.execute("SELECT r.*, v.destination, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, c.name AS campus, c.university, c.icon FROM reservas AS r LEFT JOIN viajes AS v ON r.id_trip=v.id LEFT JOIN campus AS c ON v.destination=c.id WHERE r.id_user=? AND v.departure_date >= CURDATE();", [req.auth._id], (err, result) => {
             if (err) {
                 console.log(err);
                 return res.status(200).json({error: true, info: 'Error inesperado en la base de datos.', data:''});

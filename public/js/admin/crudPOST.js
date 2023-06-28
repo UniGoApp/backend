@@ -104,7 +104,7 @@ const showPostForm = (e) => {
             break;
         case 'viajes':
             modal.querySelector('h4').innerText = "Viajes: ";
-            let data_viaje = {id_usuario: '', origen: '', id_campus: '', precio: '2', plazas: '3', salida: '', observaciones: '', estado: 'ACTIVO'};
+            let data_viaje = {id_usuario: '', origen: '', destination: '', precio: '2', plazas: '3', salida: '', observaciones: '', estado: 'ACTIVO'};
             //usuario
             const select_user = document.createElement('select');
             select_user.style.width = '100%';
@@ -226,7 +226,7 @@ const showPostForm = (e) => {
             modal.querySelector('section.modal-container-body > div').appendChild(select_campus);
 
             select_campus.onchange = () => {
-                data_viaje.id_campus = select_campus.value;
+                data_viaje.destination = select_campus.value;
                 modal.querySelector('p').innerText = JSON.stringify(data_viaje, null, '\t');
             }
 

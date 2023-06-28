@@ -39,7 +39,7 @@ router.get("/viajes-general", requireSignin, obtenerViajesGeneral);
 router.post("/viajes", requireSignin, obtenerViajesDia);
 router.get("/viaje/:id", requireSignin, detallesViaje);
 router.get("/mis-viajes", requireSignin, misViajes);
-router.post("/nuevo-viaje", requireSignin, publicarViaje);
+router.post("/viaje", requireSignin, publicarViaje);
 router.put("/viajes/:id", requireSignin, modificarViaje);
 router.delete("/viajes/:id", requireSignin, borrarViaje);
 

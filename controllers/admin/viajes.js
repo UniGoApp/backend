@@ -33,7 +33,7 @@ const postViajes = async (req, res) => {
         let time = dateTime[1].split('.')[0].replaceAll(':','');
         let id = `v_${date}_${time}`;
         con.execute(
-            'INSERT INTO viajes (`id`, `id_user`, `origin`,`id_campus`,`price`,`seats`,`departure`,`comments`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [id, req.body.id_usuario, req.body.origen, req.body.id_campus, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
+            'INSERT INTO viajes (`id`, `id_user`, `origin`,`destination`,`price`,`seats`,`departure`,`comments`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);', [id, req.body.id_usuario, req.body.origen, req.body.destination, req.body.precio, req.body.plazas, req.body.salida, req.body.observaciones, req.body.estado], (err, result) => {
                 if (err) console.log(err);
                 con.execute(
                     'SELECT * FROM viajes WHERE id = ?;', [id], (err, result2) => {
