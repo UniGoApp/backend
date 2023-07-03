@@ -1,5 +1,5 @@
 const con = require("../database");
-const idMaker = require('../../helpers/idMaker');
+const {idMaker} = require('../../helpers/idMaker');
 
 const topViajes = async (req, res) => {
     const user_id = req.auth._id;
@@ -148,7 +148,7 @@ const detallesViaje = async (req, res) => {
 };
 
 const misViajes = async (req, res) => {
-    con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON c.id=v.destination LEFT JOIN reservas r ON r.id_trip=v.id WHERE v.id_user=? ORDER BY date;", [req.auth._id], (err, result) => {
+    con.execute("SELECT v.id, v.origin, v.price, v.seats, DATE_FORMAT(v.departure_date,'%Y-%m-%d') AS date, v.departure_time AS time, v.status, v.visualizaciones, c.name, c.university, c.icon, SUM(r.num_seats) AS reservas FROM viajes v LEFT JOIN campus c ON v.destination=c.id LEFT JOIN reservas r ON v.id=r.id_trip WHERE v.id_user=? GROUP BY v.id ORDER BY date DESC;", [req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -176,12 +176,12 @@ const publicarViaje = async (req, res) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
-            info: 'Parece que algo ha ido mal...'
+            info: 'No se ha podido procesar la petición, por favor disculpe las molestias...r'
         });
         return res.status(200).json({
             error: false,
-            data: 'Viaje creado con éxito.',
-            info: ''
+            data: '',
+            info: 'Viaje creado con éxito.'
         });
     });
 };
@@ -202,7 +202,7 @@ const modificarViaje = async (req, res) => {
 };
 
 const borrarViaje = async (req, res) => {
-    con.execute('DELETE FROM viajes WHERE id=? AND id_user=?;', [req.body.viaje_id, req.auth._id], (err, result) => {
+    con.execute('DELETE FROM viajes WHERE id=? AND id_user=?;', [req.params.id, req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
