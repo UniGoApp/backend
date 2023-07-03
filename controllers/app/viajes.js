@@ -187,7 +187,7 @@ const publicarViaje = async (req, res) => {
 };
 
 const modificarViaje = async (req, res) => {
-    con.execute('UPDATE viajes SET comments=? WHERE id=? AND id_user=?;', [req.body.observaciones, req.params.id, req.auth._id], (err, result) => {
+    con.execute('UPDATE viajes SET comments=? WHERE id=? AND id_user=?;', [req.body.comments, req.params.id, req.auth._id], (err, result) => {
         if (err) return res.status(200).json({
             error: true,
             data: '',
@@ -195,8 +195,8 @@ const modificarViaje = async (req, res) => {
         });
         return res.status(200).json({
             error: false,
-            data: 'Viaje modificado con éxito.',
-            info: ''
+            data: '',
+            info: 'Viaje modificado con éxito.'
         });
     });
 };
