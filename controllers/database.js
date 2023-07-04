@@ -9,6 +9,11 @@ let con = mysql.createConnection({
     database: process.env.AWS_RDS_DB_NAME
 });
 
+con.on('error', () => {
+    console.log('Not connected to db...');
+    con.destroy();
+});
+
 // con.connect(function(err) {
 //     if (err) {
 //         console.error('Database connection failed: ' + err.stack);

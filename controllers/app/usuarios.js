@@ -170,11 +170,14 @@ const borrarUsuario = async (req, res) => {
     if(req.params.id == req.auth._id){
         con.execute(
             'DELETE FROM usuarios WHERE id=?;', [req.auth._id], (err, result) => {
-                if (err) return res.status(200).json({error: true, info: 'No se ha podido borrar el usuario.', data:''});
+                if (err) {
+                    console.log('error: ', err)
+                    return res.status(200).json({error: true, info: 'No se ha podido borrar el usuario.', data:''});
+                }
                 return res.status(200).json({
                     error: false,
-                    data: 'Usuario borrado con éxito.',
-                    info: ''
+                    data: '',
+                    info: 'Usuario borrado con éxito.'
                 });
             }
         );

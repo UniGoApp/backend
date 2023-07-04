@@ -261,4 +261,25 @@ const resetPassword = async (req, res) => {
   });
 };
 
-module.exports = {signup, signin, forgotPassword, resetPassword, getAuthCode, verifyUser};
+const changePassword = async (req, res) => {
+  const newPassword = req.body.password;
+  con.execute('SELECT * FROM usuarios WHERE id=?;', [req.auth._id], function (err, result) {
+    if (err) return res.json({error:true, info: "Unexpected error", data: ''});
+    if(result.length == 0){
+      return res.json({error: true, info: "El recurso solicitado no existe.", data: ''});
+    } else {
+      // hash password
+      const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+      con.execute('UPDATE usuarios SET password=? WHERE id=?;', [hashedPassword, req.auth._id], function(err) {
+        if(err) return res.json({error: true, info: "No se ha podido modificar la contraseña. Disculpe las molestias.", data: ''});
+      });
+      const token = jwt.sign({ _id: result[0].id, _rol: result[0].role }, process.env.JWT_SECRET, {
+        expiresIn: "360d",
+      });
+      return res.json({error: false, info: '', data: token});
+    }
+  });
+};
+
+module.exports = {signup, signin, forgotPassword, resetPassword, changePassword, getAuthCode, verifyUser};

@@ -7,7 +7,9 @@ const requireSignin = expressjwt({
     algorithms: ['HS256'],
     onExpired: async (req, err) => {
         if (new Date() - err.inner.expiredAt < 5000) { return; }
-        throw err;
+        console.log(err);
+        // throw err;
+        // Send to frontend and using axios handle the special response sent here to logout the user
     }
 });
 
