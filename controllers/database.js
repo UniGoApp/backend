@@ -12,6 +12,13 @@ let con = mysql.createConnection({
 con.on('error', () => {
     console.log('Not connected to db...');
     con.destroy();
+    con.connect(function(err) {
+        if (err) {
+            console.error('Database connection failed: ' + err.stack);
+            return;
+        }
+        console.log('Connected to database.');
+    });
 });
 
 // con.connect(function(err) {

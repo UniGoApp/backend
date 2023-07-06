@@ -30,7 +30,7 @@ const fillNewsletterTable = (info) => {
             const rowEmail = document.createElement('td');
             rowEmail.innerText = info.data.emails[i].email;
             const rowLast = document.createElement('td');
-            rowLast.innerText = info.data.emails[i].last;
+            rowLast.innerText = new Date(info.data.emails[i].last).toLocaleDateString();
             row.appendChild(rowEmail);
             row.appendChild(rowLast);
             tableNewsletter.appendChild(row);

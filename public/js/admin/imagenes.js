@@ -70,7 +70,7 @@ fetch('/user-imgs', requestOptions)
     for (let i = 0; i < imgs.length; i++) {
         imgs[i].addEventListener('click', (e) => {
             const url = e.target.src;
-            document.getElementById('imageViewer').style.display='block';
+            document.getElementById('imageViewer').style.display='flex';
             document.querySelector('#imageViewer > img').src=url;
             document.querySelector('#imageViewer > img').alt='Imagen de usuario';
             document.querySelector('#imageViewer > p').textContent='Subdirectorio de la imagen: /img'+url.split('img')[1];
