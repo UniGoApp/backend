@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 // Only log error responses
 app.use(morgan('combined', {
-    skip: function (req, res) { return res.statusCode < 400 }
+    skip: function (req, res) { return res.statusCode != 200 }
 }));
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
