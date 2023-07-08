@@ -49,6 +49,29 @@ const postReports = async (req, res) => {
     });
 };
 
+const putReports = async (req, res) => {
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
+        con.execute( 'UPDATE reportes SET from_user=?, to_user=?, motivo=?, info=? WHERE id=?;', [req.body.from_user, req.body.to_user, req.body.motivo, req.body.info, req.params.id], (err, result) => {
+            if(err) return res.status(200).json({
+                error: true,
+                info: 'No se ha podido modificar el viaje.',
+                data: ''
+            });
+            return res.status(200).json({
+                error: false,
+                info: 'Viaje moficado con éxito.',
+                data: ''
+            });
+        });
+    } else {
+        return res.status(403).json({
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
+        });
+    }
+};
+
 const deleteReports = async (req, res) => {
     if(req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN") {
         con.execute(`DELETE FROM reportes WHERE id=?;`,[req.params.id] , (err, result) => {
@@ -74,4 +97,4 @@ const deleteReports = async (req, res) => {
     }
 };
 
-module.exports = { getReports, postReports, deleteReports };
+module.exports = { getReports, postReports, putReports, deleteReports };

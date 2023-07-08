@@ -905,8 +905,8 @@ div.supermenuContainer > div.supermenu > p.shown{
 /* LOADERS */
 
 .boxLoading {
-    display: inline-block;
     position: relative;
+    margin: auto;
     width: 80px;
     height: 80px;
 }

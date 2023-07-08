@@ -63,27 +63,19 @@ const postViajes = async (req, res) => {
 
 const putViajes = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
-        con.execute(
-            'UPDATE viajes SET `comments`= ?,`status` = ? WHERE id = ?;', [req.body.observaciones, req.body.estado, req.params.id], (err, result) => {
-                if (err) console.log(err);
-                con.execute(
-                    'SELECT * FROM viajes WHERE id = ?;', [req.params.id], (err, result2) => {
-                        if (err) console.log(err);
-                        if(result2.length === 0) return res.status(200).json({
-                            error: true,
-                            info: 'No se encuentra el viaje con id: ' + req.params.id + '.',
-                            data: ''
-                        });
-                        return res.status(200).json({
-                            error: false,
-                            info: 'Viaje moficado con éxito.',
-                            data: result2
-                        });
-                    }
-                );
-            }
-        );
-    }else{
+        con.execute( 'UPDATE viajes SET comments=?, status=? WHERE id=?;', [req.body.comments, req.body.status, req.params.id], (err, result) => {
+            if(err) return res.status(200).json({
+                error: true,
+                info: 'No se ha podido modificar el viaje.',
+                data: ''
+            });
+            return res.status(200).json({
+                error: false,
+                info: 'Viaje moficado con éxito.',
+                data: ''
+            });
+        });
+    } else {
         return res.status(403).json({
             error: true,
             info: 'Acceso no autorizado',
@@ -95,7 +87,7 @@ const putViajes = async (req, res) => {
 const deleteViajes = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         con.execute(
-            'DELETE FROM viajes WHERE `id` = ?;', [req.params.id], (err, result) => {
+            'DELETE FROM viajes WHERE id=?;', [req.params.id], (err, result) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
@@ -105,8 +97,8 @@ const deleteViajes = async (req, res) => {
                 }
                 return res.status(200).json({
                     error: false,
-                    info: '',
-                    data: 'Viaje borrado con éxito.'
+                    info: 'Viaje borrado con éxito.',
+                    data: ''
                 });
             }
         );

@@ -26,6 +26,32 @@ const getReservas = async (req, res) => {
     }
 };
 
+const putReservas = async (req, res) => {
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
+        con.execute(
+            'UPDATE reservas SET `id_trip`=?, `id_user`=?, `num_seats`=?, `read`=?, `scored`=? WHERE id=?;', [req.body.id_trip, req.body.id_user, req.body.num_seats, req.body.read, req.body.scored, req.params.id], (err, result) => {
+                console.log('err :>> ', err);
+                if(err) return res.status(200).json({
+                    error: true,
+                    info: 'No se ha podido modificar la reserva.',
+                    data: ''
+                });
+                return res.status(200).json({
+                    error: false,
+                    info: 'Reserva modificada con éxito.',
+                    data: ''
+                });
+            }
+        );
+    }else{
+        return res.status(403).json({
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
+        });
+    }
+};
+
 const postReservas = async (req, res) => {
     if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
         let dateTime = new Date().toJSON().split('T');
@@ -73,14 +99,14 @@ const deleteReservas = async (req, res) => {
                 if (err) {
                     return res.status(200).json({
                         error: true,
-                        info: 'Esta reserva no se ha podido borrar.',
+                        info: 'No se ha podido borrar la reserva.',
                         data: ''
                     });
                 }
                 return res.status(200).json({
                     error: false,
                     info: 'Reserva borrada con éxito.',
-                    data: result
+                    data: ''
                 });
             }
         );
@@ -93,4 +119,4 @@ const deleteReservas = async (req, res) => {
     }
 };
 
-module.exports = { getReservas, postReservas, deleteReservas };
+module.exports = { getReservas, putReservas, postReservas, deleteReservas };

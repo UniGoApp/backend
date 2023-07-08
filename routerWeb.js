@@ -100,8 +100,9 @@ router.put("/viajes/:id", requireSignin, putViajes);
 router.delete("/viajes/:id", requireSignin, deleteViajes);
 
 // ADMIN CRUD RESERVAS
-const { getReservas, postReservas, deleteReservas } = require("./controllers/admin/reservas");
+const { getReservas, putReservas, postReservas, deleteReservas } = require("./controllers/admin/reservas");
 router.get("/reservas", requireSignin, getReservas);
+router.put("/reservas/:id", requireSignin, putReservas);
 router.post("/reservas", requireSignin, postReservas);
 router.delete("/reservas/:id", requireSignin, deleteReservas);
 

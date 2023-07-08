@@ -108,7 +108,7 @@ const putUsuarios = async (req, res) => {
                         return res.status(200).json({
                             error: false,
                             info: 'Usuario moficado con éxito.',
-                            data: result2
+                            data: ''
                         });
                     }
                 );
@@ -136,8 +136,8 @@ const deleteUsuarios = async (req, res) => {
                 }
                 return res.status(200).json({
                     error: false,
-                    info: '',
-                    data: 'Usuario borrado con éxito.'
+                    info: 'Usuario borrado con éxito.',
+                    data: ''
                 });
             }
         );

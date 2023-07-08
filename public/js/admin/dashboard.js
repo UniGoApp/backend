@@ -84,7 +84,7 @@ const refreshDashboard = () => {
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
             keys.forEach(key => {
-                if(key !== 'password'){
+                if(key !== 'password' && key !== 'id'){
                     const th = document.createElement('th');
                     th.innerText = key;
                     trhead.appendChild(th);
@@ -98,8 +98,9 @@ const refreshDashboard = () => {
             result.data.forEach(user => {
                 //DATA
                 const trbody = document.createElement('tr');
+                trbody.id = 'usuario-'+user.id;
                 for(let d = 0; d < keys.length; d++){
-                    if(keys[d] !== 'password'){
+                    if(keys[d] !== 'password' && keys[d] !== 'id'){
                         const td = document.createElement('td');
                         let key = keys[d];
                         td.innerText = user[key];
@@ -235,14 +236,17 @@ const refreshDashboard = () => {
             tabmsg.innerText = result.info;
             document.querySelector('#bbdd-viajes > table').style.display = 'none';
         }else{
+            dataViajes = result;
             viajes.innerText = result.data.length;
             //Table headings
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
             keys.forEach( key => {
-                const th = document.createElement('th');
-                th.innerText = key;
-                trhead.appendChild(th);
+                if(key !== 'id'){
+                    const th = document.createElement('th');
+                    th.innerText = key;
+                    trhead.appendChild(th);
+                }
             });
             let thActions = document.createElement('th');
             thActions.innerText = "Options";
@@ -251,11 +255,14 @@ const refreshDashboard = () => {
             //Table content
             result.data.forEach(msg => {
                 const trbody = document.createElement('tr');
+                trbody.id = 'viaje-'+msg.id;
                 for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbody.appendChild(td);
+                    if(keys[d] !== 'id'){
+                        const td = document.createElement('td');
+                        let key = keys[d];
+                        td.innerText = msg[key];
+                        trbody.appendChild(td);
+                    }
                 }
                 const td = document.createElement('td');
                 td.innerHTML = `<div onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"></path></svg></div><div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
@@ -289,9 +296,11 @@ const refreshDashboard = () => {
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
             keys.forEach( key => {
-                const th = document.createElement('th');
-                th.innerText = key;
-                trhead.appendChild(th);
+                if(key !== 'id'){
+                    const th = document.createElement('th');
+                    th.innerText = key;
+                    trhead.appendChild(th);
+                }
             });
             let thActions = document.createElement('th');
             thActions.innerText = "Options";
@@ -300,11 +309,14 @@ const refreshDashboard = () => {
             //Table content
             result.data.forEach(msg => {
                 const trbody = document.createElement('tr');
+                trbody.id = 'reserva-'+msg.id;
                 for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbody.appendChild(td);
+                    if(keys[d] !== 'id'){
+                        const td = document.createElement('td');
+                        let key = keys[d];
+                        td.innerText = msg[key];
+                        trbody.appendChild(td);
+                    }
                 }
                 const td = document.createElement('td');
                 td.innerHTML = `<div onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"></path></svg></div><div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
@@ -340,9 +352,11 @@ const refreshDashboard = () => {
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
             keys.forEach( key => {
-                const th = document.createElement('th');
-                th.innerText = key;
-                trhead.appendChild(th);
+                if(key !== 'id'){
+                    const th = document.createElement('th');
+                    th.innerText = key;
+                    trhead.appendChild(th);
+                }
             });
             let thActions = document.createElement('th');
             thActions.innerText = "Options";
@@ -351,11 +365,14 @@ const refreshDashboard = () => {
             //Table content
             result.data.forEach(msg => {
                 const trbody = document.createElement('tr');
+                trbody.id = 'campus-'+msg.id;
                 for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbody.appendChild(td);
+                    if(keys[d] !== 'id'){
+                        const td = document.createElement('td');
+                        let key = keys[d];
+                        td.innerText = msg[key];
+                        trbody.appendChild(td);
+                    }
                 }
                 const td = document.createElement('td');
                 td.innerHTML = `<div onclick="showPutForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5 19h1.4l8.625-8.625-1.4-1.4L5 17.6ZM19.3 8.925l-4.25-4.2 1.4-1.4q.575-.575 1.413-.575.837 0 1.412.575l1.4 1.4q.575.575.6 1.388.025.812-.55 1.387ZM17.85 10.4 7.25 21H3v-4.25l10.6-10.6Zm-3.525-.725-.7-.7 1.4 1.4Z"></path></svg></div><div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
@@ -389,9 +406,11 @@ const refreshDashboard = () => {
             const trhead = document.createElement('tr');
             const keys = Object.keys(result.data[0]);
             keys.forEach( key => {
-                const th = document.createElement('th');
-                th.innerText = key;
-                trhead.appendChild(th);
+                if(key !== 'id'){
+                    const th = document.createElement('th');
+                    th.innerText = key;
+                    trhead.appendChild(th);
+                }
             });
             let thActions = document.createElement('th');
             thActions.innerText = "Options";
@@ -400,11 +419,14 @@ const refreshDashboard = () => {
             //Table content
             result.data.forEach(msg => {
                 const trbody = document.createElement('tr');
+                trbody.id = 'report-'+msg.id;
                 for(let d = 0; d < keys.length; d++){
-                    const td = document.createElement('td');
-                    let key = keys[d];
-                    td.innerText = msg[key];
-                    trbody.appendChild(td);
+                    if(keys[d] !== 'id'){
+                        const td = document.createElement('td');
+                        let key = keys[d];
+                        td.innerText = msg[key];
+                        trbody.appendChild(td);
+                    }
                 }
                 const td = document.createElement('td');
                 td.innerHTML = `<div onclick="showDeleteForm(this)"><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z"/></svg></div>`;
@@ -414,7 +436,6 @@ const refreshDashboard = () => {
         }
     })
     .catch(error => {
-        console.log('error :>> ', error);
         let target = document.querySelector('#bbdd-incidencias > p.tab-msg');
         target.textContent="Error al cargar las incidencias del servidor.";
     });
