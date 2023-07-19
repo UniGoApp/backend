@@ -2,10 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const compression = require('compression');
+require('dotenv').config();
 
 const routerWeb = require("./routerWeb");
 const routerApp = require("./routerApp");
 
+const PORT = process.env.PORT;
 const app = express();
 app.set('trust proxy',true);
 
@@ -29,4 +31,4 @@ app.use(express.static('public'));
 app.use("/api", routerApp);
 app.use("/", routerWeb);
 
-app.listen(3000, () => console.log("Server running on port 3000.")).on('error', ()=> console.log('error on listen'));
+app.listen(PORT, () => console.log("ACCEPTING TRAFFIC")).on('error', ()=> console.log('error on listen'));
