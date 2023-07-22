@@ -2,13 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const compression = require('compression');
+require('dotenv').config();
 
-const routerWeb = require("./routerWeb");
-const routerApp = require("./routerApp");
+const routerWeb = require("./app/routes/web");
+const routerApp = require("./app/routes/app");
 
 const app = express();
-app.set('trust proxy',true);
-
+const PORT = process.env.PORT || 3000;
 // middlewares
 app.use(compression());
 app.use(express.json({ limit: '4mb' }));
@@ -29,4 +29,4 @@ app.use(express.static('public'));
 app.use("/api", routerApp);
 app.use("/", routerWeb);
 
-app.listen(3000, () => console.log("Server running on port 3000.")).on('error', ()=> console.log('error on listen'));
+app.listen(PORT, () => console.log("ACCETING TRAFIC")).on('error', ()=> console.log('error on listen'));
