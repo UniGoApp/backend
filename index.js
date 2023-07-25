@@ -5,6 +5,7 @@ const compression = require('compression');
 require('dotenv').config();
 
 const routerWeb = require("./app/routes/web");
+const routerAdmin = require("./app/routes/administration");
 const routerApp = require("./app/routes/app");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use((_, res, next) => {
 
 app.use(express.static('public'));
 app.use("/api", routerApp);
+app.use("/admin", routerAdmin);
 app.use("/", routerWeb);
 
 app.listen(PORT, () => console.log("ACCEPTING TRAFFIC")).on('error', () => console.log('error on listen'));

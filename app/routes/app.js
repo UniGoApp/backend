@@ -29,7 +29,7 @@ router.delete("/usuarios/:id", requireSignin, borrarUsuario);
 router.put("/rrss/:id", requireSignin, updateRrss);
 
 // REPORTS
-const {postReports} = require("../controllers/reportes");
+const { postReports } = require("../controllers/app/reportes");
 router.post("/reportes", requireSignin, postReports);
 
 // VIAJES

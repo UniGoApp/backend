@@ -3,25 +3,15 @@ const router = express.Router();
 const path = require('path');
 const { requireSignin } = require('../middleware/middleware');
 
-router.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/login.html'));
-});
-router.get("/privado", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/admin.html'));
-});
-// 401 error
-router.get("/401", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/401.html'));
-});
-
 // AUTH
-const { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin } = require("../controllers/web/login");
+const { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin, changePasswordAdmin } = require("../controllers/admin/login");
 router.post("/signin", signinAdmin);
 router.post("/forgot-password", forgotPasswordAdmin);
 router.post("/reset-password", resetPasswordAdmin);
+router.put("/change-password/:id", requireSignin, changePasswordAdmin);
 
 // NEWSLETTER
-const { getNewsletter, updateNewsletter } = require("../controllers/newsletter");
+const { getNewsletter, updateNewsletter } = require("../controllers/admin/newsletter");
 // admin
 router.get("/newsletter", requireSignin, getNewsletter);
 router.put('/newsletter', requireSignin, updateNewsletter);
@@ -41,7 +31,8 @@ router.delete("/email/:id", requireSignin, deleteEmail);
 router.post("/responderEmail", requireSignin, responderEmail);
 
 // ADMIN CRUD DESTINOS (web y archivos)
-const { getCampus, getUniversidades, postCampus, updateCampus, deleteCampus } = require("../controllers/campus");
+const { getCampus, postCampus, updateCampus, deleteCampus } = require("../controllers/admin/campus");
+router.get('/campus', requireSignin, getCampus);
 router.post('/campus', requireSignin, postCampus);
 router.put('/campus/:id', requireSignin, updateCampus);
 router.delete('/campus/:id', requireSignin, deleteCampus);
@@ -60,8 +51,10 @@ router.put("/usuarios_img/:id", requireSignin, borrarImagenUsuario);
 router.delete("/usuarios/:id", requireSignin, deleteUsuarios);
 
 // ADMIN CRUD REPORTS
-const {getReports, deleteReports} = require("../controllers/reportes");
+const { getReports, postReports, putReports, deleteReports } = require("../controllers/admin/reportes");
 router.get("/reportes", requireSignin, getReports);
+router.post("/reportes", requireSignin, postReports);
+router.put("/reportes/:id", requireSignin, putReports);
 router.delete("/reportes/:id", requireSignin, deleteReports);
 
 // ADMIN CRUD VIAJES
@@ -86,7 +79,7 @@ router.get("/user-imgs", requireSignin, getUsersImg);
 // ERROR HANDLING
 // 404 error
 router.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/404.html'));
+  res.json({error: true, info: 'Esta ruta no existe.', data:''});
 });
 
 module.exports = router;

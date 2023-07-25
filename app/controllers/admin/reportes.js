@@ -1,5 +1,5 @@
-const { idMaker } = require("../helpers/idMaker");
-const con = require("./database");
+const { idMaker } = require("../../helpers/idMaker");
+const con = require("../database");
 
 const getReports = async (req, res) => {
     if(req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN") {
@@ -32,21 +32,29 @@ const getReports = async (req, res) => {
 };
 
 const postReports = async (req, res) => {
-    const id_report = idMaker('x');
-    con.execute(`INSERT INTO reportes (id, from_user, to_user, motivo, info) VALUES (?,?,?,?,?);`, [id_report, req.auth._id, req.body.to_user, req.body.motivo, req.body.info] , (err, result) => {
-        if (err) {
+    if(req.auth._rol === "SUPER_ADMIN" || req.auth._rol === "ADMIN"){
+        const id_report = idMaker('x');
+        con.execute(`INSERT INTO reportes (id, from_user, to_user, motivo, info) VALUES (?,?,?,?,?);`, [id_report, req.auth._id, req.body.to_user, req.body.motivo, req.body.info] , (err, result) => {
+            if (err) {
+                return res.status(200).json({
+                    error: true,
+                    info: 'Error con la base de datos.',
+                    data:''
+                });
+            }
             return res.status(200).json({
-                error: true,
-                info: 'Error con la base de datos.',
-                data:''
+                error: false,
+                info: '',
+                data: 'Denuncia publicada con éxito.'
             });
-        }
-        return res.status(200).json({
-            error: false,
-            info: '',
-            data: 'Denuncia publicada con éxito.'
         });
-    });
+    }else{
+        return res.status(403).json({
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
+        });
+    }
 };
 
 const putReports = async (req, res) => {

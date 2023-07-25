@@ -144,4 +144,32 @@ const resetPasswordAdmin = async (req, res) => {
     });
 };
 
-module.exports = { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin };
+const changePasswordAdmin = async (req, res) => {
+    if(req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
+		if(req.auth._id === req.params.id){
+			const { email, newPassword } = req.body;
+			con.execute('SELECT * FROM usuarios WHERE email=? AND id=?;', [email, req.params.id], function (err, result) {
+				if (err || result.length == 0) return res.json({error: true, info: "Esta petición no es válida.", data: ""});
+				const hashedPassword = bcrypt.hashSync(newPassword, 10);
+				con.execute('UPDATE usuarios SET password=? WHERE email=?;', [hashedPassword, email], function(err) {
+					if(err) return res.json({error: true, info: "No se ha podido modificar la contraseña.", data: ""});
+				});
+				return res.json({error: false, info: "Contraseña cambiada con éxito.", data: ""});
+			});
+		}else{
+			return res.status(403).json({
+				error: true,
+				info: 'Acceso no autorizado',
+				data: ''
+			});
+		}
+	} else {
+        return res.status(403).json({
+            error: true,
+            info: 'Acceso no autorizado',
+            data: ''
+        });
+	}
+};
+
+module.exports = { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin, changePasswordAdmin };

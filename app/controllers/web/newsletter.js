@@ -1,52 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-
-const jsonDir = path.join(__dirname, "../data/newsletter.json");
-
-const getNewsletter = async (req, res) => {
-    if( req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
-        fs.readFile(jsonDir, "utf8", (err, data) => {
-            if (err) {
-                return res.status(200).json({
-                    error: true,
-                    info: 'Se ha producido un error al leer el archivo.',
-                    data: ''
-                });
-            }
-            try {
-                const jsonData = JSON.parse(data);
-                return res.status(200).json({
-                    error: false,
-                    info: '',
-                    data: jsonData
-                });
-            } catch (err) {
-                return res.status(200).json({
-                    error: false,
-                    info: '',
-                    data: data
-                });
-            }
-        });
-    }else{
-        return res.status(403).json({
-            error: true,
-            info: 'Acceso no autorizado',
-            data: ''
-        });
-    }
-};
+const jsonDir = path.join(__dirname, "../../data/newsletter.json");
 
 const joinNewsletter = async (req, res) => {
     let emailToAdd = req.body.email;
     let lastToAdd = req.body.last;
     if(!emailToAdd) return;
     
-    fs.readFile(jsonDir, 'utf8', (error, data) => {
-        if(error){
+    fs.readFile(jsonDir, 'utf8', (err, data) => {
+        if(err){
             return res.status(200).json({
                 error: true,
-                info: 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.',
+                info: err.message,
                 data: ''
             });
         }
@@ -118,32 +83,4 @@ const removeNewsletter = async (req, res) => {
     });
 };
 
-const updateNewsletter = async (req, res) => {
-    if( req.auth._rol === "ADMIN" || req.auth._rol === "SUPER_ADMIN"){
-        let newContent = req.body;
-        if(!newContent) return;
-        
-        fs.writeFile(jsonDir, JSON.stringify(newContent, null, 2), (error) => {
-            if (error) {
-                return res.status(200).json({
-                    error: true,
-                    info: 'Error al escribir en el archivo.',
-                    data: ''
-                });
-            }
-            return res.status(200).json({
-                error: false,
-                info: 'Archivo modificado correctamente.',
-                data: ''
-            });
-        });
-    }else{
-        return res.status(403).json({
-            error: true,
-            info: 'Acceso no autorizado',
-            data: ''
-        });
-    }
-};
-
-module.exports = { getNewsletter, joinNewsletter, removeNewsletter, updateNewsletter };
+module.exports = { joinNewsletter, removeNewsletter };

@@ -153,6 +153,8 @@ section{
 }
 .section-title{
     text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 /* ------------> INICIO */
