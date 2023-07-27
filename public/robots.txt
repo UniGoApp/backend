@@ -32,11 +32,12 @@ Allow: /
 
 ## PRIVATE URLS
 
-Disallow: /l0g1n52
-Disallow: /pr15@d052
+Disallow: /login
+Disallow: /privado
 Disallow: /unsuscribe
-Disallow: /404
 Disallow: /401
+Disallow: /403
+Disallow: /404
 
 ## SITEMAPS 
 

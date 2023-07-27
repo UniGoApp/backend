@@ -61,7 +61,7 @@
                 redirect: 'follow'
             };
 
-            fetch("/newsletter", requestOptions)
+            fetch("/web-api/newsletter", requestOptions)
             .then(response => response.json())
             .then(result => {
                 if(result.error === 'error'){
@@ -75,7 +75,7 @@
                     msgContainer.getElementsByTagName('p')[0].innerText = result.info;
                 }
             })
-            .catch( () => {
+            .catch((err) => {
                 msgContainer.classList.toggle('no-visible');
                 msgContainer.innerHTML="";
                 let errorP = document.createElement('p');

@@ -30,7 +30,7 @@ window.addEventListener('scroll', function()  {
     }
 });
 
-// // DESTINOS FUNC
+// DESTINOS FUNC
 let universidadesContainer = document.getElementById('universidades');
 
 // SLIDER CONTROLS
@@ -38,14 +38,14 @@ const prevButton = document.querySelector('.controls div.prev');
 const nextButton = document.querySelector('.controls div.next');
 const allButton = document.querySelector('.controls > button');
 
-fetch('/universidades')
+fetch('/web-api/universidades')
 .then(response => response.json())
 .then(result => {
     if(result.error){
-        universidadesContainer.innerHTML = "Se ha producido un error, inéntelo de nuevo mas tarde.";
         prevButton.style.display = "none";
         nextButton.style.display = "none";
         allButton.style.display = "none";
+        universidadesContainer.innerHTML = result.info;
     }else{
         result.data.map(uni => {
             let card_uni = `
@@ -71,7 +71,7 @@ fetch('/universidades')
             }
         }
     }
-}).catch(error => {
+}).catch(err => {
     universidadesContainer.innerHTML = "Se ha producido un error, inéntelo de nuevo mas tarde.";
     prevButton.style.display = "none";
     nextButton.style.display = "none";
@@ -156,7 +156,7 @@ myform.onsubmit = (e) => {
         redirect: 'follow'
     };
 
-    fetch("/newsletter", requestOptions)
+    fetch("/web-api/newsletter", requestOptions)
     .then(response => response.json())
     .then(result => {
         if(result.error){

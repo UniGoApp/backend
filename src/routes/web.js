@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require('path');
 // SERVER OPTIONS
-const maintenance = true;
+const maintenance = false;
 
 // STATIC RESOURCES
 router.get("/", (req, res) => {
@@ -46,19 +46,22 @@ router.post("/reset-password", resetPasswordAdmin);
 
 // CONFIRM-EMAIL
 const { confirmEmail } = require("../controllers/web/email");
-router.get("/confirm-email/:email", confirmEmail);
+router.get("/web-api/confirm-email/:email", confirmEmail);
 
 // NEWSLETTER
 const { joinNewsletter, removeNewsletter } = require("../controllers/web/newsletter");
-router.post("/newsletter", joinNewsletter);
-router.delete("/newsletter", removeNewsletter);
+router.post("/web-api/newsletter", joinNewsletter);
+router.delete("/web-api/newsletter", removeNewsletter);
 
 // DESTINOS
 const { getUniversidades } = require("../controllers/web/campus");
-router.get('/universidades', getUniversidades);
+router.get('/web-api/universidades', getUniversidades);
 
 // ERROR HANDLING
-router.get("*", (req, res) => {
+router.all("/web-api/*", (req, res) => {
+  res.status(404).json({error: true, info: 'Esta ruta no existe', data: ''});
+});
+router.all("*", (req, res) => {
   res.redirect('/404');
 });
 

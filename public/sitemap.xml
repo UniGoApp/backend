@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
    <url>
       <loc>https://www.unigoapp.es/</loc>
-      <lastmod>2022-11-14</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>1.0</priority>
+      <lastmod>2023-07-27</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.6</priority>
    </url>
 
    <url>
@@ -22,21 +22,21 @@
       <loc>https://www.unigoapp.es/404</loc>
       <lastmod>2022-09-23</lastmod>
       <changefreq>yearly</changefreq>
-      <priority>0.4</priority>
-   </url>
-
-   <url>
-      <loc>https://www.unigoapp.es/l0g1n52</loc>
-      <lastmod>2022-09-23</lastmod>
-      <changefreq>yearly</changefreq>
       <priority>0.1</priority>
    </url>
 
    <url>
-      <loc>https://www.unigoapp.es/pr1v@d052</loc>
-      <lastmod>2022-09-23</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.1</priority>
+      <loc>https://www.unigoapp.es/login</loc>
+      <lastmod>2023-07-27</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+   </url>
+
+   <url>
+      <loc>https://www.unigoapp.es/privado</loc>
+      <lastmod>2023-07-237</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
    </url>
 
 </urlset> 
