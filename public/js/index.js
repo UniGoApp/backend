@@ -45,7 +45,7 @@ fetch('/web-api/universidades')
         prevButton.style.display = "none";
         nextButton.style.display = "none";
         allButton.style.display = "none";
-        universidadesContainer.innerHTML = result.info;
+        universidadesContainer.innerHTML = result.data;
     }else{
         result.data.map(uni => {
             let card_uni = `
@@ -160,16 +160,16 @@ myform.onsubmit = (e) => {
     .then(response => response.json())
     .then(result => {
         if(result.error){
-            submitErrorMsg.innerText = result.info;
+            submitErrorMsg.innerText = result.data;
             submitError.style.display = "flex";
             suscribe_input.value = "";
         }else{
-            submitSuccessMsg.innerText = result.info;
+            submitSuccessMsg.innerText = result.data;
             submitSuccess.style.display = "flex";
             suscribe_input.parentNode.style.display = "none";
         }
     })
-    .catch(error => {
+    .catch(err => {
         submitErrorMsg.innerText = 'Se ha producido un error... Inténtalo de nuevo más tarde, disculpa las molestias.';
         submitError.style.display = "flex";
         suscribe_input.value = "";

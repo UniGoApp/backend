@@ -20,7 +20,7 @@ function createNewLog(req, cause){
 		var json = JSON.parse(data);
 		json.logs.push(access);
 		fs.writeFile(logsDir, JSON.stringify(json, null, 4), (err) => {
-			throw new Error('InternalServerError');
+			if (err) throw new Error('InternalServerError');
 		});
 	});
 }
@@ -31,21 +31,20 @@ function checkEmail(req, res){
         if (err) throw new Error('InternalServerError');
         if(result.length === 0){
 			createNewLog(req, 'Email incorrecto');
-        	return res.status(404).json({error: "Este usuario no existe."});
+        	return res.status(404).json({error: true, data: "Este usuario no existe."});
         }
 		const match = bcrypt.compareSync(password, result[0].password);
 		if (!match) {
 			createNewLog(req, 'Contraseña incorrecta');
-			return res.status(401).json({error: "Contraseña incorrecta."});
+			return res.status(401).json({error: true, data: "Contraseña incorrecta."});
 		}
-		// -> create signed token
-		const token = jwt.sign({ _id: result[0].id, _role: result[0].role }, process.env.JWT_SECRET, {
-			expiresIn: "3d",
-		});
-		// -> send response
+		const token = jwt.sign({ _id: result[0].id, _role: result[0].role }, process.env.JWT_SECRET, { expiresIn: "8h" });
 		res.status(200).json({
-			token,
-			user: result[0],
+			error: false,
+			data: {
+				token: token,
+				user: result[0]
+			}
 		});
     });
 };
@@ -62,7 +61,7 @@ const signinAdmin = async (req, res) => {
 			}
 		});
 		if (count > 2) {
-			return res.status(400).json({error: "System is down. Please contact administrators."});
+			return res.status(400).json({error: true, data: "System is down. Please contact administrators."});
 		}else{
 			checkEmail(req, res);
 		}

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "Thu Jul 27 2023",
+  "lastUpdated": "Fri Jul 28 2023",
   "emails": [
     {
       "email": "jose.to4@hotmail.com",
@@ -7,6 +7,10 @@
     },
     {
       "email": "jose.hlopez@edu.upct.es",
+      "last": "1/1/1970, 1:00:00"
+    },
+    {
+      "email": "jose.aa@g.com",
       "last": "1/1/1970, 1:00:00"
     }
   ]

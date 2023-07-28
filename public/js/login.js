@@ -59,19 +59,19 @@ const login = () => {
         .then(response => response.json())
         .then(result => {
             //Check token an user info received
-            if(!result.error && (result.user.role === "SUPER_ADMIN" || result.user.role === "ADMIN")){
-                const token = 'Bearer ' + result.token;
+            if(!result.error && (result.data.user.role === "SUPER_ADMIN" || result.data.user.role === "ADMIN")){
+                const token = 'Bearer ' + result.data.token;
                 sessionStorage.setItem('tokenUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', token);
-                const usuario = JSON.stringify(result.user);
+                const usuario = JSON.stringify(result.data.user);
                 sessionStorage.setItem('adminUserUniGoAPP_forAdminPanel__SecurityLevelAuth0_04082022', usuario);
                 window.location.assign('/privado');
             }else{
                 error_box.classList.remove('icons');
-                error_box.children[1].innerHTML = result.error;
+                error_box.children[1].innerHTML = result.data;
                 document.getElementsByTagName('form')[0].reset();
             }
         })
-        .catch(error => {
+        .catch(err => {
             error_box.innerText = "Se ha producido un error inesperado...";
         });
     }

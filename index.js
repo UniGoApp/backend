@@ -34,9 +34,9 @@ app.use("/", routerWeb);
 // ERROR HANDLING
 app.use(function (err, req, res, next) {
     if (err.message === 'UnauthorizedError') {
-        res.status(401).json({error: true, info: 'Acceso no autorizado.', data:''});
+        res.status(401).json({error: true, data: 'Acceso no autorizado.'});
     }else if (err.message === 'InternalServerError'){
-        res.status(500).json({error: true, info: 'Internal Server Error', data:''});
+        res.status(500).json({error: true, data: 'Internal Server Error'});
     } else {
         res.redirect('/403');
     }

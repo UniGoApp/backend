@@ -6,7 +6,7 @@ const confirmEmail = async (req, res) => {
     con.execute('SELECT id FROM usuarios WHERE email=?;', [email], (err, result) => { 
         if(err) throw new Error('InternalServerError');
         if(result.length === 0) return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/error.html'));
-        con.execute('UPDATE usuarios SET email_confirmed="1" WHERE email=?;', [email], (err, result) => {
+        con.execute('UPDATE usuarios SET email_confirmed=1 WHERE email=?;', [email], (err, result) => {
             if (err) throw new Error('InternalServerError');
             return res.status(200).sendFile(path.join(__dirname,'../../templates/messages/success.html'));
         });

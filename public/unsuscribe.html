@@ -46,11 +46,9 @@
             // CALL API
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-
             var raw = JSON.stringify({
                 "email": email.value
             });
-
             var requestOptions = {
                 method: 'DELETE',
                 mode: 'cors',
@@ -60,7 +58,6 @@
                 body: raw,
                 redirect: 'follow'
             };
-
             fetch("/web-api/newsletter", requestOptions)
             .then(response => response.json())
             .then(result => {
@@ -68,18 +65,18 @@
                     msgContainer.classList.toggle('no-visible');
                     msgContainer.innerHTML="";
                     let errorP = document.createElement('p');
-                    errorP.innerText = result.info;
+                    errorP.innerText = result.data;
                     msgContainer.appendChild(errorP);
                 }else{
                     msgContainer.classList.toggle('no-visible');
-                    msgContainer.getElementsByTagName('p')[0].innerText = result.info;
+                    msgContainer.getElementsByTagName('p')[0].innerText = result.data;
                 }
             })
             .catch((err) => {
                 msgContainer.classList.toggle('no-visible');
                 msgContainer.innerHTML="";
                 let errorP = document.createElement('p');
-                errorP.innerText = result.info;
+                errorP.innerText = 'Ha ocurrido un error inesperado. Inténtelo más tarde.';
                 msgContainer.appendChild(errorP);
             });
         }
