@@ -39,7 +39,7 @@ const fillNewsletterTable = (info) => {
 }
 
 const refreshDashboard = () => {
-    fetch('/templates', requestOptions)
+    fetch('/admin/templates', requestOptions)
     .then(response => response.json())
     .then(result => {
         let targetContainer = document.getElementById('template-email-container');
@@ -62,7 +62,7 @@ const refreshDashboard = () => {
         targetMsg.textContent = "Error al cargar las plantillas de AMAZON.";
     });
 
-    fetch('/usuarios', requestOptions)
+    fetch('/admin/usuarios', requestOptions)
     .then(response => response.json())
     .then(result => {
         let target = document.querySelector('#bbdd-usuarios > p.tab-msg');
@@ -120,7 +120,7 @@ const refreshDashboard = () => {
         document.getElementById('user-menu').style.display = "none";
     });
 
-    fetch('/emails', requestOptions)
+    fetch('/admin/emails', requestOptions)
     .then(response => response.json())
     .then(result => {
         //Msg target
@@ -168,7 +168,7 @@ const refreshDashboard = () => {
                     });
                     clicked.classList.add('visible');
                     //Get email info
-                    fetch(`/email/${clicked.innerText}`, requestOptions)
+                    fetch(`/admin/email/${clicked.innerText}`, requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         show.innerHTML="";
@@ -219,7 +219,7 @@ const refreshDashboard = () => {
         console.log('error :>> ', error);
     });
 
-    fetch('/viajes', requestOptions)
+    fetch('/admin/viajes', requestOptions)
     .then(response => response.json())
     .then(result => {
         const section = document.getElementById('bbdd-viajes');
@@ -276,7 +276,7 @@ const refreshDashboard = () => {
         target.textContent="Error al cargar los viajes del servidor.";
     });
 
-    fetch('/reservas', requestOptions)
+    fetch('/admin/reservas', requestOptions)
     .then(response => response.json())
     .then(result => {
         const section = document.getElementById('bbdd-reservas');
@@ -330,7 +330,7 @@ const refreshDashboard = () => {
         target.textContent="Error al cargar las reservas del servidor.";
     });
 
-    fetch('/campus', requestOptions)
+    fetch('/admin/campus', requestOptions)
     .then(response => response.json())
     .then(result => {
         const section = document.getElementById('bbdd-campus');
@@ -386,7 +386,7 @@ const refreshDashboard = () => {
         target.textContent="Error al cargar los destinos del servidor.";
     });
 
-    fetch('/reportes', requestOptions)
+    fetch('/admin/reportes', requestOptions)
     .then(response => response.json())
     .then(result => {
         const section = document.getElementById('bbdd-incidencias');

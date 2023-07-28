@@ -357,7 +357,7 @@ const postData = (e) => {
     //FETCH con la url en funcion del h4
     let modal_id = document.querySelector('#modalPost h4').innerText.toLowerCase().split(':')[0];
 
-    const url = `/${modal_id}`;
+    const url = `/admin/${modal_id}`;
     var raw = JSON.stringify(data);
     var requestOptions = {
         method: 'POST',

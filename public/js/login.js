@@ -55,7 +55,7 @@ const login = () => {
             redirect: 'follow'
         };
 
-        fetch("/signin", requestOptions)
+        fetch("/web-api/signin", requestOptions)
         .then(response => response.json())
         .then(result => {
             //Check token an user info received

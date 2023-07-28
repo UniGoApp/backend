@@ -20,7 +20,7 @@ for(let i=0;i<enlaces_menu_imagenes.length; i++){
 // Escudos universidades
 const uniMSG = document.querySelector('#imagenes-universidades > p');
 const uniImgContainer = document.querySelector('#imagenes-universidades > div');
-fetch('/uni-imgs', requestOptions)
+fetch('/admin/uni-imgs', requestOptions)
 .then(response => response.json())
 .then(result => {
     if(!result.error){
@@ -38,7 +38,7 @@ fetch('/uni-imgs', requestOptions)
 // Avatares usuarios
 const userMSG = document.querySelector('#imagenes-usuarios > p');
 const userImgContainer = document.querySelector('#imagenes-usuarios > div');
-fetch('/user-imgs', requestOptions)
+fetch('/admin/user-imgs', requestOptions)
 .then(response => response.json())
 .then(result => {
     if(!result.error){
@@ -90,7 +90,7 @@ const borrarImagenUsuario = (e) =>{
     const old_image = user_image.src.split('/users/')[1];
     const new_image = './img/users/user_default.png';
     if (window.confirm("¿Está seguro de borrar la imagen?")) {
-        fetch(`/usuarios_img/${id_user}`, {
+        fetch(`/admin/usuarios_img/${id_user}`, {
             method: 'PUT',
             headers: myHeaders,
             credentials: "same-origin",

@@ -12,7 +12,7 @@ document.querySelector('#templateHTML').addEventListener('input', () =>{
 });
 
 const openTemplate = (e) => {
-    fetch(`/templates/${e.innerText}`, requestOptions)
+    fetch(`/admin/templates/${e.innerText}`, requestOptions)
     .then(response => response.json())
     .then(result => {
         if(result.error){
@@ -62,7 +62,7 @@ const addTemplate = (e) => {
         redirect: 'follow'
     };
       
-    fetch('/templates', requestOptions)
+    fetch('/admin/templates', requestOptions)
     .then(response => response.json())
     .then(result => {
         closeModal(e);
@@ -103,7 +103,7 @@ const deleteTemplate = (e) => {
         redirect: 'follow'
     };
       
-    fetch(`/templates/${templateId}`, requestOptions)
+    fetch(`/admin/templates/${templateId}`, requestOptions)
     .then(response => response.json())
     .then(result => {
         //mostrar notificacion

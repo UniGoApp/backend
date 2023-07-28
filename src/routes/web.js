@@ -40,9 +40,9 @@ router.get("/404", (req, res) => {
 // ENDPOINTS
 // AUTH
 const { signinAdmin, forgotPasswordAdmin, resetPasswordAdmin } = require("../controllers/admin/login");
-router.post("/signin", signinAdmin);
-router.post("/forgot-password", forgotPasswordAdmin);
-router.post("/reset-password", resetPasswordAdmin);
+router.post("/web-api/signin", signinAdmin);
+router.post("/web-api/forgot-password", forgotPasswordAdmin);
+router.post("/web-api/reset-password", resetPasswordAdmin);
 
 // CONFIRM-EMAIL
 const { confirmEmail } = require("../controllers/web/email");

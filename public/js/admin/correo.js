@@ -14,7 +14,7 @@ const borrar = () => {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch(`/email/${email_id}`, requestOptions)
+        fetch(`/admin/email/${email_id}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             if(result.error){
@@ -77,7 +77,7 @@ const send = (e) => {
         redirect: 'follow'
     };
       
-    fetch('/responderEmail', requestOptions)
+    fetch('/admin/responderEmail', requestOptions)
     .then(response => response.json())
     .then(result => {
         //cerrar modal

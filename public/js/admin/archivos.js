@@ -32,7 +32,7 @@ for(let i=0; i<textareas.length; i++){
 // LOGIN FAILURE
 let textarea_loginFailure = document.getElementById('loginFailure_json');
 let loginFailure_txt = '';
-fetch('/logins', requestOptions)
+fetch('/admin/logins', requestOptions)
 .then(response => response.json())
 .then(result => {
     if(result.error){
@@ -82,7 +82,7 @@ function guardar_loginFailure(){
         body: raw,
         redirect: 'follow'
     };
-    fetch('/logins', requestOptions)
+    fetch('/admin/logins', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(result.error){
@@ -119,7 +119,7 @@ function guardar_loginFailure(){
 // NEWSLETTER
 let textarea_newsletter = document.getElementById('newsletter_json');
 let newsletter_txt = '';
-fetch('/newsletter', requestOptions)
+fetch('/admin/newsletter', requestOptions)
 .then(response => response.json())
 .then(result => {
     if(result.error){
@@ -170,7 +170,7 @@ function guardar_newsletter(){
         body: raw,
         redirect: 'follow'
     };
-    fetch('/newsletter', requestOptions)
+    fetch('/admin/newsletter', requestOptions)
     .then(response => response.json())
     .then(result => {
         if(result.error){

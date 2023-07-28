@@ -102,7 +102,7 @@ const putData = (e) => {
     let targetID = modal_title[1];
     targetAPI = targetAPI[targetAPI.length-1]==='s' ? targetAPI : targetAPI+'s';
     
-    const url = `/${targetAPI}/${targetID}`;
+    const url = `/admin/${targetAPI}/${targetID}`;
     var raw = JSON.stringify(data);
     var requestOptions = {
         method: 'PUT',
